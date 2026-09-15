@@ -180,7 +180,22 @@
   </section>
 
 
-  <!-- HJEMMEMÅL -->
+  <!-- UMIDDELBAR MÅLFEIRING -->
+
+  <section id="goalCelebrationScene" class="scene">
+    <div class="goal-celebration-layout">
+      <img
+        id="goalCelebrationLogo"
+        src="../images/teams/ullkisa.jpg"
+        alt="Ull/Kisa"
+      >
+      <div class="goal-celebration-title">MÅL!</div>
+      <div class="goal-celebration-team">ULL/KISA INNEBANDY</div>
+    </div>
+  </section>
+
+
+  <!-- MÅLSCORER HJEMME -->
 
   <section id="goalHomeScene" class="scene">
 
@@ -226,6 +241,7 @@
           id="goalPlayerVideo"
           class="goal-player-video"
           muted
+          loop
           playsinline
         ></video>
 
@@ -893,6 +909,7 @@
         case "game":
         case "matchUpdate":
         case "goalHome":
+        case "goalCelebrationStart":
         case "goalAway":
         case "penalty":
         case "bestPlayerHome":

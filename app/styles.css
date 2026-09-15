@@ -1119,6 +1119,54 @@ body {
 
 
 /* =========================================================
+   UMIDDELBAR MÅLFEIRING
+========================================================= */
+
+#goalCelebrationScene {
+  background:
+    radial-gradient(circle at center, #19a45d, #07552f 48%, #010d06 85%);
+}
+
+.goal-celebration-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  animation: goal-celebration-flash .42s infinite alternate;
+}
+
+#goalCelebrationLogo {
+  width: 17vw;
+  height: 17vw;
+  object-fit: contain;
+  filter: drop-shadow(0 0 1.5vw rgba(255,214,0,.55));
+}
+
+.goal-celebration-title {
+  color: var(--yellow);
+  font-size: 18vw;
+  line-height: .85;
+  font-weight: 1000;
+  text-shadow: 0 0 2vw rgba(255,214,0,.9);
+}
+
+.goal-celebration-team {
+  margin-top: 1.6vw;
+  color: #fff;
+  font-size: 2.6vw;
+  font-weight: 900;
+  letter-spacing: .08em;
+}
+
+@keyframes goal-celebration-flash {
+  from { filter: brightness(.72); transform: scale(.97); }
+  to { filter: brightness(1.45); transform: scale(1.025); }
+}
+
+
+/* =========================================================
    HJEMMEMÅL DISPLAY
 ========================================================= */
 

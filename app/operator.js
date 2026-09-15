@@ -49,6 +49,9 @@ let matches = [];
 let homeGoalRunning =
   false;
 
+let goalCelebrationRunning =
+  false;
+
 let selectedHomeGoalPlayer =
   null;
 
@@ -149,6 +152,11 @@ const awayLogo =
 const showHomeGoalButton =
   document.getElementById(
     "showHomeGoal"
+  );
+
+const showGoalCelebrationButton =
+  document.getElementById(
+    "showGoalCelebration"
   );
 
 const homeGoalPlayersContainer =
@@ -4269,6 +4277,38 @@ function renderPlayers() {
 
 
 /* =========================================================
+   UMIDDELBAR MÅLFEIRING
+========================================================= */
+
+if (
+  showGoalCelebrationButton
+) {
+  showGoalCelebrationButton.addEventListener(
+    "click",
+    () => {
+      goalCelebrationRunning =
+        !goalCelebrationRunning;
+
+      showGoalCelebrationButton.classList.toggle(
+        "running",
+        goalCelebrationRunning
+      );
+
+      channel.postMessage({
+        type:
+          goalCelebrationRunning
+            ? "goalCelebrationStart"
+            : "goalCelebrationStop",
+
+        match:
+          activeMatch
+      });
+    }
+  );
+}
+
+
+/* =========================================================
    HJEMMEMÅL
 ========================================================= */
 
@@ -6006,6 +6046,22 @@ channel.addEventListener(
       );
 
       renderArenaTimeoutControl();
+    }
+
+    if (
+      data.type ===
+        "goalCelebrationFinished"
+    ) {
+      goalCelebrationRunning =
+        false;
+
+      if (
+        showGoalCelebrationButton
+      ) {
+        showGoalCelebrationButton.classList.remove(
+          "running"
+        );
+      }
     }
 
     if (

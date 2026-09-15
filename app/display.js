@@ -114,6 +114,11 @@ const displayBreakClock =
    HJEMMEMÅL
 ========================================================= */
 
+const goalCelebrationLogo =
+  document.getElementById(
+    "goalCelebrationLogo"
+  );
+
 const goalHomeNumber =
   document.getElementById(
     "goalHomeNumber"
@@ -832,6 +837,11 @@ function applyMatch(
         match.homeLogo;
     }
 
+    if (goalCelebrationLogo) {
+      goalCelebrationLogo.src =
+        match.homeLogo;
+    }
+
     if (goalHomeHomeLogo) {
       goalHomeHomeLogo.src = match.homeLogo;
     }
@@ -1160,6 +1170,26 @@ function finishHomeGoalPresentation() {
 }
 
 
+function finishGoalCelebration() {
+  clearTimeout(
+    autoClearTimer
+  );
+
+  stopAllAudio();
+
+  showScene(
+    "idleScene"
+  );
+
+  renderDisplayPenalties();
+
+  channel.postMessage({
+    type:
+      "goalCelebrationFinished"
+  });
+}
+
+
 if (
   goalPlayerVideo
 ) {
@@ -1176,18 +1206,18 @@ if (
   goalHomeAudio.addEventListener(
     "ended",
     () => {
-      const homeGoalScene =
-        document.getElementById(
-          "goalHomeScene"
-        );
-
       if (
-        homeGoalScene &&
-        homeGoalScene.classList.contains(
-          "active"
-        )
+        document
+          .getElementById(
+            "goalCelebrationScene"
+          )
+          ?.classList.contains(
+            "active"
+          )
       ) {
-        finishHomeGoalPresentation();
+        finishGoalCelebration();
+
+        return;
       }
     }
   );
@@ -3071,6 +3101,43 @@ channel.addEventListener(
         playHomeGoalAudio(
           null
         );
+
+        break;
+
+
+      case "goalCelebrationStart":
+
+        stopSponsorCarousel();
+
+        clearTimeout(
+          autoClearTimer
+        );
+
+        stopAllAudio();
+        stopGoalMedia();
+
+        if (
+          data.match
+        ) {
+          applyMatch(
+            data.match
+          );
+        }
+
+        showScene(
+          "goalCelebrationScene"
+        );
+
+        playHomeGoalAudio(
+          null
+        );
+
+        break;
+
+
+      case "goalCelebrationStop":
+
+        finishGoalCelebration();
 
         break;
 
