@@ -740,6 +740,23 @@ function installOperatorEnhancementStyles() {
       color: #ffe891;
     }
 
+    .away-goal-controls input[readonly] {
+      cursor: default;
+      background: #eef2ef;
+    }
+
+    .away-goal-controls .roster-name-found {
+      border-color: #32b85d !important;
+      background: #eaffef !important;
+      color: #0b4d20 !important;
+      font-weight: 900 !important;
+    }
+
+    .away-goal-controls .roster-name-missing {
+      border-color: #d44141 !important;
+      background: #fff0f0 !important;
+    }
+
     .arena-kube-manual-fallback[hidden] {
       display: none !important;
     }
@@ -1206,14 +1223,6 @@ function installAwayGoalSelects() {
       )
     );
 
-  manualRows.forEach(
-    (row) => {
-      row.classList.add(
-        "arena-kube-manual-fallback"
-      );
-    }
-  );
-
   awayRosterStatus =
     document.createElement(
       "div"
@@ -1225,44 +1234,6 @@ function installAwayGoalSelects() {
   awayRosterStatus.textContent =
     "Bortelagsspillere: manuell registrering";
 
-  awayGoalSelectControls =
-    document.createElement(
-      "div"
-    );
-
-  awayGoalSelectControls.className =
-    "arena-kube-compact-select-row";
-
-  awayGoalPlayerSelect =
-    document.createElement(
-      "select"
-    );
-
-  awayGoalPlayerSelect.id =
-    "awayGoalPlayerSelect";
-
-  awayGoalPlayerSelect.innerHTML =
-    '<option value="">Velg målscorer …</option>';
-
-  awayGoalAssistSelect =
-    document.createElement(
-      "select"
-    );
-
-  awayGoalAssistSelect.id =
-    "awayGoalAssistSelect";
-
-  awayGoalAssistSelect.innerHTML =
-    '<option value="">Ingen assist</option>';
-
-  awayGoalSelectControls.appendChild(
-    awayGoalPlayerSelect
-  );
-
-  awayGoalSelectControls.appendChild(
-    awayGoalAssistSelect
-  );
-
   const firstManualRow =
     manualRows[0];
 
@@ -1272,20 +1243,12 @@ function installAwayGoalSelects() {
       awayRosterStatus
     );
 
-    awayRosterStatus.insertAdjacentElement(
-      "afterend",
-      awayGoalSelectControls
-    );
   } else {
     showAwayGoalButton.insertAdjacentElement(
       "beforebegin",
       awayRosterStatus
     );
 
-    awayRosterStatus.insertAdjacentElement(
-      "afterend",
-      awayGoalSelectControls
-    );
   }
 
   setAwayRosterMode(
@@ -3543,33 +3506,34 @@ function setAwayRosterMode(
       !rosterAvailable;
   }
 
-  if (
-    awayGoalNumberInput
-  ) {
-    const row =
-      awayGoalNumberInput.closest(
-        ".away-goal-controls"
+  [
+    awayGoalNameInput,
+    awayAssistNameInput
+  ].forEach(
+    (input) => {
+      if (!input) {
+        return;
+      }
+
+      input.readOnly =
+        rosterAvailable;
+
+      input.classList.toggle(
+        "roster-name-found",
+        rosterAvailable &&
+        Boolean(input.value)
       );
 
-    if (row) {
-      row.hidden =
-        rosterAvailable;
-    }
-  }
+      if (!rosterAvailable) {
+        input.classList.remove(
+          "roster-name-missing"
+        );
 
-  if (
-    awayAssistNumberInput
-  ) {
-    const row =
-      awayAssistNumberInput.closest(
-        ".away-goal-controls"
-      );
-
-    if (row) {
-      row.hidden =
-        rosterAvailable;
+        input.placeholder =
+          "Skriv navn manuelt";
+      }
     }
-  }
+  );
 
   if (
     bestAwayPlayerSelect
@@ -3600,7 +3564,7 @@ function setAwayRosterMode(
       );
 
       awayRosterStatus.textContent =
-        `${awayPlayers.length} bortespillere lastet`;
+        `${awayPlayers.length} bortespillere lastet – skriv draktnummer`;
 
     } else {
       awayRosterStatus.classList.remove(
@@ -3615,6 +3579,85 @@ function setAwayRosterMode(
         "Bortelagsspillere ikke funnet – bruker manuell registrering";
     }
   }
+}
+
+
+function findAwayPlayerByNumber(
+  number
+) {
+  const wanted =
+    String(number || "").trim();
+
+  if (!wanted) {
+    return null;
+  }
+
+  return (
+    awayPlayers.find(
+      (player) =>
+        String(
+          player.number
+        ).trim() ===
+        wanted
+    ) ||
+    null
+  );
+}
+
+
+function syncAwayGoalNameFromNumber(
+  numberInput,
+  nameInput
+) {
+  if (
+    !numberInput ||
+    !nameInput ||
+    !awayPlayersLoaded
+  ) {
+    return;
+  }
+
+  const number =
+    numberInput.value.trim();
+
+  const player =
+    findAwayPlayerByNumber(
+      number
+    );
+
+  nameInput.value =
+    player
+      ? player.name || ""
+      : "";
+
+  nameInput.classList.toggle(
+    "roster-name-found",
+    Boolean(player)
+  );
+
+  nameInput.classList.toggle(
+    "roster-name-missing",
+    Boolean(number) &&
+    !player
+  );
+
+  nameInput.placeholder =
+    number && !player
+      ? "Nummer ikke funnet"
+      : "Navn fylles inn automatisk";
+}
+
+
+function syncAwayGoalNames() {
+  syncAwayGoalNameFromNumber(
+    awayGoalNumberInput,
+    awayGoalNameInput
+  );
+
+  syncAwayGoalNameFromNumber(
+    awayAssistNumberInput,
+    awayAssistNameInput
+  );
 }
 
 
@@ -3641,6 +3684,8 @@ function renderAwayPlayers() {
     awayPlayers.length >
       0
   );
+
+  syncAwayGoalNames();
 
   refreshPenaltyClockSelectors();
 }
@@ -4201,55 +4246,66 @@ if (
       let assist =
         null;
 
+      const number =
+        awayGoalNumberInput
+          ? awayGoalNumberInput.value.trim()
+          : "";
+
+      const name =
+        awayGoalNameInput
+          ? awayGoalNameInput.value.trim()
+          : "";
+
+      const assistNumber =
+        awayAssistNumberInput
+          ? awayAssistNumberInput.value.trim()
+          : "";
+
+      const assistName =
+        awayAssistNameInput
+          ? awayAssistNameInput.value.trim()
+          : "";
+
+      if (!number) {
+        alert(
+          "Skriv inn draktnummer på målscorer."
+        );
+
+        return;
+      }
+
       if (
         awayPlayersLoaded
       ) {
         scorer =
-          getAwayPlayerFromSelect(
-            awayGoalPlayerSelect
+          findAwayPlayerByNumber(
+            number
           );
 
         if (!scorer) {
           alert(
-            "Velg målscorer for bortelaget."
+            `Fant ikke spiller #${number} i bortelagets lagoppstilling.`
           );
 
           return;
         }
 
-        assist =
-          getAwayPlayerFromSelect(
-            awayGoalAssistSelect
-          );
+        if (assistNumber) {
+          assist =
+            findAwayPlayerByNumber(
+              assistNumber
+            );
+
+          if (!assist) {
+            alert(
+              `Fant ikke assist #${assistNumber} i bortelagets lagoppstilling.`
+            );
+
+            return;
+          }
+        }
 
       } else {
-        const number =
-          awayGoalNumberInput
-            ? awayGoalNumberInput.value.trim()
-            : "";
-
-        const name =
-          awayGoalNameInput
-            ? awayGoalNameInput.value.trim()
-            : "";
-
-        const assistNumber =
-          awayAssistNumberInput
-            ? awayAssistNumberInput.value.trim()
-            : "";
-
-        const assistName =
-          awayAssistNameInput
-            ? awayAssistNameInput.value.trim()
-            : "";
-
-        if (!number) {
-          alert(
-            "Skriv inn draktnummer på målscorer."
-          );
-
-          return;
-        }
 
         scorer = {
           number,
@@ -4328,6 +4384,34 @@ if (
           "";
       }
     }
+  );
+}
+
+
+if (
+  awayGoalNumberInput
+) {
+  awayGoalNumberInput.addEventListener(
+    "input",
+    () =>
+      syncAwayGoalNameFromNumber(
+        awayGoalNumberInput,
+        awayGoalNameInput
+      )
+  );
+}
+
+
+if (
+  awayAssistNumberInput
+) {
+  awayAssistNumberInput.addEventListener(
+    "input",
+    () =>
+      syncAwayGoalNameFromNumber(
+        awayAssistNumberInput,
+        awayAssistNameInput
+      )
   );
 }
 
