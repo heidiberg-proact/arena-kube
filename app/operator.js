@@ -595,8 +595,8 @@ function installOperatorEnhancementStyles() {
       margin: 0 !important;
       border: 2px solid #fff !important;
       border-radius: 7px !important;
-      background: #f4d000 !important;
-      color: #111 !important;
+      background: #c62828 !important;
+      color: #fff !important;
       font-size: 16px !important;
       font-weight: 900 !important;
     }
@@ -604,7 +604,7 @@ function installOperatorEnhancementStyles() {
     .operator-live-workspace
     .compact-goal-button.running {
       border-color: #ffb0b0 !important;
-      background: #b51f1f !important;
+      background: #8e1515 !important;
       color: #fff !important;
     }
 
@@ -4166,7 +4166,7 @@ if (
       showHomeGoalButton.textContent =
         homeGoalRunning
           ? "STOPP MÅL"
-          : "START MÅL";
+          : "MÅL";
 
       showHomeGoalButton.classList.toggle(
         "running",
@@ -4679,9 +4679,9 @@ function createPenaltySlotMarkup(
         data-team="${team}"
         data-index="${index}"
       >
-        <option value="2">2 minutter</option>
-        <option value="4">4 minutter</option>
-        <option value="10">10 minutter</option>
+        <option value="2">2 min</option>
+        <option value="4">4 min</option>
+        <option value="10">10 min</option>
       </select>
 
       <div data-penalty-player-label>
@@ -5859,7 +5859,7 @@ channel.addEventListener(
         showHomeGoalButton
       ) {
         showHomeGoalButton.textContent =
-          "START MÅL";
+          "MÅL";
 
         showHomeGoalButton.classList.remove(
           "running"
