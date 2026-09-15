@@ -46,8 +46,8 @@ let players = [];
 let awayPlayers = [];
 let matches = [];
 
-let selectedGoalPlayer =
-  null;
+let homeGoalRunning =
+  false;
 
 let activeMatch =
   null;
@@ -142,26 +142,6 @@ const awayLogo =
 /* =========================================================
    DOM – HJEMMEMÅL
 ========================================================= */
-
-const playerStatus =
-  document.getElementById(
-    "playerStatus"
-  );
-
-const playersContainer =
-  document.getElementById(
-    "players"
-  );
-
-const assistSelect =
-  document.getElementById(
-    "assistSelect"
-  );
-
-const selectedGoalStatus =
-  document.getElementById(
-    "selectedGoalStatus"
-  );
 
 const showHomeGoalButton =
   document.getElementById(
@@ -4064,16 +4044,6 @@ async function loadPlayers() {
 
     renderPlayers();
 
-    if (
-      playerStatus
-    ) {
-      playerStatus.textContent =
-        `${players.length} spillere lastet`;
-
-      playerStatus.className =
-        "success";
-    }
-
   } catch (error) {
     console.error(
       "Kunne ikke laste players.json:",
@@ -4084,82 +4054,11 @@ async function loadPlayers() {
       [];
 
     renderPlayers();
-
-    if (
-      playerStatus
-    ) {
-      playerStatus.textContent =
-        "Spillerlisten kunne ikke lastes.";
-
-      playerStatus.className =
-        "error";
-    }
   }
-}
-
-
-function clearSelectedGoalPlayer() {
-  selectedGoalPlayer =
-    null;
-
-  document
-    .querySelectorAll(
-      "#players .player-button"
-    )
-    .forEach(
-      (button) => {
-        button.classList.remove(
-          "selected-player"
-        );
-      }
-    );
-
-  if (
-    selectedGoalStatus
-  ) {
-    selectedGoalStatus.textContent =
-      "Ingen målscorer valgt";
-  }
-}
-
-
-function createPlayerButton(
-  player
-) {
-  const button =
-    document.createElement(
-      "button"
-    );
-
-  button.type =
-    "button";
-
-  button.className =
-    "player-button";
-
-  button.innerHTML =
-    `<span class="player-number">${player.number}</span>` +
-    `<span class="player-name">${player.name}</span>`;
-
-  return button;
 }
 
 
 function renderPlayers() {
-  if (
-    playersContainer
-  ) {
-    playersContainer.innerHTML =
-      "";
-  }
-
-  if (
-    assistSelect
-  ) {
-    assistSelect.innerHTML =
-      '<option value="">Ingen assist</option>';
-  }
-
   if (
     penaltyHomePlayerSelect
   ) {
@@ -4179,69 +4078,6 @@ function renderPlayers() {
       player,
       index
     ) => {
-      if (
-        playersContainer
-      ) {
-        const button =
-          createPlayerButton(
-            player
-          );
-
-        button.addEventListener(
-          "click",
-          () => {
-            selectedGoalPlayer =
-              player;
-
-            document
-              .querySelectorAll(
-                "#players .player-button"
-              )
-              .forEach(
-                (item) => {
-                  item.classList.remove(
-                    "selected-player"
-                  );
-                }
-              );
-
-            button.classList.add(
-              "selected-player"
-            );
-
-            if (
-              selectedGoalStatus
-            ) {
-              selectedGoalStatus.textContent =
-                `Valgt målscorer: #${player.number} ${player.name}`;
-            }
-          }
-        );
-
-        playersContainer.appendChild(
-          button
-        );
-      }
-
-      if (
-        assistSelect
-      ) {
-        const option =
-          document.createElement(
-            "option"
-          );
-
-        option.value =
-          index;
-
-        option.textContent =
-          `#${player.number} ${player.name}`;
-
-        assistSelect.appendChild(
-          option
-        );
-      }
-
       if (
         penaltyHomePlayerSelect
       ) {
@@ -4287,33 +4123,6 @@ function renderPlayers() {
 
 
 /* =========================================================
-   ASSIST HJEMME
-========================================================= */
-
-function getSelectedAssist() {
-  if (
-    !assistSelect ||
-    assistSelect.value ===
-      ""
-  ) {
-    return null;
-  }
-
-  const index =
-    Number(
-      assistSelect.value
-    );
-
-  return (
-    players[
-      index
-    ] ||
-    null
-  );
-}
-
-
-/* =========================================================
    HJEMMEMÅL
 ========================================================= */
 
@@ -4323,43 +4132,28 @@ if (
   showHomeGoalButton.addEventListener(
     "click",
     () => {
-      if (
-        !selectedGoalPlayer
-      ) {
-        alert(
-          "Velg målscorer først."
-        );
+      homeGoalRunning =
+        !homeGoalRunning;
 
-        return;
-      }
+      showHomeGoalButton.textContent =
+        homeGoalRunning
+          ? "STOPP MÅL"
+          : "START MÅL";
 
-      const assist =
-        getSelectedAssist();
-
-      changeScore(
-        "home",
-        1
+      showHomeGoalButton.classList.toggle(
+        "running",
+        homeGoalRunning
       );
 
       channel.postMessage({
         type:
-          "goalHome",
-
-        scorer:
-          selectedGoalPlayer,
-
-        assist,
+          homeGoalRunning
+            ? "goalHomeStart"
+            : "goalHomeStop",
 
         match:
           activeMatch
       });
-
-      if (
-        assistSelect
-      ) {
-        assistSelect.value =
-          "";
-      }
     }
   );
 }
@@ -5779,7 +5573,6 @@ if (
           "stopAudio"
       });
 
-      clearSelectedGoalPlayer();
     }
   );
 }
@@ -6142,6 +5935,25 @@ channel.addEventListener(
       );
 
       renderArenaTimeoutControl();
+    }
+
+    if (
+      data.type ===
+        "goalHomeFinished"
+    ) {
+      homeGoalRunning =
+        false;
+
+      if (
+        showHomeGoalButton
+      ) {
+        showHomeGoalButton.textContent =
+          "START MÅL";
+
+        showHomeGoalButton.classList.remove(
+          "running"
+        );
+      }
     }
   }
 );

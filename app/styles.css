@@ -792,8 +792,15 @@ body {
   margin-top: 7px;
   padding-top: 8px;
   padding-bottom: 8px;
-  background: var(--yellow);
-  color: black;
+  background: #d71920;
+  color: white;
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.goal-send-button.running {
+  background: #7a0b0f;
+  border-color: white;
 }
 
 
@@ -1125,10 +1132,13 @@ body {
 }
 
 .home-goal-layout {
-  display: grid;
-  grid-template-columns: 48% 52%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   height: 100%;
+  animation: home-goal-flash 0.55s infinite alternate;
 }
 
 .home-goal-info {
@@ -1140,8 +1150,10 @@ body {
 
 .home-goal-title {
   color: var(--yellow);
-  font-size: 7vw;
+  font-size: 18vw;
   font-weight: 900;
+  line-height: 0.9;
+  text-shadow: 0 0 2vw rgba(255, 214, 0, 0.75);
 }
 
 .home-goal-number {
@@ -1166,14 +1178,16 @@ body {
 }
 
 .home-goal-team {
-  margin-top: 2vw;
+  margin-top: 3vw;
   color: var(--yellow);
+  font-size: 3vw;
   font-weight: 900;
 }
 
 .goal-media-area {
-  width: 100%;
-  height: 100%;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
 }
 
 .goal-player-image,
@@ -1186,6 +1200,18 @@ body {
 
 .goal-player-video {
   object-fit: cover;
+}
+
+@keyframes home-goal-flash {
+  from {
+    filter: brightness(0.85);
+    transform: scale(0.98);
+  }
+
+  to {
+    filter: brightness(1.35);
+    transform: scale(1.02);
+  }
 }
 
 

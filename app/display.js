@@ -1089,6 +1089,61 @@ function stopGoalMedia() {
 }
 
 
+function finishHomeGoalPresentation() {
+  clearTimeout(
+    autoClearTimer
+  );
+
+  stopAllAudio();
+  stopGoalMedia();
+
+  showScene(
+    "idleScene"
+  );
+
+  renderDisplayPenalties();
+
+  channel.postMessage({
+    type:
+      "goalHomeFinished"
+  });
+}
+
+
+if (
+  goalPlayerVideo
+) {
+  goalPlayerVideo.addEventListener(
+    "ended",
+    finishHomeGoalPresentation
+  );
+}
+
+
+if (
+  goalHomeAudio
+) {
+  goalHomeAudio.addEventListener(
+    "ended",
+    () => {
+      const homeGoalScene =
+        document.getElementById(
+          "goalHomeScene"
+        );
+
+      if (
+        homeGoalScene &&
+        homeGoalScene.classList.contains(
+          "active"
+        )
+      ) {
+        finishHomeGoalPresentation();
+      }
+    }
+  );
+}
+
+
 function showGoalImage(
   scorer
 ) {
@@ -2924,6 +2979,43 @@ channel.addEventListener(
         );
 
         renderDisplayPenalties();
+
+        break;
+
+
+      case "goalHomeStart":
+
+        stopSponsorCarousel();
+
+        clearTimeout(
+          autoClearTimer
+        );
+
+        stopAllAudio();
+        stopGoalMedia();
+
+        if (
+          data.match
+        ) {
+          applyMatch(
+            data.match
+          );
+        }
+
+        showScene(
+          "goalHomeScene"
+        );
+
+        playHomeGoalAudio(
+          null
+        );
+
+        break;
+
+
+      case "goalHomeStop":
+
+        finishHomeGoalPresentation();
 
         break;
 
