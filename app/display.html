@@ -534,6 +534,7 @@
     src="../media/video/innmarsj.mp4"
     preload="auto"
     playsinline
+    muted
   ></video>
 </div>
 
@@ -572,6 +573,12 @@
   preload="auto"
 ></audio>
 
+<audio
+  id="entranceAudio"
+  src="../media/video/innmarsj.mp3"
+  preload="auto"
+></audio>
+
 
 <script src="display.js"></script>
 
@@ -592,25 +599,37 @@
       "entranceVideo"
     );
 
+  const entranceTrack =
+    document.getElementById(
+      "entranceAudio"
+    );
+
   let entranceRunning =
     false;
 
 
-  function resetVideo() {
-    if (!video) {
-      return;
-    }
+  function resetEntranceMedia() {
+    [
+      video,
+      entranceTrack
+    ].forEach(
+      (media) => {
+        if (!media) {
+          return;
+        }
 
-    video.pause();
+        media.pause();
 
-    try {
-      video.currentTime =
-        0;
-    } catch (error) {
-      console.log(
-        "Arena Kube: innmarsjvideo var ikke startet."
-      );
-    }
+        try {
+          media.currentTime =
+            0;
+        } catch (error) {
+          console.log(
+            "Arena Kube: innmarsjmediet var ikke startet."
+          );
+        }
+      }
+    );
   }
 
 
@@ -623,7 +642,7 @@
       return;
     }
 
-    resetVideo();
+    resetEntranceMedia();
 
     overlay.hidden =
       true;
@@ -651,14 +670,15 @@
   async function startEntrance() {
     if (
       !overlay ||
-      !video
+      !video ||
+      !entranceTrack
     ) {
       channel.postMessage({
         type:
           "entranceStopped",
 
         error:
-          "Innmarsjvideo mangler"
+          "Innmarsjvideo eller innmarsjlyd mangler"
       });
 
       return;
@@ -699,7 +719,7 @@
       stopGoalMedia();
     }
 
-    resetVideo();
+    resetEntranceMedia();
 
     overlay.hidden =
       false;
@@ -708,7 +728,10 @@
       true;
 
     try {
-      await video.play();
+      await Promise.all([
+        video.play(),
+        entranceTrack.play()
+      ]);
 
       channel.postMessage({
         type:
@@ -721,9 +744,11 @@
 
     } catch (error) {
       console.error(
-        "Arena Kube: kunne ikke starte innmarsjvideo:",
+        "Arena Kube: kunne ikke starte innmarsjvideo/-lyd:",
         error
       );
+
+      resetEntranceMedia();
 
       overlay.hidden =
         true;
