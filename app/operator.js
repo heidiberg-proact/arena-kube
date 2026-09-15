@@ -31,6 +31,9 @@ const BREAK_DURATION_MS =
 const ENTRANCE_VIDEO_URL =
   "../media/video/innmarsj.mp4";
 
+const ENTRANCE_AUDIO_URL =
+  "../media/video/innmarsj.mp3";
+
 const PENALTY_SLOT_COUNT =
   3;
 
@@ -6202,7 +6205,8 @@ async function runPreflight() {
       homeGoalAudioOk,
       awayGoalAudioOk,
       penaltyAudioOk,
-      entranceVideoOk
+      entranceVideoOk,
+      entranceAudioOk
     ] =
       await Promise.all([
         testUrl(
@@ -6223,6 +6227,10 @@ async function runPreflight() {
 
         testUrl(
           ENTRANCE_VIDEO_URL
+        ),
+
+        testUrl(
+          ENTRANCE_AUDIO_URL
         )
       ]);
 
@@ -6231,7 +6239,8 @@ async function runPreflight() {
       homeGoalAudioOk,
       awayGoalAudioOk,
       penaltyAudioOk,
-      entranceVideoOk
+      entranceVideoOk,
+      entranceAudioOk
     );
 
     setPreflightItem(
@@ -6276,12 +6285,14 @@ async function runPreflight() {
 
     setPreflightItem(
       "checkEntranceVideo",
-      entranceVideoOk
+      entranceVideoOk &&
+      entranceAudioOk
         ? "ok"
         : "fail",
-      entranceVideoOk
-        ? "Funnet"
-        : "Mangler"
+      entranceVideoOk &&
+      entranceAudioOk
+        ? "Video + lyd funnet"
+        : "Video eller lyd mangler"
     );
 
     let awayRosterPreflightOk =
