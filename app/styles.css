@@ -799,8 +799,9 @@ body {
 }
 
 .goal-send-button.running {
-  background: #7a0b0f;
-  border-color: white;
+  background: var(--yellow);
+  border-color: #fff07a;
+  color: #000;
 }
 
 
