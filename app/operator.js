@@ -582,11 +582,19 @@ function installOperatorEnhancementStyles() {
     }
 
     .operator-live-workspace
+    .compact-goal-control {
+      display: flex;
+      justify-content: center;
+      margin-top: 7px;
+    }
+
+    .operator-live-workspace
     .compact-goal-button {
-      width: 100% !important;
-      min-height: 42px !important;
-      margin: 8px 0 0 !important;
+      width: 150px !important;
+      min-height: 58px !important;
+      margin: 0 !important;
       border: 2px solid #fff !important;
+      border-radius: 7px !important;
       background: #f4d000 !important;
       color: #111 !important;
       font-size: 16px !important;
@@ -765,7 +773,7 @@ function installOperatorEnhancementStyles() {
     #operatorPenaltyClocks {
       width: 100%;
       box-sizing: border-box;
-      padding: 7px;
+      padding: 5px;
       margin: 0;
       background: #071d11;
       border: 2px solid #f4d000;
@@ -775,9 +783,9 @@ function installOperatorEnhancementStyles() {
 
     #operatorPenaltyClocks
     .penalty-clock-title {
-      margin-bottom: 7px;
+      margin-bottom: 4px;
       color: #f4d000;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 900;
       text-align: center;
     }
@@ -787,7 +795,7 @@ function installOperatorEnhancementStyles() {
       grid-template-columns:
         minmax(0, 1fr)
         minmax(0, 1fr);
-      gap: 7px;
+      gap: 5px;
       max-height: none;
       overflow: visible;
       padding-right: 2px;
@@ -795,17 +803,17 @@ function installOperatorEnhancementStyles() {
 
     #operatorPenaltyGrid > div {
       min-width: 0;
-      padding: 6px;
+      padding: 4px;
       background: #10291a;
       border: 1px solid #456451;
       border-radius: 7px;
     }
 
     [data-penalty-team-heading] {
-      margin-bottom: 5px;
+      margin-bottom: 3px;
       overflow: hidden;
       color: #f4d000;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 900;
       text-align: center;
       text-overflow: ellipsis;
@@ -815,20 +823,20 @@ function installOperatorEnhancementStyles() {
     [data-penalty-slots] {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 3px;
     }
 
     [data-penalty-slot] {
       min-width: 0;
       min-height: 0 !important;
       display: grid;
-      grid-template-columns: 46px 92px minmax(62px, 1fr) 58px;
+      grid-template-columns: 42px 84px minmax(72px, 1fr);
       grid-template-areas:
-        "number duration time buttons"
-        "label label label label";
-      gap: 3px 5px;
+        "number duration buttons"
+        "label label label";
+      gap: 2px 4px;
       align-items: center;
-      padding: 4px !important;
+      padding: 3px !important;
       background: #071d11;
       border: 1px solid #3c5d47;
       border-radius: 6px;
@@ -864,23 +872,13 @@ function installOperatorEnhancementStyles() {
       grid-area: duration;
     }
 
-    [data-penalty-time] {
-      grid-area: time;
-      margin: 0;
-      color: #ffcf00;
-      font-size: 24px;
-      line-height: 1;
-      font-weight: 900;
-      font-variant-numeric: tabular-nums;
-    }
-
     [data-penalty-player-label] {
       grid-area: label;
-      min-height: 12px;
+      min-height: 11px;
       margin: 0;
       overflow: hidden;
       color: white;
-      font-size: 10px;
+      font-size: 9px;
       font-weight: 800;
       line-height: 1.2;
       text-overflow: ellipsis;
@@ -888,14 +886,15 @@ function installOperatorEnhancementStyles() {
 
     .penalty-clock-button-row {
       grid-area: buttons;
-      display: flex;
+      display: grid;
+      grid-template-columns: minmax(58px, 1fr) 25px;
       gap: 3px;
     }
 
     [data-penalty-slot] button {
       width: 100%;
       min-width: 0;
-      min-height: 28px;
+      min-height: 26px;
       padding: 4px 3px !important;
       border: 0;
       border-radius: 4px;
@@ -907,6 +906,12 @@ function installOperatorEnhancementStyles() {
     [data-penalty-start] {
       background: #f4d000;
       color: #111;
+      font-variant-numeric: tabular-nums;
+    }
+
+    [data-penalty-start]:disabled {
+      opacity: 1;
+      cursor: default;
     }
 
     [data-penalty-clear] {
@@ -4694,10 +4699,6 @@ function createPenaltySlotMarkup(
         <option value="10">10 minutter</option>
       </select>
 
-      <div data-penalty-time>
-        02:00
-      </div>
-
       <div data-penalty-player-label>
         Ingen utvisning
       </div>
@@ -5240,8 +5241,13 @@ function renderPenaltyClocks() {
           ) {
             startButton.textContent =
               slot.active
-                ? "START PÅ NYTT"
+                ? formatClock(
+                    slot.remainingMs
+                  )
                 : "START";
+
+            startButton.disabled =
+              slot.active;
           }
         }
       );
