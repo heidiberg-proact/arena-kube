@@ -4326,11 +4326,6 @@ if (
         }
       }
 
-      changeScore(
-        "away",
-        1
-      );
-
       channel.postMessage({
         type:
           "goalAway",
