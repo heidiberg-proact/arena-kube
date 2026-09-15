@@ -3179,7 +3179,7 @@ channel.addEventListener(
         }
 
         showScene(
-          "goalHomeScene"
+          "goalCelebrationScene"
         );
 
         playHomeGoalAudio(
