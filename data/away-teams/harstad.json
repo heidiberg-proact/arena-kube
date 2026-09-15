@@ -1,1 +1,10 @@
-[]
+[
+  {
+    "number": 7,
+    "name": "Ola Nordmann"
+  },
+  {
+    "number": 14,
+    "name": "Kari Nordmann"
+  }
+]

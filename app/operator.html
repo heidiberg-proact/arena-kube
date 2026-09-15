@@ -521,15 +521,6 @@
           STOPPET
         </div>
 
-        <div class="compact-goal-control">
-          <button
-            id="showGoalCelebration"
-            class="control-button goal-send-button compact-goal-button"
-          >
-            MÅL
-          </button>
-        </div>
-
       </div>
 
 
@@ -757,6 +748,15 @@
 
         </div>
 
+        <div class="compact-goal-control">
+          <button
+            id="showHomeGoal"
+            class="control-button goal-send-button compact-goal-button"
+          >
+            MÅL
+          </button>
+        </div>
+
       </div>
 
     </section>
@@ -827,7 +827,7 @@
         id="showSponsors"
         class="control-button yellow"
       >
-        START SPONSORER
+        SPONSORER
       </button>
 
 
@@ -869,39 +869,7 @@
 
 
   <!-- =====================================================
-       HJEMMEMÅL
-  ====================================================== -->
-
-  <section class="panel" id="homeGoalPanel">
-    <h2>Hjemmemål</h2>
-    <p class="help">
-      Velg målscorer og eventuell assist. Resultatet endres manuelt.
-    </p>
-
-    <div id="homeGoalPlayers" class="players-grid"></div>
-
-    <div class="assist-area">
-      <label for="homeGoalAssistSelect">Assist</label>
-      <select id="homeGoalAssistSelect">
-        <option value="">Ingen assist</option>
-      </select>
-    </div>
-
-    <div id="homeGoalSelectionStatus" class="selected-goal-status">
-      Velg målscorer
-    </div>
-
-    <button
-      id="showHomeGoal"
-      class="control-button goal-send-button full-width-button"
-    >
-      VIS MÅLSCORER
-    </button>
-  </section>
-
-
-  <!-- =====================================================
-       BORTEMÅL – KUN SPEAKERINFORMASJON
+       BORTEMÅL
   ====================================================== -->
 
   <section class="panel">
@@ -909,8 +877,9 @@
     <h2>Bortemål</h2>
 
     <p class="help">
-      Velg målscorer og eventuell assist for speakeren.
-      Informasjonen vises ikke på displayet, og resultatet endres manuelt.
+      Bortelagets navn og logo hentes fra aktiv kamp.
+      Skriv draktnummer, så hentes navnet fra lagoppstillingen.
+      Resultatet endres manuelt på kampklokka.
     </p>
 
     <div class="away-goal-controls">
@@ -927,7 +896,7 @@
         id="awayGoalName"
         type="text"
         maxlength="40"
-        placeholder="Målscorer navn"
+        placeholder="Navn fylles inn automatisk"
       >
 
     </div>
@@ -946,7 +915,7 @@
         id="awayAssistName"
         type="text"
         maxlength="40"
-        placeholder="Assist navn"
+        placeholder="Navn fylles inn automatisk"
       >
 
     </div>
@@ -955,12 +924,8 @@
       id="showAwayGoal"
       class="control-button yellow full-width-button"
     >
-      REGISTRER FOR SPEAKER
+      VIS BORTEMÅL
     </button>
-
-    <div id="awayGoalSpeakerStatus" class="selected-goal-status">
-      Ingen bortemål registrert
-    </div>
 
   </section>
 
@@ -1618,12 +1583,6 @@
       sortButtonContainer(
         document.getElementById(
           "players"
-        )
-      );
-
-      sortButtonContainer(
-        document.getElementById(
-          "homeGoalPlayers"
         )
       );
 
