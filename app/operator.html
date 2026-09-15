@@ -750,7 +750,7 @@
 
         <div class="compact-goal-control">
           <button
-            id="showHomeGoal"
+            id="showGoalCelebration"
             class="control-button goal-send-button compact-goal-button"
           >
             MÅL
@@ -864,6 +864,42 @@
       </button>
 
     </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       HJEMMEMÅL – MÅLSCORER OG ASSIST
+  ====================================================== -->
+
+  <section class="panel" id="homeGoalPanel">
+
+    <h2>Hjemmemål – målscorer</h2>
+
+    <p class="help">
+      Velg målscorer og eventuell assist. Denne funksjonen
+      viser delt skjerm. Resultatet endres manuelt.
+    </p>
+
+    <div id="homeGoalPlayers" class="players-grid"></div>
+
+    <div class="assist-area">
+      <label for="homeGoalAssistSelect">Assist</label>
+      <select id="homeGoalAssistSelect">
+        <option value="">Ingen assist</option>
+      </select>
+    </div>
+
+    <div id="homeGoalSelectionStatus" class="selected-goal-status">
+      Velg målscorer
+    </div>
+
+    <button
+      id="showHomeGoal"
+      class="control-button goal-send-button full-width-button"
+    >
+      VIS MÅLSCORER
+    </button>
 
   </section>
 
