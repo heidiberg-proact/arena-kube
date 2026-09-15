@@ -186,12 +186,34 @@
 
     <div class="home-goal-layout">
 
-      <div class="home-goal-title">MÅL!</div>
+      <div class="home-goal-scoreboard">
+        <div class="home-goal-scoreboard-title">MÅL!</div>
 
-      <div class="home-goal-team">ULL/KISA INNEBANDY</div>
+        <div class="home-goal-score-row">
+          <div class="home-goal-mini-team">
+            <img id="goalHomeHomeLogo" src="../images/teams/ullkisa.jpg" alt="Hjemmelag">
+            <div id="goalHomeHomeName">ULL/KISA</div>
+            <strong id="goalHomeHomeScore">0</strong>
+            <div id="goalHomePenaltyHome" class="home-goal-penalties"></div>
+          </div>
 
+          <div class="home-goal-mini-clock">
+            <div id="goalHomeGameClock">00:00</div>
+            <div id="goalHomePeriod">1. PERIODE</div>
+            <div id="goalHomeClockStatus">STOPPET</div>
+          </div>
 
-      <div class="goal-media-area">
+          <div class="home-goal-mini-team">
+            <img id="goalHomeAwayLogo" src="../images/teams/away.png" alt="Bortelag">
+            <div id="goalHomeAwayName">BORTELAG</div>
+            <strong id="goalHomeAwayScore">0</strong>
+            <div id="goalHomePenaltyAway" class="home-goal-penalties"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="home-goal-player-panel">
+        <div class="goal-media-area">
 
         <img
           id="goalPlayerImage"
@@ -206,6 +228,14 @@
           muted
           playsinline
         ></video>
+
+        </div>
+
+        <div class="home-goal-player-info">
+          <div id="goalHomeNumber" class="home-goal-number"></div>
+          <div id="goalHomeName" class="home-goal-name"></div>
+          <div id="goalAssist" class="goal-assist"></div>
+        </div>
 
       </div>
 

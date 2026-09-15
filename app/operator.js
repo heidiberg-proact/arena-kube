@@ -49,6 +49,9 @@ let matches = [];
 let homeGoalRunning =
   false;
 
+let selectedHomeGoalPlayer =
+  null;
+
 let activeMatch =
   null;
 
@@ -148,6 +151,21 @@ const showHomeGoalButton =
     "showHomeGoal"
   );
 
+const homeGoalPlayersContainer =
+  document.getElementById(
+    "homeGoalPlayers"
+  );
+
+const homeGoalAssistSelect =
+  document.getElementById(
+    "homeGoalAssistSelect"
+  );
+
+const homeGoalSelectionStatus =
+  document.getElementById(
+    "homeGoalSelectionStatus"
+  );
+
 
 /* =========================================================
    DOM – BORTEMÅL
@@ -176,6 +194,11 @@ const awayAssistNameInput =
 const showAwayGoalButton =
   document.getElementById(
     "showAwayGoal"
+  );
+
+const awayGoalSpeakerStatus =
+  document.getElementById(
+    "awayGoalSpeakerStatus"
   );
 
 let awayGoalPlayerSelect =
@@ -4068,7 +4091,17 @@ async function loadPlayers() {
     }
 
     players =
-      data;
+      data.map(
+        (player) => ({
+          ...player,
+          image:
+            player.image ||
+            `../media/players/Images/${player.number}.jpeg`,
+          goalVideo:
+            player.goalVideo ||
+            `../media/players/videos/${player.number}.mp4`
+        })
+      );
 
     renderPlayers();
 
@@ -4088,6 +4121,20 @@ async function loadPlayers() {
 
 function renderPlayers() {
   if (
+    homeGoalPlayersContainer
+  ) {
+    homeGoalPlayersContainer.innerHTML =
+      "";
+  }
+
+  if (
+    homeGoalAssistSelect
+  ) {
+    homeGoalAssistSelect.innerHTML =
+      '<option value="">Ingen assist</option>';
+  }
+
+  if (
     penaltyHomePlayerSelect
   ) {
     penaltyHomePlayerSelect.innerHTML =
@@ -4106,6 +4153,77 @@ function renderPlayers() {
       player,
       index
     ) => {
+      if (
+        homeGoalPlayersContainer
+      ) {
+        const goalButton =
+          document.createElement(
+            "button"
+          );
+
+        goalButton.type =
+          "button";
+
+        goalButton.className =
+          "player-button";
+
+        goalButton.innerHTML = `
+          <span class="player-number">${player.number}</span>
+          <span class="player-name">${player.name}</span>
+        `;
+
+        goalButton.addEventListener(
+          "click",
+          () => {
+            selectedHomeGoalPlayer =
+              player;
+
+            homeGoalPlayersContainer
+              .querySelectorAll(
+                ".player-button"
+              )
+              .forEach(
+                (button) => {
+                  button.classList.toggle(
+                    "selected-player",
+                    button === goalButton
+                  );
+                }
+              );
+
+            if (
+              homeGoalSelectionStatus
+            ) {
+              homeGoalSelectionStatus.textContent =
+                `Målscorer: #${player.number} ${player.name}`;
+            }
+          }
+        );
+
+        homeGoalPlayersContainer.appendChild(
+          goalButton
+        );
+      }
+
+      if (
+        homeGoalAssistSelect
+      ) {
+        const assistOption =
+          document.createElement(
+            "option"
+          );
+
+        assistOption.value =
+          index;
+
+        assistOption.textContent =
+          `#${player.number} ${player.name}`;
+
+        homeGoalAssistSelect.appendChild(
+          assistOption
+        );
+      }
+
       if (
         penaltyHomePlayerSelect
       ) {
@@ -4160,11 +4278,67 @@ if (
   showHomeGoalButton.addEventListener(
     "click",
     () => {
+      if (
+        homeGoalRunning
+      ) {
+        homeGoalRunning =
+          false;
+
+        showHomeGoalButton.textContent =
+          "VIS MÅLSCORER";
+
+        showHomeGoalButton.classList.remove(
+          "running"
+        );
+
+        channel.postMessage({
+          type:
+            "goalHomeStop"
+        });
+
+        return;
+      }
+
+      if (
+        !selectedHomeGoalPlayer
+      ) {
+        alert(
+          "Velg målscorer for hjemmelaget."
+        );
+
+        return;
+      }
+
+      const assistIndex =
+        homeGoalAssistSelect
+          ? homeGoalAssistSelect.value
+          : "";
+
+      const assist =
+        assistIndex === ""
+          ? null
+          : players[
+              Number(
+                assistIndex
+              )
+            ] || null;
+
+      if (
+        assist ===
+        selectedHomeGoalPlayer
+      ) {
+        alert(
+          "Målscorer og assist kan ikke være samme spiller."
+        );
+
+        return;
+      }
+
       homeGoalRunning =
-        !homeGoalRunning;
+        true;
 
       showHomeGoalButton.textContent =
-        "MÅL";
+        "STOPP MÅLVISNING";
 
       showHomeGoalButton.classList.toggle(
         "running",
@@ -4173,9 +4347,12 @@ if (
 
       channel.postMessage({
         type:
-          homeGoalRunning
-            ? "goalHomeStart"
-            : "goalHomeStop",
+          "goalHome",
+
+        scorer:
+          selectedHomeGoalPlayer,
+
+        assist,
 
         match:
           activeMatch
@@ -4270,34 +4447,19 @@ if (
         }
       }
 
-      changeScore(
-        "away",
-        1
-      );
-
-      channel.postMessage({
-        type:
-          "goalAway",
-
-        scorer,
-        assist,
-
-        match:
-          activeMatch
-      });
-
       if (
-        awayGoalPlayerSelect
+        awayGoalSpeakerStatus
       ) {
-        awayGoalPlayerSelect.value =
-          "";
-      }
+        const scorerText =
+          `#${scorer.number} ${scorer.name || ""}`.trim();
 
-      if (
-        awayGoalAssistSelect
-      ) {
-        awayGoalAssistSelect.value =
-          "";
+        const assistText =
+          assist
+            ? ` – assist #${assist.number || ""} ${assist.name || ""}`.trim()
+            : " – uten assist";
+
+        awayGoalSpeakerStatus.textContent =
+          `Speaker: ${scorerText}${assistText}`;
       }
 
       if (
@@ -5857,7 +6019,7 @@ channel.addEventListener(
         showHomeGoalButton
       ) {
         showHomeGoalButton.textContent =
-          "MÅL";
+          "VIS MÅLSCORER";
 
         showHomeGoalButton.classList.remove(
           "running"

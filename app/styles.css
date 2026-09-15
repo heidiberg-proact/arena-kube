@@ -1133,56 +1133,143 @@ body {
 }
 
 .home-goal-layout {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   width: 100%;
   height: 100%;
-  animation: home-goal-flash 0.55s infinite alternate;
+  background: #03130a;
 }
 
-.home-goal-info {
+.home-goal-scoreboard {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-left: 6vw;
+  box-sizing: border-box;
+  padding: 2.2vw;
+  border-right: .45vw solid var(--yellow);
+  background: linear-gradient(145deg, #062817, #020b06);
 }
 
-.home-goal-title {
+.home-goal-scoreboard-title {
+  margin-bottom: 2vw;
   color: var(--yellow);
-  font-size: 18vw;
+  font-size: 5vw;
   font-weight: 900;
-  line-height: 0.9;
+  text-align: center;
   text-shadow: 0 0 2vw rgba(255, 214, 0, 0.75);
 }
 
+.home-goal-score-row {
+  display: grid;
+  grid-template-columns: 1fr 1.25fr 1fr;
+  gap: 1vw;
+  align-items: center;
+}
+
+.home-goal-mini-team {
+  min-width: 0;
+  text-align: center;
+  color: #fff;
+  font-size: 1.25vw;
+  font-weight: 900;
+}
+
+.home-goal-mini-team img {
+  width: 6vw;
+  height: 6vw;
+  object-fit: contain;
+}
+
+.home-goal-mini-team strong {
+  display: block;
+  color: var(--yellow);
+  font-size: 5vw;
+  line-height: 1;
+}
+
+.home-goal-mini-clock {
+  text-align: center;
+  color: #fff;
+  font-weight: 900;
+}
+
+#goalHomeGameClock {
+  font-size: 4.8vw;
+  font-variant-numeric: tabular-nums;
+}
+
+#goalHomePeriod {
+  margin-top: .6vw;
+  color: var(--yellow);
+  font-size: 1.4vw;
+}
+
+#goalHomeClockStatus {
+  margin-top: .35vw;
+  font-size: .8vw;
+}
+
+.home-goal-penalties {
+  display: grid;
+  gap: .35vw;
+  margin-top: .5vw;
+}
+
+.home-goal-penalties .display-penalty-item {
+  grid-template-columns: 1fr auto;
+  padding: .35vw;
+}
+
+.home-goal-penalties .display-penalty-player-name,
+.home-goal-penalties .display-penalty-duration {
+  display: none;
+}
+
+.home-goal-penalties .display-penalty-player-number {
+  font-size: .9vw;
+}
+
+.home-goal-penalties .display-penalty-time {
+  font-size: 1.35vw;
+}
+
+.home-goal-player-panel {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  background: radial-gradient(circle at center, #168b4f, #03150b 75%);
+}
+
 .home-goal-number {
-  color: white;
-  font-size: 9vw;
+  color: var(--yellow);
+  font-size: 4.5vw;
   font-weight: 900;
 }
 
 .home-goal-name {
-  font-size: 4vw;
+  font-size: 2.5vw;
   font-weight: 900;
   text-transform: uppercase;
 }
 
 .goal-assist {
-  margin-top: 2vw;
-  padding: 1vw;
-  border-left: 8px solid var(--yellow);
+  margin-top: .8vw;
+  padding: .55vw;
+  border-left: .35vw solid var(--yellow);
   background: rgba(0, 0, 0, 0.5);
-  font-size: 1.7vw;
+  font-size: 1.15vw;
   font-weight: 900;
 }
 
-.home-goal-team {
-  margin-top: 3vw;
-  color: var(--yellow);
-  font-size: 3vw;
-  font-weight: 900;
+.home-goal-player-info {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  padding: 1.4vw 2vw;
+  background: linear-gradient(transparent, rgba(0,0,0,.95) 35%);
+  color: #fff;
 }
 
 .goal-media-area {
@@ -1202,19 +1289,6 @@ body {
 .goal-player-video {
   object-fit: cover;
 }
-
-@keyframes home-goal-flash {
-  from {
-    filter: brightness(0.85);
-    transform: scale(0.98);
-  }
-
-  to {
-    filter: brightness(1.35);
-    transform: scale(1.02);
-  }
-}
-
 
 /* =========================================================
    BORTEMÅL DISPLAY

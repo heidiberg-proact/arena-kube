@@ -139,6 +139,18 @@ const goalPlayerVideo =
     "goalPlayerVideo"
   );
 
+const goalHomeGameClock = document.getElementById("goalHomeGameClock");
+const goalHomeHomeScore = document.getElementById("goalHomeHomeScore");
+const goalHomeAwayScore = document.getElementById("goalHomeAwayScore");
+const goalHomePeriod = document.getElementById("goalHomePeriod");
+const goalHomeClockStatus = document.getElementById("goalHomeClockStatus");
+const goalHomeHomeName = document.getElementById("goalHomeHomeName");
+const goalHomeAwayName = document.getElementById("goalHomeAwayName");
+const goalHomeHomeLogo = document.getElementById("goalHomeHomeLogo");
+const goalHomeAwayLogo = document.getElementById("goalHomeAwayLogo");
+const goalHomePenaltyHome = document.getElementById("goalHomePenaltyHome");
+const goalHomePenaltyAway = document.getElementById("goalHomePenaltyAway");
+
 
 /* =========================================================
    BORTEMÅL
@@ -505,11 +517,20 @@ function renderScoreboard() {
       );
   }
 
+  if (goalHomeGameClock) {
+    goalHomeGameClock.textContent =
+      formatTime(getCurrentElapsed(state));
+  }
+
   if (
     displayHomeScore
   ) {
     displayHomeScore.textContent =
       state.homeScore;
+  }
+
+  if (goalHomeHomeScore) {
+    goalHomeHomeScore.textContent = state.homeScore;
   }
 
   if (
@@ -519,11 +540,19 @@ function renderScoreboard() {
       state.awayScore;
   }
 
+  if (goalHomeAwayScore) {
+    goalHomeAwayScore.textContent = state.awayScore;
+  }
+
   if (
     displayPeriod
   ) {
     displayPeriod.textContent =
       `${state.period}. PERIODE`;
+  }
+
+  if (goalHomePeriod) {
+    goalHomePeriod.textContent = `${state.period}. PERIODE`;
   }
 
   if (
@@ -538,6 +567,11 @@ function renderScoreboard() {
       "running",
       state.running
     );
+  }
+
+  if (goalHomeClockStatus) {
+    goalHomeClockStatus.textContent =
+      state.running ? "KLOKKEN GÅR" : "STOPPET";
   }
 }
 
@@ -764,12 +798,20 @@ function applyMatch(
       "ULL/KISA";
   }
 
+  if (goalHomeHomeName) {
+    goalHomeHomeName.textContent = match.homeTeam || "ULL/KISA";
+  }
+
   if (
     frontAwayName
   ) {
     frontAwayName.textContent =
       match.awayTeam ||
       "BORTELAG";
+  }
+
+  if (goalHomeAwayName) {
+    goalHomeAwayName.textContent = match.awayTeam || "BORTELAG";
   }
 
   if (
@@ -790,6 +832,10 @@ function applyMatch(
         match.homeLogo;
     }
 
+    if (goalHomeHomeLogo) {
+      goalHomeHomeLogo.src = match.homeLogo;
+    }
+
     if (
       bestHomeTeamLogo
     ) {
@@ -806,6 +852,10 @@ function applyMatch(
     ) {
       frontAwayLogo.src =
         match.awayLogo;
+    }
+
+    if (goalHomeAwayLogo) {
+      goalHomeAwayLogo.src = match.awayLogo;
     }
 
     if (
@@ -2641,6 +2691,18 @@ function renderDisplayPenalties() {
 
   renderPenaltyTeam(
     awayBoard,
+    state.away,
+    scoreboardState
+  );
+
+  renderPenaltyTeam(
+    goalHomePenaltyHome,
+    state.home,
+    scoreboardState
+  );
+
+  renderPenaltyTeam(
+    goalHomePenaltyAway,
     state.away,
     scoreboardState
   );
