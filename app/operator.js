@@ -4681,10 +4681,10 @@ function createPenaltySlotMarkup(
         data-penalty-player-manual
         data-team="${team}"
         data-index="${index}"
-        type="number"
-        min="0"
-        max="999"
+        type="text"
         inputmode="numeric"
+        pattern="[0-9]*"
+        maxlength="3"
         aria-label="Spillernummer"
         placeholder="NR."
       >
