@@ -4704,7 +4704,7 @@ function createPenaltySlotMarkup(
           data-team="${team}"
           data-index="${index}"
         >
-          NULLSTILL
+          FJERN
         </button>
       </div>
     </div>
