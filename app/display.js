@@ -331,6 +331,11 @@ const hornAudio =
     "hornAudio"
   );
 
+const entranceAudio =
+  document.getElementById(
+    "entranceAudio"
+  );
+
 const enableAudioButton =
   document.getElementById(
     "enableAudioButton"
@@ -1472,6 +1477,10 @@ function stopAllAudio() {
   stopAudioTrack(
     hornAudio
   );
+
+  stopAudioTrack(
+    entranceAudio
+  );
 }
 
 
@@ -2035,6 +2044,10 @@ async function activateAllAudio() {
 
   await unlockAudio(
     hornAudio
+  );
+
+  await unlockAudio(
+    entranceAudio
   );
 
   markAudioEnabled();
