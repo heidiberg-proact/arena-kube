@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Arena Kube – Silent Preview</title>
+
+  <style>
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #000;
+    }
+
+    #displayPreviewFrame {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      background: #000;
+    }
+
+    #previewError {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      box-sizing: border-box;
+      background: #240606;
+      color: #fff;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 14px;
+      font-weight: 900;
+      text-align: center;
+      z-index: 100;
+    }
+  </style>
+</head>
+
+<body>
+
+  <iframe
+    id="displayPreviewFrame"
+    src="display.html"
+    title="Arena Kube live preview"
+    tabindex="-1"
+  ></iframe>
+
+  <div id="previewError">
+    LIVE PREVIEW KUNNE IKKE LASTES
+  </div>
+
+
+  <script>
+    (() => {
+      const frame =
+        document.getElementById(
+          "displayPreviewFrame"
+        );
+
+      const errorBox =
+        document.getElementById(
+          "previewError"
+        );
+
+
+      function protectPreview() {
+        try {
+          const previewWindow =
+            frame.contentWindow;
+
+          const previewDocument =
+            frame.contentDocument ||
+            previewWindow.document;
+
+
+          if (
+            !previewWindow ||
+            !previewDocument
+          ) {
+            throw new Error(
+              "Preview-vinduet er ikke tilgjengelig."
+            );
+          }
+
+
+          /*
+            ================================================
+            BLOKKER PREFLIGHT-SVAR FRA PREVIEW
+
+            Den ekte display-siden skal fortsatt kunne svare
+            på KAMPKLAR. Preview skal aldri telle som display.
+            ================================================
+          */
+
+          if (
+            previewWindow.BroadcastChannel &&
+            previewWindow.BroadcastChannel.prototype
+          ) {
+            const prototype =
+              previewWindow
+                .BroadcastChannel
+                .prototype;
+
+            if (
+              !prototype
+                .__arenaKubePreviewProtected
+            ) {
+              const originalPostMessage =
+                prototype.postMessage;
+
+
+              prototype.postMessage =
+                function (data) {
+                  if (
+                    data &&
+                    (
+                      data.type ===
+                        "preflightPong" ||
+
+                      data.type ===
+                        "preflightAudioResult"
+                    )
+                  ) {
+                    console.log(
+                      "Arena Kube preview blokkerte:",
+                      data.type
+                    );
+
+                    return;
+                  }
+
+                  return originalPostMessage.call(
+                    this,
+                    data
+                  );
+                };
+
+
+              prototype
+                .__arenaKubePreviewProtected =
+                  true;
+            }
+          }
+
+
+          /*
+            ================================================
+            GJØR PREVIEW HELT LYDLØS
+
+            VIDEO beholdes.
+            AUDIO blokkeres.
+            ================================================
+          */
+
+          if (
+            previewWindow.HTMLMediaElement &&
+            previewWindow
+              .HTMLMediaElement
+              .prototype
+          ) {
+            const mediaPrototype =
+              previewWindow
+                .HTMLMediaElement
+                .prototype;
+
+
+            if (
+              !mediaPrototype
+                .__arenaKubePreviewMuted
+            ) {
+              const originalPlay =
+                mediaPrototype.play;
+
+
+              mediaPrototype.play =
+                function () {
+                  if (
+                    this.tagName ===
+                    "AUDIO"
+                  ) {
+                    try {
+                      this.muted = true;
+                      this.volume = 0;
+                    } catch (error) {
+                      console.log(
+                        "Kunne ikke mute preview-lyd.",
+                        error
+                      );
+                    }
+
+                    return Promise.resolve();
+                  }
+
+
+                  /*
+                    Målvideo skal fremdeles vises.
+                  */
+
+                  return originalPlay.call(
+                    this
+                  );
+                };
+
+
+              mediaPrototype
+                .__arenaKubePreviewMuted =
+                  true;
+            }
+          }
+
+
+          /*
+            Muter eksisterende audio-elementer.
+          */
+
+          previewDocument
+            .querySelectorAll("audio")
+            .forEach((audio) => {
+              try {
+                audio.pause();
+                audio.muted = true;
+                audio.volume = 0;
+
+                if (
+                  Number.isFinite(
+                    audio.currentTime
+                  )
+                ) {
+                  audio.currentTime = 0;
+                }
+              } catch (error) {
+                console.log(
+                  "Kunne ikke nullstille preview-lyd.",
+                  error
+                );
+              }
+            });
+
+
+          /*
+            Skjul AKTIVER LYD-knappen kun i preview.
+          */
+
+          const enableAudioButton =
+            previewDocument
+              .getElementById(
+                "enableAudioButton"
+              );
+
+          if (enableAudioButton) {
+            enableAudioButton.hidden = true;
+
+            enableAudioButton.style.display =
+              "none";
+          }
+
+
+          /*
+            Sørger også for at eventuelle målvideoer
+            alltid er muted i preview.
+          */
+
+          const goalVideo =
+            previewDocument
+              .getElementById(
+                "goalPlayerVideo"
+              );
+
+          if (goalVideo) {
+            goalVideo.muted = true;
+            goalVideo.defaultMuted = true;
+          }
+
+
+          if (errorBox) {
+            errorBox.style.display =
+              "none";
+          }
+
+
+          console.log(
+            "Arena Kube: live preview aktiv og lydløs."
+          );
+
+        } catch (error) {
+          console.error(
+            "Arena Kube preview-feil:",
+            error
+          );
+
+          if (errorBox) {
+            errorBox.style.display =
+              "flex";
+
+            errorBox.textContent =
+              "LIVE PREVIEW KUNNE IKKE LASTES";
+          }
+        }
+      }
+
+
+      frame.addEventListener(
+        "load",
+        () => {
+          protectPreview();
+
+          /*
+            En ekstra kontroll etter at display.js
+            er ferdig startet.
+          */
+
+          setTimeout(
+            protectPreview,
+            250
+          );
+
+          setTimeout(
+            protectPreview,
+            1000
+          );
+        }
+      );
+    })();
+  </script>
+
+</body>
+</html>

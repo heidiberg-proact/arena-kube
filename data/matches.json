@@ -1,0 +1,112 @@
+[
+  {
+    "date": "20.09.2026 kl. 14:00",
+    "time": "14:00",
+    "homeTeam": "Ull/Kisa",
+    "awayTeam": "Harstad",
+    "homeLogo": "../images/teams/ullkisa.jpg",
+    "awayLogo": "../images/teams/harstad.jpg",
+    "venue": "EV4 Arena",
+    "streaming": true
+  },
+  {
+    "date": "27.09.2026 kl. 18:00",
+    "time": "18:00",
+    "homeTeam": "Ull/Kisa",
+    "awayTeam": "Sveiva",
+    "homeLogo": "../images/teams/ullkisa.jpg",
+    "awayLogo": "../images/teams/sveiva.jpg",
+    "venue": "EV4 Arena",
+    "streaming": false
+  },
+  {
+    "date": "07.10.2026 kl. 19:30",
+    "time": "19:30",
+    "homeTeam": "Ull/Kisa",
+    "awayTeam": "Akerselva",
+    "homeLogo": "../images/teams/ullkisa.jpg",
+    "awayLogo": "../images/teams/akerselva.jpg",
+    "venue": "EV4 Arena",
+    "streaming": false
+  },
+  {
+    "date": "01.11.2026 kl. 18:00",
+    "time": "18:00",
+    "homeTeam": "Ull/Kisa",
+    "awayTeam": "Slevik",
+    "homeLogo": "../images/teams/ullkisa.jpg",
+    "awayLogo": "../images/teams/slevik.jpg",
+    "venue": "EV4 Arena",
+    "streaming": false
+  },
+  {
+    "date": "04.11.2026 kl. 19:30",
+    "time": "19:30",
+    "homeTeam": "Ull/Kisa",
+    "awayTeam": "Gjelleråsen",
+    "homeLogo": "../images/teams/ullkisa.jpg",
+    "awayLogo": "../images/teams/gjellerasen.jpg",
+    "venue": "EV4 Arena",
+    "streaming": false
+  },
+  {
+    "date": "21.11.2026 kl. 16:00",
+    "time": "16:00",
+    "homeTeam": "Ull/Kisa",
+    "awayTeam": "Sjetne",
+    "homeLogo": "../images/teams/ullkisa.jpg",
+    "awayLogo": "../images/teams/sjetne.jpg",
+    "venue": "EV4 Arena",
+    "streaming": false
+  },
+  {
+    "date": "20.12.2026 kl. 18:00",
+    "time": "18:00",
+    "homeTeam": "Ull/Kisa",
+    "awayTeam": "NOR 92",
+    "homeLogo": "../images/teams/ullkisa.jpg",
+    "awayLogo": "../images/teams/nor92.jpg",
+    "venue": "EV4 Arena",
+    "streaming": false
+  },
+  {
+    "date": "16.01.2027 kl. 16:00",
+    "time": "16:00",
+    "homeTeam": "Ull/Kisa",
+    "awayTeam": "Sandnes",
+    "homeLogo": "../images/teams/ullkisa.jpg",
+    "awayLogo": "../images/teams/sandnes.jpg",
+    "venue": "EV4 Arena",
+    "streaming": false
+  },
+  {
+    "date": "03.02.2027 kl. 19:30",
+    "time": "19:30",
+    "homeTeam": "Ull/Kisa",
+    "awayTeam": "Greåker",
+    "homeLogo": "../images/teams/ullkisa.jpg",
+    "awayLogo": "../images/teams/greaker.jpg",
+    "venue": "EV4 Arena",
+    "streaming": false
+  },
+  {
+    "date": "07.02.2027 kl. 18:00",
+    "time": "18:00",
+    "homeTeam": "Ull/Kisa",
+    "awayTeam": "Sarpsborg",
+    "homeLogo": "../images/teams/ullkisa.jpg",
+    "awayLogo": "../images/teams/sarpsborg.jpg",
+    "venue": "EV4 Arena",
+    "streaming": false
+  },
+  {
+    "date": "10.03.2027 kl. 19:30",
+    "time": "19:30",
+    "homeTeam": "Ull/Kisa",
+    "awayTeam": "Tunet",
+    "homeLogo": "../images/teams/ullkisa.jpg",
+    "awayLogo": "../images/teams/tunet.jpg",
+    "venue": "EV4 Arena",
+    "streaming": false
+  }
+]

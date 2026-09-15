@@ -1,0 +1,21 @@
+[
+  {
+    "name": "Gausdal Landhandleri",
+    "type": "slide",
+    "image": "../images/sponsors/Gausdal.png",
+    "duration": 3
+  },
+  {
+    "name": "Sommer og vinter",
+    "type": "slide",
+    "image": "../images/sponsors/sommer og vinter.png",
+    "duration": 3
+  },
+  {
+    "name": "alle",
+    "type": "slide",
+    "image": "../images/sponsors/alle.png",
+    "duration": 3
+  }
+  
+]
