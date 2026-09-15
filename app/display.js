@@ -256,6 +256,11 @@ const sponsorSlideImage =
     "sponsorSlideImage"
   );
 
+const sponsorVideo =
+  document.getElementById(
+    "sponsorVideo"
+  );
+
 let sponsors = [];
 let sponsorIndex = 0;
 let sponsorTimer = null;
@@ -974,6 +979,20 @@ function stopSponsorCarousel() {
 
     sponsorTimer = null;
   }
+
+  if (
+    sponsorVideo
+  ) {
+    sponsorVideo.pause();
+
+    try {
+      sponsorVideo.currentTime =
+        0;
+    } catch (error) {}
+
+    sponsorVideo.style.display =
+      "none";
+  }
 }
 
 
@@ -1112,6 +1131,40 @@ function showCurrentSponsor() {
 
 function startSponsorCarousel() {
   stopSponsorCarousel();
+
+  if (
+    sponsorVideo
+  ) {
+    if (
+      sponsorLogoLayout
+    ) {
+      sponsorLogoLayout.style.display =
+        "none";
+    }
+
+    if (
+      sponsorSlideLayout
+    ) {
+      sponsorSlideLayout.style.display =
+        "none";
+    }
+
+    sponsorVideo.style.display =
+      "block";
+
+    sponsorVideo
+      .play()
+      .catch(
+        (error) => {
+          console.error(
+            "Kunne ikke starte sponsorvideo:",
+            error
+          );
+        }
+      );
+
+    return;
+  }
 
   sponsorIndex = 0;
 
@@ -3206,6 +3259,10 @@ channel.addEventListener(
         );
 
         showGoalMedia(
+          data.scorer
+        );
+
+        playHomeGoalAudio(
           data.scorer
         );
 

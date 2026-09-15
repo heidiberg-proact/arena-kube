@@ -307,6 +307,9 @@ const showSponsorsButton =
     "showSponsors"
   );
 
+let sponsorsRunning =
+  false;
+
 const showMessageButton =
   document.getElementById(
     "showMessage"
@@ -5598,6 +5601,20 @@ if (
   showGameButton.addEventListener(
     "click",
     () => {
+      sponsorsRunning =
+        false;
+
+      if (
+        showSponsorsButton
+      ) {
+        showSponsorsButton.textContent =
+          "START SPONSORER";
+
+        showSponsorsButton.classList.remove(
+          "running"
+        );
+      }
+
       channel.postMessage({
         type:
           "game",
@@ -5616,9 +5633,27 @@ if (
   showSponsorsButton.addEventListener(
     "click",
     () => {
+      sponsorsRunning =
+        !sponsorsRunning;
+
+      showSponsorsButton.textContent =
+        sponsorsRunning
+          ? "STOPP SPONSORER"
+          : "START SPONSORER";
+
+      showSponsorsButton.classList.toggle(
+        "running",
+        sponsorsRunning
+      );
+
       channel.postMessage({
         type:
-          "sponsors"
+          sponsorsRunning
+            ? "sponsors"
+            : "game",
+
+        match:
+          activeMatch
       });
     }
   );
