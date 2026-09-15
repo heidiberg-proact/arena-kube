@@ -494,16 +494,16 @@ function installOperatorEnhancementStyles() {
     .operator-live-workspace {
       display: grid !important;
       grid-template-columns:
-        minmax(520px, 620px)
-        minmax(360px, 1fr) !important;
-      gap: 14px !important;
+        minmax(480px, 56%)
+        minmax(420px, 44%) !important;
+      gap: 10px !important;
       align-items: start !important;
     }
 
     .operator-live-workspace
     .scoreboard-control-panel {
       width: 100% !important;
-      max-width: 620px !important;
+      max-width: none !important;
       padding: 10px 12px 12px !important;
       margin: 0 !important;
     }
@@ -582,6 +582,25 @@ function installOperatorEnhancementStyles() {
     }
 
     .operator-live-workspace
+    .compact-goal-button {
+      width: 100% !important;
+      min-height: 42px !important;
+      margin: 8px 0 0 !important;
+      border: 2px solid #fff !important;
+      background: #f4d000 !important;
+      color: #111 !important;
+      font-size: 16px !important;
+      font-weight: 900 !important;
+    }
+
+    .operator-live-workspace
+    .compact-goal-button.running {
+      border-color: #ffb0b0 !important;
+      background: #b51f1f !important;
+      color: #fff !important;
+    }
+
+    .operator-live-workspace
     .period-length-control {
       margin-top: 7px !important;
       opacity: .82;
@@ -632,7 +651,7 @@ function installOperatorEnhancementStyles() {
     .arena-kube-right-stack {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 7px;
       min-width: 0;
       width: 100%;
     }
@@ -642,7 +661,7 @@ function installOperatorEnhancementStyles() {
       max-width: none !important;
       justify-self: stretch !important;
       margin: 0 !important;
-      padding: 9px !important;
+      padding: 6px !important;
       border-width: 2px !important;
       border-radius: 7px !important;
       box-sizing: border-box;
@@ -667,8 +686,7 @@ function installOperatorEnhancementStyles() {
     }
 
     .operator-page .live-preview-help {
-      margin-top: 5px !important;
-      font-size: 8px !important;
+      display: none !important;
       line-height: 1.25 !important;
     }
 
@@ -747,7 +765,7 @@ function installOperatorEnhancementStyles() {
     #operatorPenaltyClocks {
       width: 100%;
       box-sizing: border-box;
-      padding: 9px;
+      padding: 7px;
       margin: 0;
       background: #071d11;
       border: 2px solid #f4d000;
@@ -770,8 +788,8 @@ function installOperatorEnhancementStyles() {
         minmax(0, 1fr)
         minmax(0, 1fr);
       gap: 7px;
-      max-height: 430px;
-      overflow-y: auto;
+      max-height: none;
+      overflow: visible;
       padding-right: 2px;
     }
 
@@ -797,12 +815,20 @@ function installOperatorEnhancementStyles() {
     [data-penalty-slots] {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 4px;
     }
 
     [data-penalty-slot] {
       min-width: 0;
-      padding: 6px;
+      min-height: 0 !important;
+      display: grid;
+      grid-template-columns: 46px 92px minmax(62px, 1fr) 58px;
+      grid-template-areas:
+        "number duration time buttons"
+        "label label label label";
+      gap: 3px 5px;
+      align-items: center;
+      padding: 4px !important;
       background: #071d11;
       border: 1px solid #3c5d47;
       border-radius: 6px;
@@ -819,8 +845,8 @@ function installOperatorEnhancementStyles() {
       width: 100%;
       min-width: 0;
       box-sizing: border-box;
-      margin-bottom: 4px;
-      padding: 4px 5px;
+      margin: 0 !important;
+      padding: 4px 5px !important;
       border: 1px solid #9ba69e;
       border-radius: 4px;
       background: white;
@@ -829,8 +855,18 @@ function installOperatorEnhancementStyles() {
       font-weight: 700;
     }
 
+    [data-penalty-player-manual] {
+      grid-area: number;
+      text-align: center;
+    }
+
+    [data-penalty-duration] {
+      grid-area: duration;
+    }
+
     [data-penalty-time] {
-      margin: 3px 0;
+      grid-area: time;
+      margin: 0;
       color: #ffcf00;
       font-size: 24px;
       line-height: 1;
@@ -839,8 +875,9 @@ function installOperatorEnhancementStyles() {
     }
 
     [data-penalty-player-label] {
-      min-height: 25px;
-      margin: 3px 0;
+      grid-area: label;
+      min-height: 12px;
+      margin: 0;
       overflow: hidden;
       color: white;
       font-size: 10px;
@@ -850,15 +887,16 @@ function installOperatorEnhancementStyles() {
     }
 
     .penalty-clock-button-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4px;
+      grid-area: buttons;
+      display: flex;
+      gap: 3px;
     }
 
     [data-penalty-slot] button {
       width: 100%;
       min-width: 0;
-      padding: 5px 3px;
+      min-height: 28px;
+      padding: 4px 3px !important;
       border: 0;
       border-radius: 4px;
       cursor: pointer;
@@ -880,17 +918,17 @@ function installOperatorEnhancementStyles() {
       width: 100%;
       box-sizing: border-box;
       margin: 0;
-      padding: 9px;
-      border: 2px solid #f4d000;
+      padding: 5px 6px;
+      border: 1px solid #456451;
       border-radius: 8px;
       background: #071d11;
       color: white;
     }
 
     .arena-kube-timeout-title {
-      margin-bottom: 6px;
-      color: #f4d000;
-      font-size: 13px;
+      margin-bottom: 4px;
+      color: #aeb8b1;
+      font-size: 10px;
       font-weight: 900;
       text-align: center;
     }
@@ -903,8 +941,8 @@ function installOperatorEnhancementStyles() {
     }
 
     .arena-kube-timeout-control button {
-      min-height: 34px;
-      padding: 6px;
+      min-height: 27px;
+      padding: 4px;
       border: 0;
       border-radius: 5px;
       cursor: pointer;
@@ -923,7 +961,7 @@ function installOperatorEnhancementStyles() {
     }
 
     .arena-kube-timeout-actions {
-      margin-top: 6px;
+      margin-top: 4px;
     }
 
     .arena-kube-timeout-start {
@@ -940,14 +978,14 @@ function installOperatorEnhancementStyles() {
       display: flex;
       justify-content: space-between;
       gap: 8px;
-      margin-top: 6px;
-      font-size: 12px;
+      margin-top: 3px;
+      font-size: 10px;
       font-weight: 900;
     }
 
     .arena-kube-timeout-clock {
       color: #f4d000;
-      font-size: 18px;
+      font-size: 14px;
       font-variant-numeric: tabular-nums;
     }
 
@@ -4634,24 +4672,16 @@ function createPenaltySlotMarkup(
       data-team="${team}"
       data-index="${index}"
     >
-      <select
-        data-penalty-player-select
-        data-team="${team}"
-        data-index="${index}"
-      >
-        <option value="">
-          Velg spiller …
-        </option>
-      </select>
-
       <input
         data-penalty-player-manual
         data-team="${team}"
         data-index="${index}"
-        type="text"
-        maxlength="40"
-        placeholder="Nr. / navn"
-        hidden
+        type="number"
+        min="0"
+        max="999"
+        inputmode="numeric"
+        aria-label="Spillernummer"
+        placeholder="NR."
       >
 
       <select
@@ -4688,7 +4718,7 @@ function createPenaltySlotMarkup(
           data-team="${team}"
           data-index="${index}"
         >
-          NULLSTILL
+          ×
         </button>
       </div>
     </div>
@@ -4793,98 +4823,8 @@ function fillPenaltyClockSelect(
 
 
 function refreshPenaltyClockSelectors() {
-  document
-    .querySelectorAll(
-      "[data-penalty-player-select]"
-    )
-    .forEach(
-      (select) => {
-        const team =
-          select.dataset.team;
-
-        const index =
-          Number(
-            select.dataset.index
-          );
-
-        const manual =
-          document.querySelector(
-            `[data-penalty-player-manual][data-team="${team}"][data-index="${index}"]`
-          );
-
-        if (
-          team === "home"
-        ) {
-          if (
-            players.length >
-              0
-          ) {
-            fillPenaltyClockSelect(
-              select,
-              players
-            );
-
-            select.hidden =
-              false;
-
-            if (
-              manual
-            ) {
-              manual.hidden =
-                true;
-            }
-
-          } else {
-            select.innerHTML =
-              '<option value="">Ingen spillerliste</option>';
-
-            select.hidden =
-              true;
-
-            if (
-              manual
-            ) {
-              manual.hidden =
-                false;
-            }
-          }
-
-        } else if (
-          awayPlayersLoaded &&
-          awayPlayers.length >
-            0
-        ) {
-          fillPenaltyClockSelect(
-            select,
-            awayPlayers
-          );
-
-          select.hidden =
-            false;
-
-          if (
-            manual
-          ) {
-            manual.hidden =
-              true;
-          }
-
-        } else {
-          select.innerHTML =
-            '<option value="">Ingen spillerliste</option>';
-
-          select.hidden =
-            true;
-
-          if (
-            manual
-          ) {
-            manual.hidden =
-              false;
-          }
-        }
-      }
-    );
+  /* Nummerfeltene krever ingen oppbygging. Hjemmenavn slås
+     opp i players.json når START trykkes; borte bruker nummer. */
 }
 
 
@@ -4892,48 +4832,15 @@ function readPenaltyClockPlayer(
   team,
   index
 ) {
-  const select =
-    document.querySelector(
-      `[data-penalty-player-select][data-team="${team}"][data-index="${index}"]`
-    );
-
   const manual =
     document.querySelector(
       `[data-penalty-player-manual][data-team="${team}"][data-index="${index}"]`
     );
 
-  if (
-    select &&
-    !select.hidden &&
-    select.value
-  ) {
-    try {
-      const player =
-        JSON.parse(
-          select.value
-        );
-
-      return {
-        number:
-          player.number,
-
-        name:
-          player.name ||
-          ""
-      };
-
-    } catch (error) {
-      console.warn(
-        "Kunne ikke lese spiller fra utvisningsklokke:",
-        error
-      );
-    }
-  }
-
   const manualText =
     manual &&
     !manual.hidden
-      ? manual.value.trim()
+      ? String(manual.value).trim()
       : "";
 
   if (
@@ -4942,22 +4849,20 @@ function readPenaltyClockPlayer(
     return null;
   }
 
-  const match =
-    manualText.match(
-      /^\s*#?\s*(\d{1,3})(?:\s+(.+))?$/
-    );
+  const homePlayer =
+    team === "home"
+      ? players.find(
+          (player) =>
+            String(player.number) ===
+              manualText
+        )
+      : null;
 
   if (
-    match
+    team === "home" &&
+    !homePlayer
   ) {
-    return {
-      number:
-        match[1],
-
-      name:
-        match[2] ||
-        ""
-    };
+    return null;
   }
 
   return {
@@ -4965,7 +4870,10 @@ function readPenaltyClockPlayer(
       manualText,
 
     name:
-      ""
+      homePlayer &&
+      homePlayer.name
+        ? homePlayer.name
+        : ""
   };
 }
 
@@ -5248,6 +5156,11 @@ function renderPenaltyClocks() {
               `[data-penalty-duration][data-team="${team}"][data-index="${index}"]`
             );
 
+          const numberInput =
+            document.querySelector(
+              `[data-penalty-player-manual][data-team="${team}"][data-index="${index}"]`
+            );
+
           const startButton =
             document.querySelector(
               `[data-penalty-start][data-team="${team}"][data-index="${index}"]`
@@ -5312,6 +5225,13 @@ function renderPenaltyClocks() {
             durationSelect
           ) {
             durationSelect.disabled =
+              slot.active;
+          }
+
+          if (
+            numberInput
+          ) {
+            numberInput.disabled =
               slot.active;
           }
 
