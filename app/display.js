@@ -256,12 +256,8 @@ const sponsorSlideImage =
     "sponsorSlideImage"
   );
 
-const sponsorVideo =
-  document.getElementById(
-    "sponsorVideo"
-  );
-
 let sponsors = [];
+let sponsorOrder = [];
 let sponsorIndex = 0;
 let sponsorTimer = null;
 
@@ -980,19 +976,37 @@ function stopSponsorCarousel() {
     sponsorTimer = null;
   }
 
-  if (
-    sponsorVideo
+}
+
+
+function shuffleSponsors(
+  list
+) {
+  const shuffled =
+    [...list];
+
+  for (
+    let index =
+      shuffled.length - 1;
+    index > 0;
+    index -= 1
   ) {
-    sponsorVideo.pause();
+    const randomIndex =
+      Math.floor(
+        Math.random() *
+          (index + 1)
+      );
 
-    try {
-      sponsorVideo.currentTime =
-        0;
-    } catch (error) {}
-
-    sponsorVideo.style.display =
-      "none";
+    [
+      shuffled[index],
+      shuffled[randomIndex]
+    ] = [
+      shuffled[randomIndex],
+      shuffled[index]
+    ];
   }
+
+  return shuffled;
 }
 
 
@@ -1037,8 +1051,13 @@ function showCurrentSponsor() {
     return;
   }
 
+  const activeSponsors =
+    sponsorOrder.length
+      ? sponsorOrder
+      : sponsors;
+
   const sponsor =
-    sponsors[
+    activeSponsors[
       sponsorIndex
     ];
 
@@ -1078,7 +1097,7 @@ function showCurrentSponsor() {
       sponsorCounter
     ) {
       sponsorCounter.textContent =
-        `${sponsorIndex + 1} / ${sponsors.length}`;
+        `${sponsorIndex + 1} / ${activeSponsors.length}`;
     }
 
     if (
@@ -1115,12 +1134,40 @@ function showCurrentSponsor() {
   sponsorTimer =
     setTimeout(
       () => {
-        sponsorIndex =
-          (
-            sponsorIndex +
-            1
-          ) %
-          sponsors.length;
+        sponsorIndex +=
+          1;
+
+        if (
+          sponsorIndex >=
+            activeSponsors.length
+        ) {
+          const previousSponsor =
+            activeSponsors[
+              activeSponsors.length - 1
+            ];
+
+          sponsorOrder =
+            shuffleSponsors(
+              sponsors
+            );
+
+          if (
+            sponsorOrder.length > 1 &&
+            sponsorOrder[0] ===
+              previousSponsor
+          ) {
+            [
+              sponsorOrder[0],
+              sponsorOrder[1]
+            ] = [
+              sponsorOrder[1],
+              sponsorOrder[0]
+            ];
+          }
+
+          sponsorIndex =
+            0;
+        }
 
         showCurrentSponsor();
       },
@@ -1132,39 +1179,10 @@ function showCurrentSponsor() {
 function startSponsorCarousel() {
   stopSponsorCarousel();
 
-  if (
-    sponsorVideo
-  ) {
-    if (
-      sponsorLogoLayout
-    ) {
-      sponsorLogoLayout.style.display =
-        "none";
-    }
-
-    if (
-      sponsorSlideLayout
-    ) {
-      sponsorSlideLayout.style.display =
-        "none";
-    }
-
-    sponsorVideo.style.display =
-      "block";
-
-    sponsorVideo
-      .play()
-      .catch(
-        (error) => {
-          console.error(
-            "Kunne ikke starte sponsorvideo:",
-            error
-          );
-        }
-      );
-
-    return;
-  }
+  sponsorOrder =
+    shuffleSponsors(
+      sponsors
+    );
 
   sponsorIndex = 0;
 
