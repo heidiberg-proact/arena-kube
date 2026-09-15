@@ -3280,10 +3280,6 @@ channel.addEventListener(
           data.scorer
         );
 
-        playHomeGoalAudio(
-          data.scorer
-        );
-
         autoClear(
           GOAL_AUTO_CLEAR_MS
         );
