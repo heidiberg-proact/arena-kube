@@ -603,9 +603,9 @@ function installOperatorEnhancementStyles() {
 
     .operator-live-workspace
     .compact-goal-button.running {
-      border-color: #ffb0b0 !important;
-      background: #8e1515 !important;
-      color: #fff !important;
+      border-color: #fff07a !important;
+      background: #f4d000 !important;
+      color: #000 !important;
     }
 
     .operator-live-workspace
@@ -4164,9 +4164,7 @@ if (
         !homeGoalRunning;
 
       showHomeGoalButton.textContent =
-        homeGoalRunning
-          ? "STOPP MÅL"
-          : "MÅL";
+        "MÅL";
 
       showHomeGoalButton.classList.toggle(
         "running",
