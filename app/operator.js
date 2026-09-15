@@ -665,10 +665,10 @@ function installOperatorEnhancementStyles() {
     }
 
     .operator-page .live-preview-panel {
-      width: 100% !important;
-      max-width: none !important;
-      justify-self: stretch !important;
-      margin: 0 !important;
+      width: min(250px, 100%) !important;
+      max-width: 250px !important;
+      align-self: center !important;
+      margin: 0 auto !important;
       padding: 6px !important;
       border-width: 2px !important;
       border-radius: 7px !important;
@@ -887,7 +887,7 @@ function installOperatorEnhancementStyles() {
     .penalty-clock-button-row {
       grid-area: buttons;
       display: grid;
-      grid-template-columns: minmax(58px, 1fr) 25px;
+      grid-template-columns: minmax(58px, 1fr) 58px;
       gap: 3px;
     }
 
@@ -917,6 +917,7 @@ function installOperatorEnhancementStyles() {
     [data-penalty-clear] {
       background: #8e2424;
       color: white;
+      font-size: 8px !important;
     }
 
     .arena-kube-timeout-control {
@@ -2092,25 +2093,9 @@ function installArenaTimeoutControl() {
     </div>
   `;
 
-  const penaltyPanel =
-    document.getElementById(
-      "operatorPenaltyClocks"
-    );
-
-  if (
-    penaltyPanel &&
-    penaltyPanel.parentElement ===
-      rightStack
-  ) {
-    rightStack.insertBefore(
-      operatorTimeoutPanel,
-      penaltyPanel
-    );
-  } else {
-    rightStack.appendChild(
-      operatorTimeoutPanel
-    );
-  }
+  rightStack.appendChild(
+    operatorTimeoutPanel
+  );
 
   operatorTimeoutClock =
     operatorTimeoutPanel.querySelector(
@@ -4719,7 +4704,7 @@ function createPenaltySlotMarkup(
           data-team="${team}"
           data-index="${index}"
         >
-          ×
+          NULLSTILL
         </button>
       </div>
     </div>
