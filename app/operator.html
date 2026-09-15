@@ -1,0 +1,1689 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Arena Kube – Operator</title>
+
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    /* ======================================================
+       ARENA KUBE – OPERATOR LIVE WORKSPACE
+       Stor klokke til venstre / liten preview til høyre
+    ====================================================== */
+
+    .operator-live-workspace {
+      display: grid;
+      grid-template-columns:
+        minmax(700px, 75%)
+        minmax(240px, 25%);
+      gap: 18px;
+      align-items: start;
+      width: 100%;
+      margin-bottom: 18px;
+    }
+
+    .operator-live-workspace .scoreboard-control-panel {
+      width: 100%;
+      margin: 0;
+    }
+
+    .operator-live-workspace .operator-clock-center {
+      width: 520px;
+      max-width: 100%;
+      min-height: 350px;
+      margin-left: 0;
+      margin-right: auto;
+    }
+
+    .operator-live-workspace .operator-game-clock {
+      font-size: 88px;
+      line-height: 1;
+      letter-spacing: 0.02em;
+    }
+
+    /* ======================================================
+       KOMPAKTE UTVISNINGSKLOKKER
+    ====================================================== */
+
+    #operatorPenaltyClocks {
+      max-width: 860px !important;
+      margin: 14px auto 0 !important;
+      padding: 12px !important;
+      border-radius: 12px !important;
+    }
+
+    #operatorPenaltyClocks > div:first-child {
+      font-size: 18px !important;
+      margin-bottom: 10px !important;
+    }
+
+    #operatorPenaltyGrid {
+      gap: 10px !important;
+    }
+
+    #operatorPenaltyGrid > div {
+      padding: 10px !important;
+      border-radius: 10px !important;
+    }
+
+    [data-penalty-team-heading] {
+      font-size: 15px !important;
+      margin-bottom: 7px !important;
+    }
+
+    [data-penalty-slots] {
+      gap: 6px !important;
+    }
+
+    [data-penalty-slot] {
+      min-height: 105px !important;
+      padding: 7px !important;
+      border-radius: 8px !important;
+    }
+
+    [data-penalty-slot] button {
+      padding: 7px 4px !important;
+      font-size: 12px !important;
+      border-radius: 6px !important;
+    }
+
+    [data-penalty-slot] select,
+    [data-penalty-slot] input {
+      padding: 5px !important;
+      font-size: 12px !important;
+      margin-bottom: 4px !important;
+    }
+
+    [data-penalty-time] {
+      font-size: 25px !important;
+      margin: 5px 0 !important;
+    }
+
+    .live-preview-panel {
+      margin: 0;
+      padding: 14px;
+      background: #071d11;
+      color: white;
+      border: 3px solid var(--yellow);
+      border-radius: 10px;
+    }
+
+    .live-preview-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .live-preview-title {
+      color: var(--yellow);
+      font-size: 15px;
+      font-weight: 900;
+    }
+
+    .live-preview-status {
+      padding: 5px 8px;
+      border-radius: 5px;
+      background: #163d2a;
+      color: #a6ffbd;
+      font-size: 9px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .live-preview-frame-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      border: 2px solid #4b5563;
+      border-radius: 6px;
+      background: #000;
+    }
+
+    .live-preview-frame {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      background: #000;
+      pointer-events: none;
+    }
+
+    .live-preview-help {
+      margin: 8px 0 0;
+      color: #b8c0ba;
+      font-size: 10px;
+      line-height: 1.35;
+    }
+
+    /* ======================================================
+       V2.1 – KOMPAKT KAMPKONTROLL / INNMARSJ
+    ====================================================== */
+
+    .main-controls-panel {
+      padding-top: 13px !important;
+      padding-bottom: 13px !important;
+    }
+
+    .main-controls-panel h2 {
+      margin-bottom: 10px !important;
+    }
+
+    .main-button-grid {
+      grid-template-columns:
+        repeat(
+          3,
+          minmax(120px, 1fr)
+        ) !important;
+      gap: 8px !important;
+    }
+
+    .main-button-grid .control-button {
+      min-height: 44px !important;
+      padding: 7px 10px !important;
+      font-size: 13px !important;
+    }
+
+    #showEntrance {
+      min-height: 52px !important;
+      border: 3px solid #fff !important;
+      background: var(--yellow) !important;
+      color: #000 !important;
+      font-size: 16px !important;
+      font-weight: 900 !important;
+    }
+
+    #stopEntrance {
+      min-height: 52px !important;
+      border: 3px solid #ff8b8b !important;
+      background: #b51f1f !important;
+      color: #fff !important;
+      font-size: 15px !important;
+      font-weight: 900 !important;
+    }
+
+    #stopEntrance[hidden] {
+      display: none !important;
+    }
+
+    .preflight-list.compact-list {
+      grid-template-columns:
+        repeat(
+          auto-fit,
+          minmax(90px, 1fr)
+        ) !important;
+    }
+
+    @media (max-width: 1050px) {
+      .operator-live-workspace {
+        grid-template-columns: 1fr;
+      }
+
+      .live-preview-panel {
+        width: min(480px, 100%);
+      }
+
+      .operator-live-workspace .operator-clock-center {
+        width: min(520px, 100%);
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .operator-live-workspace .operator-game-clock {
+        font-size: 78px;
+      }
+
+      #operatorPenaltyClocks {
+        max-width: 100% !important;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .main-button-grid {
+        grid-template-columns:
+          repeat(
+            2,
+            minmax(110px, 1fr)
+          ) !important;
+      }
+    }
+  </style>
+</head>
+
+<body class="operator-page">
+
+
+<header class="topbar">
+
+  <div class="topbar-brand">
+
+    <h1>ARENA KUBE</h1>
+
+    <p>
+      Ull/Kisa Innebandy – Operator
+    </p>
+
+  </div>
+
+
+  <div class="topbar-preflight">
+
+    <div class="topbar-preflight-main">
+
+      <div
+        id="preflightOverall"
+        class="preflight-overall neutral"
+      >
+        IKKE TESTET
+      </div>
+
+      <button
+        id="runPreflight"
+        class="topbar-preflight-button"
+      >
+        KJØR KAMPKLAR-SJEKK
+      </button>
+
+    </div>
+
+
+    <div
+      id="connectionStatus"
+      class="status"
+    >
+      DISPLAY IKKE TESTET
+    </div>
+
+  </div>
+
+</header>
+
+
+<section class="preflight-details-bar">
+
+  <div class="preflight-list compact-list">
+
+    <div
+      id="checkMatch"
+      class="preflight-item neutral"
+    >
+      <span class="preflight-icon">●</span>
+      <span>Aktiv kamp</span>
+      <strong>Ikke testet</strong>
+    </div>
+
+
+    <div
+      id="checkPlayers"
+      class="preflight-item neutral"
+    >
+      <span class="preflight-icon">●</span>
+      <span>Spillere</span>
+      <strong>Ikke testet</strong>
+    </div>
+
+
+    <div
+      id="checkSponsors"
+      class="preflight-item neutral"
+    >
+      <span class="preflight-icon">●</span>
+      <span>Sponsorer</span>
+      <strong>Ikke testet</strong>
+    </div>
+
+
+    <div
+      id="checkHomeLogo"
+      class="preflight-item neutral"
+    >
+      <span class="preflight-icon">●</span>
+      <span>Hjemmelogo</span>
+      <strong>Ikke testet</strong>
+    </div>
+
+
+    <div
+      id="checkAwayLogo"
+      class="preflight-item neutral"
+    >
+      <span class="preflight-icon">●</span>
+      <span>Bortelogo</span>
+      <strong>Ikke testet</strong>
+    </div>
+
+
+    <div
+      id="checkBestAudio"
+      class="preflight-item neutral"
+    >
+      <span class="preflight-icon">●</span>
+      <span>Banens beste</span>
+      <strong>Ikke testet</strong>
+    </div>
+
+
+    <div
+      id="checkHomeGoalAudio"
+      class="preflight-item neutral"
+    >
+      <span class="preflight-icon">●</span>
+      <span>Hjemmemål-lyd</span>
+      <strong>Ikke testet</strong>
+    </div>
+
+
+    <div
+      id="checkAwayGoalAudio"
+      class="preflight-item neutral"
+    >
+      <span class="preflight-icon">●</span>
+      <span>Bortemål-lyd</span>
+      <strong>Ikke testet</strong>
+    </div>
+
+
+    <div
+      id="checkPenaltyAudio"
+      class="preflight-item neutral"
+    >
+      <span class="preflight-icon">●</span>
+      <span>Utvisningslyd</span>
+      <strong>Ikke testet</strong>
+    </div>
+
+
+    <div
+      id="checkEntranceVideo"
+      class="preflight-item neutral"
+    >
+      <span class="preflight-icon">●</span>
+      <span>Innmarsjvideo</span>
+      <strong>Ikke testet</strong>
+    </div>
+
+
+    <div
+      id="checkDisplay"
+      class="preflight-item neutral"
+    >
+      <span class="preflight-icon">●</span>
+      <span>Display</span>
+      <strong>Ikke testet</strong>
+    </div>
+
+  </div>
+
+</section>
+
+
+<main class="operator-layout">
+
+
+  <!-- =====================================================
+       KAMPOPPSETT
+  ====================================================== -->
+
+  <section class="panel">
+
+    <h2>Kampoppsett</h2>
+
+
+    <div class="match-setup-controls">
+
+      <select id="matchSelect">
+        <option value="">
+          Laster kamper …
+        </option>
+      </select>
+
+
+      <button
+        id="activateMatch"
+        class="control-button yellow"
+      >
+        AKTIVER KAMP
+      </button>
+
+    </div>
+
+
+    <div
+      id="activeMatchCard"
+      class="active-match-card"
+    >
+
+      <img
+        id="operatorHomeLogo"
+        class="operator-team-logo"
+        src="../images/teams/ullkisa.png"
+        alt="Hjemmelag"
+      >
+
+
+      <div class="active-match-info">
+
+        <div class="active-match-label">
+          AKTIV KAMP
+        </div>
+
+        <div
+          id="activeMatchStatus"
+          class="active-match-name"
+        >
+          Ingen kamp aktivert
+        </div>
+
+        <div
+          id="activeMatchDate"
+          class="active-match-date"
+        ></div>
+
+      </div>
+
+
+      <img
+        id="operatorAwayLogo"
+        class="operator-team-logo"
+        src="../images/teams/away.png"
+        alt="Bortelag"
+      >
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       KLOKKE + LIVE PREVIEW
+  ====================================================== -->
+
+  <div class="operator-live-workspace">
+
+
+    <section class="panel scoreboard-control-panel">
+
+      <div class="scoreboard-control-header">
+
+        <h2>
+          Kampklokke og resultat
+        </h2>
+
+        <div
+          id="clockRunStatus"
+          class="clock-run-status stopped"
+        >
+          STOPPET
+        </div>
+
+      </div>
+
+
+      <div class="operator-scoreboard">
+
+
+        <div class="operator-score-row">
+
+
+          <div class="operator-score-team">
+
+            <div
+              id="operatorScoreHomeName"
+              class="operator-score-team-name"
+            >
+              ULL/KISA
+            </div>
+
+            <div
+              id="operatorHomeScore"
+              class="operator-score-number"
+            >
+              0
+            </div>
+
+            <div class="score-buttons">
+
+              <button
+                id="homeScoreMinus"
+                class="score-small-button"
+              >
+                −
+              </button>
+
+              <button
+                id="homeScorePlus"
+                class="score-small-button"
+              >
+                +
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <div class="operator-score-team">
+
+            <div
+              id="operatorScoreAwayName"
+              class="operator-score-team-name"
+            >
+              BORTELAG
+            </div>
+
+            <div
+              id="operatorAwayScore"
+              class="operator-score-number"
+            >
+              0
+            </div>
+
+            <div class="score-buttons">
+
+              <button
+                id="awayScoreMinus"
+                class="score-small-button"
+              >
+                −
+              </button>
+
+              <button
+                id="awayScorePlus"
+                class="score-small-button"
+              >
+                +
+              </button>
+
+            </div>
+
+          </div>
+
+
+        </div>
+
+
+        <div class="operator-clock-center">
+
+          <div
+            id="operatorGameClock"
+            class="operator-game-clock"
+          >
+            00:00
+          </div>
+
+
+          <div
+            id="operatorPeriodText"
+            class="operator-period-text"
+          >
+            1. PERIODE
+          </div>
+
+
+          <div
+            id="operatorBreakControl"
+            class="operator-break-control"
+            hidden
+          >
+
+            <div class="operator-break-label">
+              PAUSE
+            </div>
+
+            <div
+              id="operatorBreakClock"
+              class="operator-break-clock"
+            >
+              10:00
+            </div>
+
+            <button
+              id="stopBreakClock"
+              class="stop-break-button"
+            >
+              STOPP PAUSE
+            </button>
+
+          </div>
+
+
+          <div class="period-length-control">
+
+            <div class="period-length-label">
+              PERIODELENGDE
+            </div>
+
+
+            <div class="period-length-buttons">
+
+              <button
+                id="periodLength15"
+                class="period-length-button"
+                data-minutes="15"
+              >
+                15 MIN
+              </button>
+
+              <button
+                id="periodLength20"
+                class="period-length-button active"
+                data-minutes="20"
+              >
+                20 MIN
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <div class="clock-main-buttons">
+
+            <button
+              id="toggleClock"
+              class="clock-button start"
+            >
+              START
+            </button>
+
+            <button
+              id="resetClock"
+              class="clock-button reset"
+            >
+              NULLSTILL
+            </button>
+
+          </div>
+
+
+          <div class="clock-adjust-buttons">
+
+            <button id="minus10Seconds">
+              −10 SEK
+            </button>
+
+            <button id="minus1Second">
+              −1 SEK
+            </button>
+
+            <button id="plus1Second">
+              +1 SEK
+            </button>
+
+            <button id="plus10Seconds">
+              +10 SEK
+            </button>
+
+          </div>
+
+
+          <div class="period-buttons">
+
+            <button
+              class="period-button active"
+              data-period="1"
+            >
+              1. PERIODE
+            </button>
+
+            <button
+              class="period-button"
+              data-period="2"
+            >
+              2. PERIODE
+            </button>
+
+            <button
+              class="period-button"
+              data-period="3"
+            >
+              3. PERIODE
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- LIVE PREVIEW -->
+
+    <section class="live-preview-panel">
+
+      <div class="live-preview-header">
+
+        <div class="live-preview-title">
+          LIVE PREVIEW – KUBE
+        </div>
+
+        <div class="live-preview-status">
+          LYDLØS
+        </div>
+
+      </div>
+
+
+      <div class="live-preview-frame-wrap">
+
+        <iframe
+          id="displayPreview"
+          class="live-preview-frame"
+          src="preview.html"
+          title="Live preview av Arena Kube"
+          tabindex="-1"
+          aria-hidden="true"
+        ></iframe>
+
+      </div>
+
+
+      <p class="live-preview-help">
+        Kontrollvisning av det som sendes til kuben.
+        Preview spiller aldri lyd og teller ikke som tilkoblet display
+        i KAMPKLAR-sjekken.
+      </p>
+
+    </section>
+
+
+  </div>
+
+
+  <!-- =====================================================
+       KAMPKONTROLL
+  ====================================================== -->
+
+  <section class="panel main-controls-panel">
+
+    <h2>Kampkontroll</h2>
+
+    <div class="button-grid main-button-grid">
+
+      <button
+        id="showGame"
+        class="control-button green"
+      >
+        KAMPBILDE
+      </button>
+
+
+      <button
+        id="showSponsors"
+        class="control-button yellow"
+      >
+        SPONSORER
+      </button>
+
+
+      <button
+        id="showEntrance"
+        class="control-button"
+      >
+        INNMARSJ
+      </button>
+
+
+      <button
+        id="stopEntrance"
+        class="control-button"
+        hidden
+      >
+        STOPP INNMARSJ
+      </button>
+
+
+      <button
+        id="clearDisplay"
+        class="control-button dark"
+      >
+        TØM DISPLAY
+      </button>
+
+
+      <button
+        id="stopAudio"
+        class="control-button dark"
+      >
+        STOPP LYD
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       HJEMMEMÅL
+  ====================================================== -->
+
+  <section class="panel">
+
+    <h2>
+      Hjemmemål – Ull/Kisa
+    </h2>
+
+    <p class="help">
+      Starter og stopper hjemmemålpresentasjonen. Resultat og kampklokke
+      endres ikke.
+    </p>
+
+    <button
+      id="showHomeGoal"
+      class="control-button goal-send-button"
+    >
+      START MÅL
+    </button>
+
+  </section>
+
+
+  <!-- =====================================================
+       BORTEMÅL
+  ====================================================== -->
+
+  <section class="panel">
+
+    <h2>Bortemål</h2>
+
+    <p class="help">
+      Bortelagets navn og logo hentes fra aktiv kamp.
+      Resultatet økes automatisk med ett mål.
+    </p>
+
+    <div class="away-goal-controls">
+
+      <input
+        id="awayGoalNumber"
+        type="number"
+        min="0"
+        max="99"
+        placeholder="Målscorer nr."
+      >
+
+      <input
+        id="awayGoalName"
+        type="text"
+        maxlength="40"
+        placeholder="Målscorer navn"
+      >
+
+    </div>
+
+    <div class="away-goal-controls second-row">
+
+      <input
+        id="awayAssistNumber"
+        type="number"
+        min="0"
+        max="99"
+        placeholder="Assist nr."
+      >
+
+      <input
+        id="awayAssistName"
+        type="text"
+        maxlength="40"
+        placeholder="Assist navn"
+      >
+
+    </div>
+
+    <button
+      id="showAwayGoal"
+      class="control-button yellow full-width-button"
+    >
+      VIS BORTEMÅL
+    </button>
+
+  </section>
+
+
+  <!-- =====================================================
+       BANENS BESTE HJEMME
+  ====================================================== -->
+
+  <section class="panel">
+
+    <h2>
+      Banens beste – Ull/Kisa
+    </h2>
+
+    <p class="help">
+      Velg Ull/Kisa-spilleren som skal presenteres.
+    </p>
+
+    <div
+      id="bestHomePlayers"
+      class="players-grid"
+    ></div>
+
+  </section>
+
+
+  <!-- =====================================================
+       BANENS BESTE BORTE
+  ====================================================== -->
+
+  <section class="panel">
+
+    <h2>
+      Banens beste – Bortelag
+    </h2>
+
+    <p class="help">
+      Bortelagets navn og logo hentes automatisk fra aktiv kamp.
+    </p>
+
+    <div class="away-best-controls">
+
+      <input
+        id="awayBestNumber"
+        type="number"
+        min="0"
+        max="99"
+        placeholder="Spillernummer"
+      >
+
+      <button
+        id="showBestAway"
+        class="control-button yellow"
+      >
+        VIS BANENS BESTE – BORTE
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       MANUELL MELDING
+  ====================================================== -->
+
+  <section class="panel">
+
+    <h2>
+      Manuell melding
+    </h2>
+
+    <div class="message-controls">
+
+      <input
+        id="messageInput"
+        type="text"
+        maxlength="80"
+        placeholder="Skriv melding …"
+      >
+
+      <button
+        id="showMessage"
+        class="control-button green"
+      >
+        VIS MELDING
+      </button>
+
+    </div>
+
+  </section>
+
+
+</main>
+
+
+<script src="operator.js"></script>
+
+
+<!-- =======================================================
+     ARENA KUBE V2.1 – INNMARSJ
+     Bevisst lagt utenfor operator.js slik at v2.0-logikken
+     for klokke, pause, mål og bortelag forblir urørt.
+======================================================= -->
+
+<script>
+(() => {
+  const ENTRANCE_VIDEO_URL =
+    "../media/video/innmarsj.mp4";
+
+  const startButton =
+    document.getElementById(
+      "showEntrance"
+    );
+
+  const stopButton =
+    document.getElementById(
+      "stopEntrance"
+    );
+
+  const preflightItem =
+    document.getElementById(
+      "checkEntranceVideo"
+    );
+
+
+  function setEntranceUi(
+    active
+  ) {
+    if (startButton) {
+      startButton.disabled =
+        active;
+    }
+
+    if (stopButton) {
+      stopButton.hidden =
+        !active;
+    }
+  }
+
+
+  function setEntrancePreflight(
+    state,
+    text
+  ) {
+    if (!preflightItem) {
+      return;
+    }
+
+    preflightItem.classList.remove(
+      "neutral",
+      "checking",
+      "ok",
+      "success",
+      "fail",
+      "error"
+    );
+
+    preflightItem.classList.add(
+      state
+    );
+
+    const icon =
+      preflightItem.querySelector(
+        ".preflight-icon"
+      );
+
+    const result =
+      preflightItem.querySelector(
+        "strong"
+      );
+
+    if (icon) {
+      if (
+        state === "ok" ||
+        state === "success"
+      ) {
+        icon.textContent =
+          "✓";
+
+      } else if (
+        state === "fail" ||
+        state === "error"
+      ) {
+        icon.textContent =
+          "✕";
+
+      } else if (
+        state === "checking"
+      ) {
+        icon.textContent =
+          "…";
+
+      } else {
+        icon.textContent =
+          "●";
+      }
+    }
+
+    if (result) {
+      result.textContent =
+        text;
+    }
+  }
+
+
+  async function testEntranceVideo() {
+    setEntrancePreflight(
+      "checking",
+      "Tester …"
+    );
+
+    try {
+      const response =
+        await fetch(
+          ENTRANCE_VIDEO_URL,
+          {
+            cache:
+              "no-store"
+          }
+        );
+
+      if (!response.ok) {
+        throw new Error(
+          `HTTP ${response.status}`
+        );
+      }
+
+      setEntrancePreflight(
+        "ok",
+        "Funnet"
+      );
+
+      return true;
+
+    } catch (error) {
+      console.error(
+        "Arena Kube: innmarsjvideo mangler:",
+        error
+      );
+
+      setEntrancePreflight(
+        "fail",
+        "Mangler"
+      );
+
+      return false;
+    }
+  }
+
+
+  if (startButton) {
+    startButton.addEventListener(
+      "click",
+      () => {
+        setEntranceUi(
+          true
+        );
+
+        channel.postMessage({
+          type:
+            "entranceStart"
+        });
+      }
+    );
+  }
+
+
+  if (stopButton) {
+    stopButton.addEventListener(
+      "click",
+      () => {
+        channel.postMessage({
+          type:
+            "entranceStop"
+        });
+
+        setEntranceUi(
+          false
+        );
+      }
+    );
+  }
+
+
+  [
+    "showGame",
+    "showSponsors",
+    "clearDisplay",
+    "stopAudio"
+  ].forEach(
+    (id) => {
+      const button =
+        document.getElementById(
+          id
+        );
+
+      if (!button) {
+        return;
+      }
+
+      button.addEventListener(
+        "click",
+        () => {
+          setEntranceUi(
+            false
+          );
+        }
+      );
+    }
+  );
+
+
+  channel.addEventListener(
+    "message",
+    (event) => {
+      const data =
+        event.data;
+
+      if (
+        !data ||
+        !data.type
+      ) {
+        return;
+      }
+
+      if (
+        data.type ===
+          "entranceStarted"
+      ) {
+        setEntranceUi(
+          true
+        );
+      }
+
+      if (
+        data.type ===
+          "entranceStopped" ||
+        data.type ===
+          "entranceEnded"
+      ) {
+        setEntranceUi(
+          false
+        );
+      }
+    }
+  );
+
+
+  const preflightButtonV21 =
+    document.getElementById(
+      "runPreflight"
+    );
+
+  if (preflightButtonV21) {
+    preflightButtonV21.addEventListener(
+      "click",
+      async () => {
+        const videoOk =
+          await testEntranceVideo();
+
+        let attempts =
+          0;
+
+        const waitForExistingPreflight =
+          setInterval(
+            () => {
+              attempts += 1;
+
+              const overall =
+                document.getElementById(
+                  "preflightOverall"
+                );
+
+              const stillChecking =
+                overall &&
+                overall.classList.contains(
+                  "checking"
+                );
+
+              if (
+                stillChecking &&
+                attempts < 60
+              ) {
+                return;
+              }
+
+              clearInterval(
+                waitForExistingPreflight
+              );
+
+              if (
+                !videoOk &&
+                overall
+              ) {
+                overall.classList.remove(
+                  "neutral",
+                  "checking",
+                  "ok",
+                  "success"
+                );
+
+                overall.classList.add(
+                  "fail"
+                );
+
+                overall.textContent =
+                  "IKKE KAMPKLAR";
+              }
+            },
+            100
+          );
+      }
+    );
+  }
+
+
+  setEntranceUi(
+    false
+  );
+
+  console.log(
+    "Arena Kube v2.1: innmarsjkontroll aktivert."
+  );
+})();
+</script>
+
+
+<script>
+  /*
+    =========================================================
+    VISUELL SORTERING AV SPILLERE
+    =========================================================
+  */
+
+  (() => {
+    let sortScheduled = false;
+
+    function readPlayerNumber(text) {
+      const match =
+        String(text || "")
+          .trim()
+          .match(/#?\s*(\d{1,3})/);
+
+      if (!match) {
+        return Number.MAX_SAFE_INTEGER;
+      }
+
+      return Number(match[1]);
+    }
+
+
+    function sortButtonContainer(container) {
+      if (!container) {
+        return;
+      }
+
+      const buttons =
+        Array.from(
+          container.children
+        ).filter(
+          (element) =>
+            element.tagName ===
+            "BUTTON"
+        );
+
+      if (buttons.length < 2) {
+        return;
+      }
+
+      const sorted =
+        [...buttons].sort(
+          (a, b) => {
+            const numberA =
+              readPlayerNumber(
+                a.textContent
+              );
+
+            const numberB =
+              readPlayerNumber(
+                b.textContent
+              );
+
+            if (
+              numberA !==
+              numberB
+            ) {
+              return (
+                numberA -
+                numberB
+              );
+            }
+
+            return String(
+              a.textContent || ""
+            ).localeCompare(
+              String(
+                b.textContent || ""
+              ),
+              "no"
+            );
+          }
+        );
+
+      const alreadySorted =
+        buttons.every(
+          (button, index) =>
+            button ===
+            sorted[index]
+        );
+
+      if (alreadySorted) {
+        return;
+      }
+
+      sorted.forEach(
+        (button) => {
+          container.appendChild(
+            button
+          );
+        }
+      );
+    }
+
+
+    function sortPlayerSelect(select) {
+      if (!select) {
+        return;
+      }
+
+      const options =
+        Array.from(
+          select.options
+        );
+
+      if (
+        options.length <
+        3
+      ) {
+        return;
+      }
+
+      const fixed = [];
+      const playerOptions = [];
+
+      options.forEach(
+        (option) => {
+          const number =
+            readPlayerNumber(
+              option.textContent
+            );
+
+          if (
+            number ===
+            Number.MAX_SAFE_INTEGER
+          ) {
+            fixed.push(
+              option
+            );
+
+          } else {
+            playerOptions.push(
+              option
+            );
+          }
+        }
+      );
+
+      if (
+        playerOptions.length <
+        2
+      ) {
+        return;
+      }
+
+      const sorted =
+        [...playerOptions].sort(
+          (a, b) => {
+            const numberA =
+              readPlayerNumber(
+                a.textContent
+              );
+
+            const numberB =
+              readPlayerNumber(
+                b.textContent
+              );
+
+            if (
+              numberA !==
+              numberB
+            ) {
+              return (
+                numberA -
+                numberB
+              );
+            }
+
+            return String(
+              a.textContent || ""
+            ).localeCompare(
+              String(
+                b.textContent || ""
+              ),
+              "no"
+            );
+          }
+        );
+
+      const currentPlayerOptions =
+        options.filter(
+          (option) =>
+            readPlayerNumber(
+              option.textContent
+            ) !==
+            Number.MAX_SAFE_INTEGER
+        );
+
+      const alreadySorted =
+        currentPlayerOptions.every(
+          (option, index) =>
+            option ===
+            sorted[index]
+        );
+
+      if (alreadySorted) {
+        return;
+      }
+
+      fixed.forEach(
+        (option) => {
+          select.appendChild(
+            option
+          );
+        }
+      );
+
+      sorted.forEach(
+        (option) => {
+          select.appendChild(
+            option
+          );
+        }
+      );
+    }
+
+
+    function sortOperatorPlayers() {
+      sortButtonContainer(
+        document.getElementById(
+          "homeLineupPlayers"
+        )
+      );
+
+      sortButtonContainer(
+        document.getElementById(
+          "players"
+        )
+      );
+
+      sortButtonContainer(
+        document.getElementById(
+          "bestHomePlayers"
+        )
+      );
+
+      sortPlayerSelect(
+        document.getElementById(
+          "assistSelect"
+        )
+      );
+
+      document
+        .querySelectorAll(
+          '[data-penalty-slot] select'
+        )
+        .forEach(
+          (select) => {
+            sortPlayerSelect(
+              select
+            );
+          }
+        );
+    }
+
+
+    function scheduleSort() {
+      if (sortScheduled) {
+        return;
+      }
+
+      sortScheduled =
+        true;
+
+      requestAnimationFrame(
+        () => {
+          sortScheduled =
+            false;
+
+          sortOperatorPlayers();
+        }
+      );
+    }
+
+
+    const observer =
+      new MutationObserver(
+        () => {
+          scheduleSort();
+        }
+      );
+
+    observer.observe(
+      document.body,
+      {
+        childList:
+          true,
+
+        subtree:
+          true
+      }
+    );
+
+    window.addEventListener(
+      "load",
+      () => {
+        scheduleSort();
+
+        setTimeout(
+          sortOperatorPlayers,
+          300
+        );
+
+        setTimeout(
+          sortOperatorPlayers,
+          1000
+        );
+      }
+    );
+  })();
+</script>
+
+
+</body>
+</html>

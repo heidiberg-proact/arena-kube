@@ -1,0 +1,1992 @@
+:root {
+  --green: #0a6b38;
+  --green-dark: #054424;
+  --yellow: #f4d500;
+  --black: #080a09;
+  --white: #ffffff;
+  --red: #c92626;
+}
+
+
+* {
+  box-sizing: border-box;
+}
+
+
+html,
+body {
+  margin: 0;
+  width: 100%;
+  min-height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* =========================================================
+   OPERATOR – GRUNN
+========================================================= */
+
+.operator-page {
+  min-height: 100vh;
+  background: #d8ddd9;
+  color: #111;
+}
+
+
+/* =========================================================
+   TOPPLINJE
+========================================================= */
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+  padding: 14px 28px;
+  background: var(--green);
+  color: white;
+  border-bottom: 6px solid var(--yellow);
+}
+
+.topbar-brand {
+  flex-shrink: 0;
+}
+
+.topbar h1 {
+  margin: 0;
+  font-size: 30px;
+}
+
+.topbar p {
+  margin: 4px 0 0;
+  font-size: 13px;
+}
+
+.topbar-preflight {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.topbar-preflight-main {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.topbar-preflight-button {
+  min-height: 38px;
+  padding: 7px 13px;
+  border: 2px solid var(--yellow);
+  border-radius: 6px;
+  background: var(--yellow);
+  color: black;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.status {
+  padding: 8px 11px;
+  border-radius: 6px;
+  background: #202420;
+  color: #ccc;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.status.connected {
+  background: #042d17;
+  color: #9dffb8;
+  border: 2px solid #43d86d;
+}
+
+.preflight-overall {
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.preflight-overall.neutral {
+  background: #202420;
+  color: #ccc;
+}
+
+.preflight-overall.checking {
+  background: #665400;
+  color: #fff3a8;
+}
+
+.preflight-overall.ok,
+.preflight-overall.success {
+  background: #064f27;
+  color: #b7ffca;
+}
+
+.preflight-overall.fail,
+.preflight-overall.error {
+  background: #7a1717;
+  color: white;
+}
+
+
+/* =========================================================
+   PREFLIGHT DETALJER
+========================================================= */
+
+.preflight-details-bar {
+  width: 100%;
+  padding: 5px 14px;
+  background: #07120c;
+  border-bottom: 1px solid #304a3a;
+}
+
+.preflight-list.compact-list {
+  display: grid;
+  grid-template-columns: repeat(10, minmax(90px, 1fr));
+  gap: 4px;
+  width: min(1500px, 100%);
+  margin: 0 auto;
+}
+
+.preflight-item {
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  align-items: center;
+  column-gap: 4px;
+  min-height: 29px;
+  padding: 3px 5px;
+  border: 1px solid #304a3a;
+  border-radius: 4px;
+  background: #071d11;
+  color: white;
+  font-size: 10px;
+}
+
+.preflight-item strong {
+  grid-column: 2;
+  color: #bbb;
+  font-size: 8px;
+}
+
+.preflight-icon {
+  grid-row: 1 / span 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #59615c;
+  color: white;
+  font-size: 9px;
+  font-weight: 900;
+}
+
+.preflight-item.checking .preflight-icon {
+  background: #d9a91a;
+  color: black;
+}
+
+.preflight-item.ok .preflight-icon,
+.preflight-item.success .preflight-icon {
+  background: #159447;
+  color: white;
+}
+
+.preflight-item.fail .preflight-icon,
+.preflight-item.error .preflight-icon {
+  background: #d52626;
+  color: white;
+}
+
+
+/* =========================================================
+   OPERATOR LAYOUT
+========================================================= */
+
+.operator-layout {
+  width: min(1400px, 96%);
+  margin: 16px auto;
+}
+
+.panel {
+  margin-bottom: 18px;
+  padding: 20px;
+  background: #163d2a;
+  color: white;
+  border: 3px solid var(--green);
+  border-radius: 10px;
+}
+
+.panel h2 {
+  margin-top: 0;
+  color: var(--yellow);
+}
+
+.help {
+  color: #eee;
+}
+
+
+/* =========================================================
+   LIVE PREVIEW – TYDELIG MINDRE
+========================================================= */
+
+.operator-page .live-preview-panel {
+  width: min(280px, 100%) !important;
+  justify-self: end;
+  padding: 9px !important;
+  border-width: 2px !important;
+  border-radius: 7px !important;
+}
+
+.operator-page .live-preview-header {
+  gap: 6px !important;
+  margin-bottom: 6px !important;
+}
+
+.operator-page .live-preview-title {
+  font-size: 12px !important;
+}
+
+.operator-page .live-preview-status {
+  padding: 3px 5px !important;
+  font-size: 8px !important;
+}
+
+.operator-page .live-preview-frame-wrap {
+  width: 100% !important;
+  border-width: 1px !important;
+}
+
+.operator-page .live-preview-help {
+  margin-top: 5px !important;
+  font-size: 8px !important;
+  line-height: 1.25 !important;
+}
+
+
+/* =========================================================
+   KAMPOPPSETT
+========================================================= */
+
+.match-setup-controls,
+.away-goal-controls,
+.away-best-controls,
+.message-controls {
+  display: flex;
+  gap: 12px;
+}
+
+.match-setup-controls select {
+  flex: 1;
+  min-height: 54px;
+  padding: 12px;
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.active-match-card {
+  display: grid;
+  grid-template-columns: 90px 1fr 90px;
+  gap: 18px;
+  align-items: center;
+  margin-top: 16px;
+  padding: 15px;
+  border: 3px solid var(--yellow);
+  border-radius: 10px;
+  background: #071d11;
+}
+
+.operator-team-logo {
+  width: 82px;
+  height: 82px;
+  object-fit: contain;
+}
+
+.active-match-info {
+  text-align: center;
+}
+
+.active-match-label {
+  color: var(--yellow);
+  font-weight: 900;
+}
+
+.active-match-name {
+  margin-top: 6px;
+  font-size: 24px;
+  font-weight: 900;
+}
+
+.active-match-date {
+  margin-top: 5px;
+  color: #ccc;
+}
+
+
+/* =========================================================
+   SCOREBOARD OPERATOR
+========================================================= */
+
+.scoreboard-control-panel {
+  width: min(760px, 96%);
+  margin-left: auto;
+  margin-right: auto;
+  padding: 18px 22px 24px;
+  border-color: var(--yellow);
+  background: #071d11;
+}
+
+.scoreboard-control-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.scoreboard-control-header h2 {
+  margin: 0;
+}
+
+.clock-run-status {
+  padding: 8px 14px;
+  border-radius: 5px;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.clock-run-status.stopped {
+  background: #542020;
+  color: white;
+}
+
+.clock-run-status.running {
+  background: #087738;
+  color: white;
+}
+
+
+/* =========================================================
+   SCOREBOARD STRUKTUR
+========================================================= */
+
+.operator-scoreboard {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 20px;
+  width: 100%;
+}
+
+.operator-score-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 70px;
+  width: 100%;
+  align-items: start;
+}
+
+.operator-score-team {
+  width: 100%;
+  text-align: center;
+}
+
+.operator-score-team-name {
+  min-height: 25px;
+  margin: 0;
+  color: white;
+  font-size: 18px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.operator-score-number {
+  margin-top: 3px;
+  color: var(--yellow);
+  font-size: 58px;
+  line-height: 1;
+  font-weight: 900;
+}
+
+.score-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+  width: 140px;
+  margin: 8px auto 0;
+}
+
+.score-small-button {
+  min-height: 40px;
+  padding: 0;
+  border: 2px solid var(--yellow);
+  border-radius: 6px;
+  background: #263029;
+  color: white;
+  cursor: pointer;
+  font-size: 25px;
+  font-weight: 900;
+}
+
+
+/* =========================================================
+   KLOKKEBOKS
+========================================================= */
+
+.operator-clock-center {
+  width: 360px;
+  max-width: 100%;
+  min-height: 340px;
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 18px;
+  border: 3px solid var(--yellow);
+  border-radius: 10px;
+  background: #020603;
+  text-align: center;
+}
+
+.operator-clock-center.clock-fixed {
+  position: fixed;
+  top: 12px;
+  margin: 0;
+  z-index: 1000;
+  box-shadow:
+    0 8px 24px
+    rgba(0, 0, 0, 0.55);
+}
+
+.clock-placeholder {
+  display: none;
+}
+
+.clock-placeholder.active {
+  display: block;
+}
+
+.operator-game-clock {
+  color: white;
+  font-size: 62px;
+  line-height: 1;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+}
+
+.operator-period-text {
+  margin-top: 8px;
+  color: var(--yellow);
+  font-size: 18px;
+  font-weight: 900;
+}
+
+
+/* =========================================================
+   PERIODELENGDE
+========================================================= */
+
+.period-length-control {
+  margin-top: 14px;
+}
+
+.period-length-label {
+  margin-bottom: 6px;
+  color: #bbb;
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.period-length-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.period-length-button {
+  min-height: 36px;
+  border: 2px solid #526156;
+  border-radius: 5px;
+  background: #19251d;
+  color: white;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.period-length-button.active {
+  border-color: var(--yellow);
+  background: var(--yellow);
+  color: black;
+}
+
+
+/* =========================================================
+   START / STOPP / NULLSTILL
+========================================================= */
+
+.clock-main-buttons {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 7px;
+  margin-top: 12px;
+}
+
+.clock-button {
+  min-height: 46px;
+  padding: 5px;
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.clock-button.start {
+  background: #0b963f;
+  color: white;
+}
+
+.clock-button.stop {
+  background: var(--red);
+  color: white;
+}
+
+.clock-button.reset {
+  background: #444;
+  color: white;
+}
+
+
+/* =========================================================
+   KLOKKEJUSTERING
+========================================================= */
+
+.clock-adjust-buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+  margin-top: 8px;
+}
+
+.clock-adjust-buttons button {
+  min-height: 34px;
+  padding: 3px;
+  border: 1px solid #666;
+  border-radius: 4px;
+  background: #242824;
+  color: white;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+
+/* =========================================================
+   PERIODEKNAPPER
+========================================================= */
+
+.period-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+  margin-top: 9px;
+}
+
+.period-button {
+  min-height: 35px;
+  padding: 3px;
+  border: 2px solid #526156;
+  border-radius: 5px;
+  background: #19251d;
+  color: white;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.period-button.active {
+  border-color: var(--yellow);
+  background: var(--yellow);
+  color: black;
+}
+
+.period-button:disabled,
+.period-length-button:disabled,
+.clock-adjust-buttons button:disabled,
+.clock-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+
+/* =========================================================
+   KAMPKONTROLL
+========================================================= */
+
+.main-controls-panel {
+  padding: 16px 20px;
+  border-color: var(--yellow);
+  background: #0a2919;
+}
+
+.button-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(
+      auto-fit,
+      minmax(180px, 1fr)
+    );
+  gap: 12px;
+}
+
+.main-button-grid .control-button {
+  min-height: 72px;
+  font-size: 19px;
+}
+
+
+/* =========================================================
+   KNAPPER
+========================================================= */
+
+.control-button,
+.player-button {
+  border: 0;
+  border-radius: 7px;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.control-button {
+  min-height: 62px;
+  padding: 15px;
+  font-size: 17px;
+}
+
+.green {
+  background: var(--green);
+  color: white;
+}
+
+.yellow {
+  background: var(--yellow);
+  color: black;
+}
+
+.dark {
+  background: #252a27;
+  color: white;
+}
+
+.full-width-button {
+  width: 100%;
+  margin-top: 15px;
+}
+
+
+/* =========================================================
+   SPILLERE
+========================================================= */
+
+.players-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(
+      auto-fill,
+      minmax(155px, 1fr)
+    );
+  gap: 6px;
+  margin-top: 7px;
+}
+
+.player-button {
+  display: flex;
+  align-items: center;
+  min-height: 60px;
+  padding: 4px 7px;
+  background: var(--green);
+  color: white;
+}
+
+.player-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  margin-right: 8px;
+  flex-shrink: 0;
+  background: var(--yellow);
+  color: black;
+  border-radius: 50%;
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.player-name {
+  text-align: left;
+  font-size: 13px;
+  line-height: 1.1;
+}
+
+.player-button.selected-player {
+  background: #071d11;
+  border: 3px solid var(--yellow);
+}
+
+.best-player-button {
+  border: 2px solid var(--yellow);
+}
+
+
+/* =========================================================
+   MÅL – OPERATOR
+========================================================= */
+
+#playerStatus {
+  display: none;
+}
+
+.goal-selection-title {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  color: var(--yellow);
+  font-weight: 900;
+}
+
+.assist-area {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 8px;
+  padding: 8px 10px;
+  background: #071d11;
+}
+
+.assist-area select {
+  flex: 1;
+  min-height: 38px;
+  padding: 5px 8px;
+  font-size: 14px;
+}
+
+.selected-goal-status {
+  margin-top: 7px;
+  padding: 8px 10px;
+  border-left: 4px solid var(--yellow);
+  background: #092817;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.goal-send-button {
+  width: 100%;
+  min-height: 46px;
+  margin-top: 7px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  background: #d71920;
+  color: white;
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.goal-send-button.running {
+  background: #7a0b0f;
+  border-color: white;
+}
+
+
+/* =========================================================
+   INPUTFELT
+========================================================= */
+
+.away-goal-controls input,
+.away-best-controls input,
+.message-controls input,
+.penalty-controls input {
+  padding: 15px;
+  border: 2px solid #aaa;
+  border-radius: 6px;
+  background: white;
+  font-size: 18px;
+}
+
+.away-goal-controls input {
+  flex: 1;
+}
+
+.second-row {
+  margin-top: 12px;
+}
+
+
+/* =========================================================
+   UTVISNING – OPERATOR
+========================================================= */
+
+.penalty-team-selector {
+  display: flex;
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.penalty-team-option {
+  flex: 1;
+  padding: 18px;
+  border: 3px solid var(--yellow);
+  border-radius: 8px;
+  background: #071d11;
+  color: white;
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.penalty-controls {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.penalty-controls label {
+  color: var(--yellow);
+  font-weight: 900;
+}
+
+.penalty-controls select {
+  flex: 1;
+  min-height: 55px;
+  padding: 10px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.penalty-away-controls {
+  display: none;
+}
+
+.penalty-away-controls input {
+  flex: 1;
+}
+
+.penalty-send-button {
+  width: 100%;
+  margin-top: 15px;
+  background: var(--red);
+  color: white;
+  border: 3px solid var(--yellow);
+}
+
+.loading,
+.success {
+  padding: 10px;
+  font-weight: bold;
+}
+
+.success {
+  color: #a6ffbd;
+}
+
+.error {
+  padding: 12px;
+  background: #a51f1f;
+  color: white;
+}
+
+
+/* =========================================================
+   DISPLAY
+========================================================= */
+
+.display-page {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: black;
+  color: white;
+}
+
+#display {
+  width: 100vw;
+  height: 100vh;
+}
+
+.scene {
+  display: none;
+  position: absolute;
+  inset: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.scene.active {
+  display: flex;
+}
+
+.enable-audio-button {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  padding: 14px 20px;
+  border: 2px solid var(--yellow);
+  background: black;
+  color: var(--yellow);
+  font-weight: 900;
+}
+
+.enable-audio-button.audio-active {
+  background: var(--green);
+  color: white;
+}
+
+
+/* =========================================================
+   PAUSEKLOKKE DISPLAY
+========================================================= */
+
+.break-clock-overlay[hidden] {
+  display: none !important;
+}
+
+.break-clock-overlay {
+  position: fixed;
+  right: 2vw;
+  bottom: 2vw;
+  z-index: 10000;
+  min-width: 18vw;
+  padding: 1vw 1.5vw;
+  border: 4px solid var(--yellow);
+  border-radius: 12px;
+  background:
+    rgba(0, 0, 0, 0.90);
+  color: white;
+  text-align: center;
+  box-shadow:
+    0 10px 30px
+    rgba(0, 0, 0, 0.55);
+}
+
+.break-clock-overlay-label {
+  color: var(--yellow);
+  font-size: 1.3vw;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+}
+
+.display-break-clock {
+  margin-top: 0.25vw;
+  font-size: 5vw;
+  line-height: 1;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+}
+
+
+/* =========================================================
+   SCOREBOARD DISPLAY
+========================================================= */
+
+#idleScene {
+  background:
+    radial-gradient(
+      circle at 15% 50%,
+      rgba(244, 213, 0, 0.22),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 85% 50%,
+      rgba(10, 107, 56, 0.45),
+      transparent 34%
+    ),
+    linear-gradient(
+      135deg,
+      #020302,
+      #07120c 50%,
+      #020302
+    );
+}
+
+.scoreboard-display {
+  width: 94%;
+  height: 94%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.scoreboard-display-header {
+  color: var(--yellow);
+  font-size: 1.4vw;
+  font-weight: 900;
+  letter-spacing: 0.3em;
+}
+
+.scoreboard-arena-title {
+  margin-top: 0.5vw;
+  font-size: 3.2vw;
+  font-weight: 900;
+}
+
+.scoreboard-main {
+  display: grid;
+  grid-template-columns: 1fr 0.9fr 1fr;
+  gap: 3vw;
+  align-items: center;
+  width: 92%;
+  margin-top: 2vw;
+}
+
+.scoreboard-team {
+  text-align: center;
+}
+
+.scoreboard-team-logo {
+  width: 11vw;
+  height: 11vw;
+  object-fit: contain;
+}
+
+.scoreboard-team-name {
+  min-height: 3vw;
+  margin-top: 0.5vw;
+  font-size: 2.2vw;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.scoreboard-team-name.home {
+  color: var(--yellow);
+}
+
+.scoreboard-score {
+  margin-top: 0.4vw;
+  color: white;
+  font-size: 9vw;
+  line-height: 0.9;
+  font-weight: 900;
+}
+
+.scoreboard-clock-area {
+  padding: 2vw 1.4vw;
+  border-top: 0.5vw solid var(--yellow);
+  border-bottom: 0.5vw solid var(--yellow);
+  background: rgba(0, 0, 0, 0.55);
+  text-align: center;
+}
+
+.scoreboard-clock {
+  color: var(--yellow);
+  font-size: 7.5vw;
+  line-height: 1;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+}
+
+.scoreboard-period {
+  margin-top: 1vw;
+  color: white;
+  font-size: 2vw;
+  font-weight: 900;
+}
+
+.scoreboard-clock-status {
+  margin-top: 0.6vw;
+  color: #aaa;
+  font-size: 0.9vw;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+}
+
+.scoreboard-clock-status.running {
+  color: #76ff9b;
+}
+
+.scoreboard-match-date {
+  margin-top: 1.4vw;
+  color: #ccc;
+  font-size: 1.3vw;
+}
+
+
+/* =========================================================
+   HJEMMEMÅL DISPLAY
+========================================================= */
+
+#goalHomeScene {
+  background:
+    radial-gradient(
+      circle at 75% 40%,
+      #159454,
+      #07552f 42%,
+      #02160c 82%
+    );
+}
+
+.home-goal-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  animation: home-goal-flash 0.55s infinite alternate;
+}
+
+.home-goal-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 6vw;
+}
+
+.home-goal-title {
+  color: var(--yellow);
+  font-size: 18vw;
+  font-weight: 900;
+  line-height: 0.9;
+  text-shadow: 0 0 2vw rgba(255, 214, 0, 0.75);
+}
+
+.home-goal-number {
+  color: white;
+  font-size: 9vw;
+  font-weight: 900;
+}
+
+.home-goal-name {
+  font-size: 4vw;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.goal-assist {
+  margin-top: 2vw;
+  padding: 1vw;
+  border-left: 8px solid var(--yellow);
+  background: rgba(0, 0, 0, 0.5);
+  font-size: 1.7vw;
+  font-weight: 900;
+}
+
+.home-goal-team {
+  margin-top: 3vw;
+  color: var(--yellow);
+  font-size: 3vw;
+  font-weight: 900;
+}
+
+.goal-media-area {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.goal-player-image,
+.goal-player-video {
+  display: none;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.goal-player-video {
+  object-fit: cover;
+}
+
+@keyframes home-goal-flash {
+  from {
+    filter: brightness(0.85);
+    transform: scale(0.98);
+  }
+
+  to {
+    filter: brightness(1.35);
+    transform: scale(1.02);
+  }
+}
+
+
+/* =========================================================
+   BORTEMÅL DISPLAY
+========================================================= */
+
+#goalAwayScene {
+  background:
+    radial-gradient(
+      circle at center,
+      #282828,
+      #090909 70%
+    );
+}
+
+.away-goal-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 76%;
+  height: 86%;
+  border-top: 14px solid var(--yellow);
+  border-bottom: 14px solid var(--yellow);
+}
+
+.away-goal-title {
+  font-size: 3.5vw;
+  font-weight: 900;
+}
+
+.away-goal-logo {
+  width: 15vw;
+  height: 15vw;
+  margin-top: 1vw;
+  object-fit: contain;
+}
+
+.away-goal-number {
+  color: var(--yellow);
+  font-size: 8vw;
+  line-height: 1;
+  font-weight: 900;
+}
+
+.away-goal-scorer-name {
+  margin-top: 0.6vw;
+  font-size: 3vw;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.away-goal-assist {
+  margin-top: 1vw;
+  font-size: 1.5vw;
+  font-weight: 900;
+}
+
+.away-goal-team {
+  margin-top: 1.5vw;
+  color: var(--yellow);
+  font-size: 2vw;
+  font-weight: 900;
+}
+
+
+/* =========================================================
+   UTVISNING DISPLAY
+========================================================= */
+
+#penaltyScene {
+  background:
+    linear-gradient(
+      135deg,
+      #050505,
+      #2a0505
+    );
+}
+
+.penalty-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 78%;
+  height: 84%;
+  border-top: 14px solid var(--yellow);
+  border-bottom: 14px solid var(--yellow);
+}
+
+.penalty-title {
+  color: var(--yellow);
+  font-size: 5vw;
+  font-weight: 900;
+}
+
+.penalty-team-logo,
+.penalty-logo {
+  width: 15vw;
+  height: 15vw;
+  margin-top: 1vw;
+  object-fit: contain;
+}
+
+.penalty-player-number,
+.penalty-number {
+  color: white;
+  font-size: 9vw;
+  line-height: 1;
+  font-weight: 900;
+}
+
+.penalty-player-name {
+  font-size: 3.5vw;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.penalty-team-name {
+  margin-top: 1.5vw;
+  color: var(--yellow);
+  font-size: 2vw;
+  font-weight: 900;
+}
+
+
+/* =========================================================
+   SPONSOR
+========================================================= */
+
+#sponsorScene {
+  background:
+    linear-gradient(
+      135deg,
+      #f5f5f5,
+      #d9dfda
+    );
+  color: #111;
+}
+
+.sponsor-stage,
+.sponsor-logo-layout,
+.sponsor-slide-layout {
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.sponsor-stage,
+.sponsor-logo-layout {
+  display: flex;
+  flex-direction: column;
+}
+
+.sponsor-slide-layout {
+  display: none;
+}
+
+.sponsor-top {
+  color: var(--green);
+  font-size: 1.7vw;
+  font-weight: 900;
+}
+
+.sponsor-thanks {
+  font-size: 3vw;
+  font-weight: 900;
+}
+
+.sponsor-content {
+  display: flex;
+  height: 60%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.sponsor-image {
+  max-width: 62vw;
+  max-height: 55vh;
+  object-fit: contain;
+}
+
+.sponsor-name {
+  margin-top: 2vw;
+  color: var(--green-dark);
+  font-size: 4vw;
+  font-weight: 900;
+  text-align: center;
+}
+
+.sponsor-counter {
+  margin-top: 1vw;
+  color: #555;
+  font-size: 1.2vw;
+  font-weight: 900;
+}
+
+.sponsor-slide-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+
+/* =========================================================
+   MELDING
+========================================================= */
+
+#messageScene {
+  background:
+    linear-gradient(
+      110deg,
+      var(--green-dark),
+      var(--green)
+    );
+}
+
+.message-text {
+  width: 90%;
+  padding: 5vw;
+  text-align: center;
+  border-top: 12px solid var(--yellow);
+  border-bottom: 12px solid var(--yellow);
+  font-size: 6vw;
+  font-weight: 900;
+}
+
+
+/* =========================================================
+   BANENS BESTE
+========================================================= */
+
+#bestHomeScene {
+  background:
+    radial-gradient(
+      circle at 70% 40%,
+      #159454,
+      #07552f 40%,
+      #02160c 80%
+    );
+}
+
+.best-home-background {
+  display: grid;
+  grid-template-columns: 52% 48%;
+  width: 100%;
+  height: 100%;
+}
+
+.best-home-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 7vw;
+}
+
+.best-label {
+  color: var(--yellow);
+  font-size: 4vw;
+  font-weight: 900;
+}
+
+.best-team-logo {
+  width: 10vw;
+  margin-top: 2vw;
+}
+
+.best-home-number {
+  color: var(--yellow);
+  font-size: 10vw;
+  font-weight: 900;
+}
+
+.best-home-name {
+  font-size: 4.5vw;
+  font-weight: 900;
+}
+
+.best-home-team {
+  margin-top: 1vw;
+  color: white;
+  font-size: 1.5vw;
+  font-weight: 900;
+}
+
+.best-home-photo-area {
+  display: flex;
+  align-items: flex-end;
+  height: 100%;
+}
+
+.best-home-player-image {
+  max-width: 100%;
+  max-height: 95vh;
+}
+
+#bestAwayScene {
+  background:
+    linear-gradient(
+      135deg,
+      #050505,
+      #171717
+    );
+}
+
+.best-away-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 75%;
+  height: 75%;
+  border-top: 12px solid var(--yellow);
+  border-bottom: 12px solid var(--yellow);
+}
+
+.best-away-logo {
+  width: 22vw;
+  height: 22vw;
+  object-fit: contain;
+}
+
+.best-away-text {
+  margin-top: 1vw;
+  color: white;
+  font-size: 3vw;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.best-away-number {
+  color: var(--yellow);
+  font-size: 9vw;
+  font-weight: 900;
+}
+
+
+/* =========================================================
+   13-TOMMERS / KOMPAKT OPERATOR
+========================================================= */
+
+@media
+  (min-width: 801px)
+  and (max-width: 1440px) {
+
+  .operator-page .topbar {
+    gap: 18px;
+    padding: 10px 18px;
+    border-bottom-width: 4px;
+  }
+
+  .operator-page .topbar h1 {
+    font-size: 25px;
+  }
+
+  .operator-page .topbar p {
+    margin-top: 2px;
+    font-size: 11px;
+  }
+
+  .operator-page .topbar-preflight {
+    gap: 8px;
+  }
+
+  .operator-page .topbar-preflight-button {
+    min-height: 35px;
+    padding: 5px 10px;
+    font-size: 11px;
+  }
+
+  .operator-page .status,
+  .operator-page .preflight-overall {
+    padding: 6px 9px;
+    font-size: 10px;
+  }
+
+  .operator-page .preflight-details-bar {
+    padding: 4px 10px;
+  }
+
+  .operator-page .preflight-item {
+    min-height: 26px;
+    padding: 2px 4px;
+    font-size: 9px;
+  }
+
+  .operator-page .operator-layout {
+    width: min(1320px, 98%);
+    margin: 10px auto;
+  }
+
+  .operator-page .panel {
+    margin-bottom: 11px;
+    padding: 13px 15px;
+    border-width: 2px;
+  }
+
+  .operator-page .panel h2 {
+    margin-bottom: 8px;
+    font-size: 19px;
+  }
+
+  .operator-page .help {
+    margin: 5px 0 9px;
+    font-size: 12px;
+    line-height: 1.25;
+  }
+
+  .operator-page .match-setup-controls,
+  .operator-page .away-goal-controls,
+  .operator-page .away-best-controls,
+  .operator-page .message-controls {
+    gap: 8px;
+  }
+
+  .operator-page .match-setup-controls select {
+    min-height: 44px;
+    padding: 8px 10px;
+    font-size: 15px;
+  }
+
+  .operator-page .active-match-card {
+    grid-template-columns: 66px 1fr 66px;
+    gap: 10px;
+    margin-top: 9px;
+    padding: 8px 11px;
+    border-width: 2px;
+  }
+
+  .operator-page .operator-team-logo {
+    width: 58px;
+    height: 58px;
+  }
+
+  .operator-page .active-match-label {
+    font-size: 12px;
+  }
+
+  .operator-page .active-match-name {
+    margin-top: 2px;
+    font-size: 19px;
+  }
+
+  .operator-page .active-match-date {
+    margin-top: 2px;
+    font-size: 12px;
+  }
+
+  .operator-page .scoreboard-control-panel {
+    width: min(720px, 96%);
+    padding: 12px 16px 15px;
+  }
+
+  .operator-page .scoreboard-control-header {
+    margin-bottom: 10px;
+  }
+
+  .operator-page .clock-run-status {
+    padding: 6px 10px;
+    font-size: 11px;
+  }
+
+  .operator-page .operator-scoreboard {
+    gap: 12px;
+  }
+
+  .operator-page .operator-score-row {
+    gap: 44px;
+  }
+
+  .operator-page .operator-score-team-name {
+    min-height: 20px;
+    font-size: 15px;
+  }
+
+  .operator-page .operator-score-number {
+    font-size: 52px;
+  }
+
+  .operator-page .score-buttons {
+    margin-top: 5px;
+  }
+
+  .operator-page .score-small-button {
+    min-height: 42px;
+  }
+
+  .operator-page .operator-clock-center {
+    min-height: 300px;
+    padding: 12px 14px;
+  }
+
+  .operator-page .operator-game-clock {
+    font-size: 62px;
+  }
+
+  .operator-page .operator-period-text {
+    margin-top: 5px;
+    font-size: 17px;
+  }
+
+  .operator-page .period-length-control {
+    margin-top: 9px;
+  }
+
+  .operator-page .period-length-label {
+    margin-bottom: 4px;
+  }
+
+  .operator-page .period-length-button {
+    min-height: 36px;
+    font-size: 11px;
+  }
+
+  .operator-page .clock-main-buttons {
+    margin-top: 9px;
+    gap: 8px;
+  }
+
+  .operator-page .clock-button {
+    min-height: 52px;
+    font-size: 14px;
+  }
+
+  .operator-page .clock-adjust-buttons {
+    gap: 6px;
+    margin-top: 7px;
+  }
+
+  .operator-page .clock-adjust-buttons button {
+    min-height: 42px;
+    font-size: 12px;
+    font-weight: 900;
+  }
+
+  .operator-page .period-buttons {
+    gap: 6px;
+    margin-top: 7px;
+  }
+
+  .operator-page .period-button {
+    min-height: 38px;
+    font-size: 11px;
+  }
+
+  .operator-page .main-controls-panel {
+    padding: 11px 15px;
+  }
+
+  .operator-page .button-grid {
+    grid-template-columns:
+      repeat(
+        auto-fit,
+        minmax(145px, 1fr)
+      );
+    gap: 8px;
+  }
+
+  .operator-page
+  .main-button-grid
+  .control-button {
+    min-height: 54px;
+    font-size: 15px;
+  }
+
+  .operator-page .control-button {
+    min-height: 50px;
+    padding: 9px 11px;
+    font-size: 14px;
+  }
+
+  .operator-page .players-grid {
+    grid-template-columns:
+      repeat(
+        auto-fill,
+        minmax(145px, 1fr)
+      );
+    gap: 5px;
+    margin-top: 6px;
+  }
+
+  .operator-page .player-button {
+    min-height: 60px;
+    padding: 4px 6px;
+  }
+
+  .operator-page .player-number {
+    width: 52px;
+    height: 52px;
+    margin-right: 7px;
+    font-size: 22px;
+  }
+
+  .operator-page .player-name {
+    font-size: 12px;
+    line-height: 1.05;
+  }
+
+  .operator-page
+  .player-button.selected-player {
+    border-width: 3px;
+  }
+
+  .operator-page .goal-selection-title {
+    margin-top: 8px;
+    margin-bottom: 4px;
+  }
+
+  .operator-page .assist-area {
+    gap: 7px;
+    margin-top: 7px;
+    padding: 7px 9px;
+  }
+
+  .operator-page .assist-area select {
+    min-height: 36px;
+    padding: 4px 7px;
+    font-size: 13px;
+  }
+
+  .operator-page .selected-goal-status {
+    margin-top: 6px;
+    padding: 7px 9px;
+    font-size: 12px;
+  }
+
+  .operator-page .goal-send-button {
+    min-height: 44px;
+    margin-top: 6px;
+    padding: 7px 10px;
+  }
+
+  .operator-page .full-width-button,
+  .operator-page .penalty-send-button {
+    min-height: 54px;
+    margin-top: 9px;
+  }
+
+  .operator-page .away-goal-controls input,
+  .operator-page .away-best-controls input,
+  .operator-page .message-controls input,
+  .operator-page .penalty-controls input {
+    min-height: 42px;
+    padding: 9px;
+    font-size: 14px;
+  }
+
+  .operator-page .second-row {
+    margin-top: 7px;
+  }
+
+  .operator-page .penalty-team-selector {
+    gap: 9px;
+    margin: 10px 0;
+  }
+
+  .operator-page .penalty-team-option {
+    padding: 10px;
+    border-width: 2px;
+    font-size: 14px;
+  }
+
+  .operator-page .penalty-controls {
+    gap: 8px;
+  }
+
+  .operator-page .penalty-controls select {
+    min-height: 42px;
+    padding: 7px;
+    font-size: 14px;
+  }
+}
+
+
+/* =========================================================
+   RESPONSIV PREFLIGHT
+========================================================= */
+
+@media (max-width: 1200px) {
+
+  .preflight-list.compact-list {
+    grid-template-columns:
+      repeat(
+        5,
+        minmax(100px, 1fr)
+      );
+  }
+}
+
+
+/* =========================================================
+   SMAL SKJERM
+========================================================= */
+
+@media (max-width: 800px) {
+
+  .topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .topbar-preflight {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .topbar-preflight-main {
+    justify-content: space-between;
+  }
+
+  .preflight-list.compact-list {
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(120px, 1fr)
+      );
+  }
+
+  .operator-layout {
+    width: 96%;
+    margin: 10px auto;
+  }
+
+  .panel {
+    padding: 14px;
+  }
+
+  .operator-page .live-preview-panel {
+    width: min(250px, 100%) !important;
+    justify-self: center;
+  }
+
+  .match-setup-controls,
+  .away-goal-controls,
+  .away-best-controls,
+  .message-controls,
+  .penalty-controls {
+    flex-direction: column;
+  }
+
+  .active-match-card {
+    grid-template-columns:
+      70px 1fr 70px;
+  }
+
+  .operator-team-logo {
+    width: 62px;
+    height: 62px;
+  }
+
+  .operator-score-row {
+    gap: 20px;
+  }
+
+  .operator-clock-center {
+    width: 100%;
+  }
+
+  .players-grid {
+    grid-template-columns:
+      1fr;
+  }
+
+  .button-grid {
+    grid-template-columns:
+      1fr;
+  }
+
+  .penalty-team-selector {
+    flex-direction: column;
+  }
+}

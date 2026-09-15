@@ -1,0 +1,10 @@
+# Arena Kube – filer som ikke skal versjoneres
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Midlertidige filer
+*.tmp
+*.bak
+~*

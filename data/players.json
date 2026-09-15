@@ -1,0 +1,152 @@
+[
+  {
+    "number": 14,
+    "name": "Albert Svane Nilssen",
+    "goalMusic": "../audio/players/14.mp3"
+  },
+  {
+    "number": 75,
+    "name": "Albin Bruus Green",
+    "goalMusic": "../audio/players/75.mp3"
+  },
+  {
+    "number": 20,
+    "name": "Aleksi Pelo",
+    "goalMusic": "../audio/players/20.mp3"
+  },
+  {
+    "number": 18,
+    "name": "Alexander Njøs",
+    "goalMusic": "../audio/players/18.mp3"
+  },
+  {
+    "number": 45,
+    "name": "David Rosenqvist",
+    "goalMusic": "../audio/players/45.mp3"
+  },
+  {
+    "number": 27,
+    "name": "Daniel Olai Nordal",
+    "goalMusic": "../audio/players/27.mp3"
+  },
+  {
+    "number": 72,
+    "name": "Dennis Greger Steen",
+    "goalMusic": "../audio/players/72.mp3"
+  },
+  {
+    "number": 50,
+    "name": "Eeili Parkaa",
+    "goalMusic": "../audio/players/50.mp3"
+  },
+  {
+    "number": 29,
+    "name": "Elliot Henrik Rivedal-Lindeberg",
+    "goalMusic": "../audio/players/29.mp3"
+  },
+  {
+    "number": 31,
+    "name": "Emil Nordseth",
+    "goalMusic": "../audio/players/31.mp3"
+  },
+  {
+    "number": 11,
+    "name": "Filip Schedin",
+    "goalMusic": "../audio/players/11.mp3"
+  },
+  {
+    "number": 12,
+    "name": "Filip Engebretsen-Hansen",
+    "goalMusic": "../audio/players/12.mp3"
+  },
+  {
+    "number": 32,
+    "name": "Isak Kroon",
+    "goalMusic": "../audio/players/32.mp3"
+  },
+  {
+    "number": 25,
+    "name": "Ivan Moen Tøraasen",
+    "goalMusic": "../audio/players/25.mp3"
+  },
+  {
+    "number": 97,
+    "name": "Jonas Soløst",
+    "goalMusic": "../audio/players/97.mp3"
+  },
+  {
+    "number": 55,
+    "name": "Kristian Brevik",
+    "goalMusic": "../audio/players/55.mp3"
+  },
+  {
+    "number": 99,
+    "name": "Kristoffer Emanuelsen",
+    "goalMusic": "../audio/players/99.mp3"
+  },
+  {
+    "number": 33,
+    "name": "Leon Sevendal",
+    "goalMusic": "../audio/players/33.mp3"
+  },
+  {
+    "number": 7,
+    "name": "Magnus Johnsen",
+    "goalMusic": "../audio/players/7.mp3"
+  },
+  {
+    "number": 8,
+    "name": "Magnus Dahlum-Skedsmo",
+    "goalMusic": "../audio/players/8.mp3"
+  },
+  {
+    "number": 19,
+    "name": "Magnus Indand-Weinl",
+    "goalMusic": "../audio/players/19.mp3"
+  },
+  {
+    "number": 48,
+    "name": "Magnus Bergsten Normann",
+    "goalMusic": "../audio/players/48.mp3"
+  },
+  {
+    "number": 30,
+    "name": "Oliver Kristiansen",
+    "goalMusic": "../audio/players/30.mp3"
+  },
+  {
+    "number": 38,
+    "name": "Sigurd Vangen",
+    "goalMusic": "../audio/players/38.mp3"
+  },
+  {
+    "number": 40,
+    "name": "Sjur Vangen",
+    "goalMusic": "../audio/players/40.mp3"
+  },
+  {
+    "number": 42,
+    "name": "Tobias Eriksen Sund",
+    "goalMusic": "../audio/players/42.mp3"
+  },
+  {
+    "number": 6,
+    "name": "Tord Aasdalen Sundby",
+    "goalMusic": "../audio/players/6.mp3"
+  },
+  {
+    "number": 22,
+    "name": "Aatu Parkaa",
+    "goalMusic": "../audio/players/22.mp3"
+  },
+  {
+    "number": 88,
+    "name": "Even Hervik",
+    "goalMusic": "../audio/players/88.mp3"
+  },
+  {
+    "number": 89,
+    "name": "Eivind Rossavik",
+    "goalMusic": "../audio/players/89.mp3"
+  }
+]
