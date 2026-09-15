@@ -5930,7 +5930,9 @@ channel.addEventListener(
 
     if (
       data.type ===
-        "goalHomeFinished"
+        "goalHomeFinished" ||
+      data.type ===
+        "goalCelebrationFinished"
     ) {
       homeGoalRunning =
         false;
