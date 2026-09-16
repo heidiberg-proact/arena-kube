@@ -120,7 +120,7 @@
     "goalVideo": "../media/players/videos/97.mp4"
   },
   {
-     "number": 30,
+    "number": 30,
     "name": "Oliver Kristiansen",
     "image": "../media/players/Images/30.jpg",
     "goalVideo": "../media/players/videos/30.mp4"
@@ -136,50 +136,11 @@
     "name": "Tobias Eriksen Sund",
     "image": "../media/players/Images/42.jpg",
     "goalVideo": "../media/players/videos/42.mp4"
- },
-  {
-    "number": 97,
-    "name": "Jonas Soløst",
-    "image": "../media/players/Images/97.jpg",
-    "goalVideo": "../media/players/videos/97.mp4"
- },
+  },
   {
     "number": 44,
     "name": "Kristoffer Emanuelsen",
     "image": "../media/players/Images/44.jpg",
     "goalVideo": "../media/players/videos/44.mp4"
- },
-  {
-    "number": 42,
-    "name": "Tobias Eriksen Sund",
-    "image": "../media/players/Images/42.jpg",
-    "goalVideo": "../media/players/videos/42.mp4"
- },
-  {
-    "number": 42,
-    "name": "Tobias Eriksen Sund",
-    "image": "../media/players/Images/42.jpg",
-    "goalVideo": "../media/players/videos/42.mp4"
- },
-  {
-    "number": 42,
-    "name": "Tobias Eriksen Sund",
-    "image": "../media/players/Images/42.jpg",
-    "goalVideo": "../media/players/videos/42.mp4"
- },
-  {
-    "number": 42,
-    "name": "Tobias Eriksen Sund",
-    "image": "../media/players/Images/42.jpg",
-    "goalVideo": "../media/players/videos/42.mp4"
- },
-  {
-    "number": 42,
-    "name": "Tobias Eriksen Sund",
-    "image": "../media/players/Images/42.jpg",
-    "goalVideo": "../media/players/videos/42.mp4"
-
-
-    }
-
-   ]
+  }
+]
