@@ -202,11 +202,6 @@ const awayAssistNameInput =
     "awayAssistName"
   );
 
-const showAwayGoalButton =
-  document.getElementById(
-    "showAwayGoal"
-  );
-
 let awayGoalPlayerSelect =
   null;
 
@@ -3537,7 +3532,7 @@ function setAwayRosterMode(
       }
 
       input.readOnly =
-        rosterAvailable;
+        true;
 
       input.classList.toggle(
         "roster-name-found",
@@ -3551,7 +3546,7 @@ function setAwayRosterMode(
         );
 
         input.placeholder =
-          "Skriv navn manuelt";
+          "Aktiver kamp med spillerliste";
       }
     }
   );
@@ -4430,154 +4425,9 @@ if (
    BORTEMÅL
 ========================================================= */
 
-if (
-  showAwayGoalButton
-) {
-  showAwayGoalButton.addEventListener(
-    "click",
-    () => {
-      let scorer =
-        null;
-
-      let assist =
-        null;
-
-      const number =
-        awayGoalNumberInput
-          ? awayGoalNumberInput.value.trim()
-          : "";
-
-      const name =
-        awayGoalNameInput
-          ? awayGoalNameInput.value.trim()
-          : "";
-
-      const assistNumber =
-        awayAssistNumberInput
-          ? awayAssistNumberInput.value.trim()
-          : "";
-
-      const assistName =
-        awayAssistNameInput
-          ? awayAssistNameInput.value.trim()
-          : "";
-
-      if (!number) {
-        alert(
-          "Skriv inn draktnummer på målscorer."
-        );
-
-        return;
-      }
-
-      if (
-        awayPlayersLoaded
-      ) {
-        scorer =
-          findAwayPlayerByNumber(
-            number
-          );
-
-        if (!scorer) {
-          alert(
-            `Fant ikke spiller #${number} i bortelagets lagoppstilling.`
-          );
-
-          return;
-        }
-
-        if (assistNumber) {
-          assist =
-            findAwayPlayerByNumber(
-              assistNumber
-            );
-
-          if (!assist) {
-            alert(
-              `Fant ikke assist #${assistNumber} i bortelagets lagoppstilling.`
-            );
-
-            return;
-          }
-        }
-
-      } else {
-
-        scorer = {
-          number,
-          name
-        };
-
-        if (
-          assistNumber ||
-          assistName
-        ) {
-          assist = {
-            number:
-              assistNumber,
-
-            name:
-              assistName
-          };
-        }
-      }
-
-      channel.postMessage({
-        type:
-          "goalAway",
-
-        scorer,
-        assist,
-
-        match:
-          activeMatch
-      });
-
-      if (
-        awayGoalPlayerSelect
-      ) {
-        awayGoalPlayerSelect.value =
-          "";
-      }
-
-      if (
-        awayGoalAssistSelect
-      ) {
-        awayGoalAssistSelect.value =
-          "";
-      }
-
-      if (
-        awayGoalNumberInput
-      ) {
-        awayGoalNumberInput.value =
-          "";
-      }
-
-      if (
-        awayGoalNameInput
-      ) {
-        awayGoalNameInput.value =
-          "";
-      }
-
-      if (
-        awayAssistNumberInput
-      ) {
-        awayAssistNumberInput.value =
-          "";
-      }
-
-      if (
-        awayAssistNameInput
-      ) {
-        awayAssistNameInput.value =
-          "";
-      }
-    }
-  );
-}
-
+// Bortemål er kun speakerstøtte i operatoren.
+// Nummerfeltene fyller navn fra aktivt bortelags spillerliste.
+// Det sendes aldri en bortemålscene til displayet.
 
 if (
   awayGoalNumberInput
