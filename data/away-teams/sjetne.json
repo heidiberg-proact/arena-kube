@@ -1,1 +1,66 @@
-[]
+[
+  {
+    "number": 1,
+    "name": "Tormod Haus Lien"
+  },
+  {
+    "number": 4,
+    "name": "Kasper Gjesdal Hansen"
+  },
+  {
+    "number": 6,
+    "name": "Petter Bjerken (C)"
+  },
+  {
+    "number": 7,
+    "name": "Sander Johansen"
+  },
+  {
+    "number": 15,
+    "name": "Jonathan Andersson"
+  },
+  {
+    "number": 21,
+    "name": "Menkem Teferi"
+  },
+  {
+    "number": 22,
+    "name": "Sander Larsen Refsnes"
+  },
+  {
+    "number": 25,
+    "name": "Henrik Svee Bjørshol"
+  },
+  {
+    "number": 27,
+    "name": "Sander Johansen Skrolsvik"
+  },
+  {
+    "number": 34,
+    "name": "Sigurd Lenasønn Tjelle"
+  },
+  {
+    "number": 46,
+    "name": "Odin Tegnander Andresen"
+  },
+  {
+    "number": 55,
+    "name": "Erik Angell Berg (BB)"
+  },
+  {
+    "number": 73,
+    "name": "Fredrik Borren Wærnes"
+  },
+  {
+    "number": 89,
+    "name": "Iver Bakken"
+  },
+  {
+    "number": 93,
+    "name": "Oskar Bøwarp"
+  },
+  {
+    "number": 98,
+    "name": "Christian Larsen Refsnes"
+  }
+]

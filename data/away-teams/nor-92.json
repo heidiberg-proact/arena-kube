@@ -1,1 +1,70 @@
-[]
+[
+  {
+    "number": 11,
+    "name": "Emil Teksum"
+  },
+  {
+    "number": 12,
+    "name": "Robin Teksum"
+  },
+  {
+    "number": 13,
+    "name": "Kasper Tähkä"
+  },
+  {
+    "number": 17,
+    "name": "Nikolai Opsahl Johansen"
+  },
+  {
+    "number": 18,
+    "name": "Jakob Grøstad"
+  },
+  {
+    "number": 22,
+    "name": "Lukas Stefan Alexander Bemström (BB)"
+  },
+  {
+    "number": 24,
+    "name": "Daniel Pereira Arnesen"
+  },
+  {
+    "number": 27,
+    "name": "Didrik Grøstad (C)"
+  },
+  {
+    "number": 28,
+    "name": "Anders Graatrud Fanuelsen"
+  },
+  {
+    "number": 30,
+    "name": "Kristoffer Henriksen"
+  },
+  {
+    "number": 51,
+    "name": "Markus Hegnes Hansen"
+  },
+  {
+    "number": 67,
+    "name": "Philip William Kämpe"
+  },
+  {
+    "number": 77,
+    "name": "Mathias Breidablik"
+  },
+  {
+    "number": 88,
+    "name": "Alexander Brurberg Selbo"
+  },
+  {
+    "number": 90,
+    "name": "Jørgen Nilsen Ripel"
+  },
+  {
+    "number": 92,
+    "name": "Mathias Hunnestad Gommerud"
+  },
+  {
+    "number": 97,
+    "name": "Alex Christian Laiti"
+  }
+]

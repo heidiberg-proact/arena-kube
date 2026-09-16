@@ -1,1 +1,74 @@
-[]
+[
+  {
+    "number": 6,
+    "name": "Andreas Mikalsen"
+  },
+  {
+    "number": 8,
+    "name": "Jacob Lars Oskar Öberg (C)"
+  },
+  {
+    "number": 11,
+    "name": "Tobias Bratten"
+  },
+  {
+    "number": 12,
+    "name": "Tuomo Manninen"
+  },
+  {
+    "number": 17,
+    "name": "Mikal Tønnesen"
+  },
+  {
+    "number": 20,
+    "name": "Daniel Stenberg Vold"
+  },
+  {
+    "number": 23,
+    "name": "Johannes Håkstad"
+  },
+  {
+    "number": 25,
+    "name": "Odin Adirut Lilledal"
+  },
+  {
+    "number": 33,
+    "name": "Per Carl Anders Olsson"
+  },
+  {
+    "number": 44,
+    "name": "Vetle Tysdal"
+  },
+  {
+    "number": 48,
+    "name": "Idar Lyngås"
+  },
+  {
+    "number": 65,
+    "name": "Aleksander Barka Braut"
+  },
+  {
+    "number": 67,
+    "name": "Noah Mathiassen Madsen"
+  },
+  {
+    "number": 73,
+    "name": "Hans Martin Boganes"
+  },
+  {
+    "number": 77,
+    "name": "Harald Bollestad"
+  },
+  {
+    "number": 81,
+    "name": "Isaac James Emil Evans (BB)"
+  },
+  {
+    "number": 88,
+    "name": "Herman Erik Gustav Svedberg"
+  },
+  {
+    "number": 91,
+    "name": "Ørjan Emil Sandve"
+  }
+]

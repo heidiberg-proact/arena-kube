@@ -1,1 +1,82 @@
-[]
+[
+  {
+    "number": 4,
+    "name": "Adam Myrinder"
+  },
+  {
+    "number": 7,
+    "name": "Sander Raab Owren"
+  },
+  {
+    "number": 8,
+    "name": "Henrik Jørgensen Larsen"
+  },
+  {
+    "number": 10,
+    "name": "Karl Oliver Nilsson"
+  },
+  {
+    "number": 15,
+    "name": "Magnus Wiig"
+  },
+  {
+    "number": 16,
+    "name": "Mario Alexander Berntsen Thornquist"
+  },
+  {
+    "number": 26,
+    "name": "Hans Petter Hasle Nilsen"
+  },
+  {
+    "number": 28,
+    "name": "Noah Aamodt-Heidenberg"
+  },
+  {
+    "number": 33,
+    "name": "Jonathan Karlberg"
+  },
+  {
+    "number": 44,
+    "name": "Espen Østerås"
+  },
+  {
+    "number": 48,
+    "name": "Per Jarle Karlsen"
+  },
+  {
+    "number": 61,
+    "name": "Fredrik Gjødalstuen (C)"
+  },
+  {
+    "number": 69,
+    "name": "Christoffer Gjødalstuen (BB)"
+  },
+  {
+    "number": 71,
+    "name": "Sjur Ulrik Reinholt Strand"
+  },
+  {
+    "number": 72,
+    "name": "Tobias Holm-Gabler"
+  },
+  {
+    "number": 75,
+    "name": "Lasse Seppola Schie"
+  },
+  {
+    "number": 79,
+    "name": "Oliver Sannerød Andersen"
+  },
+  {
+    "number": 83,
+    "name": "Jacob Buer Arntsen"
+  },
+  {
+    "number": 87,
+    "name": "Jakob Kristoffer Oliver Mårtensson"
+  },
+  {
+    "number": 90,
+    "name": "Benjamin Alaezar Wischut"
+  }
+]
