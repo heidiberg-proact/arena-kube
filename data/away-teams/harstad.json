@@ -1,13 +1,5 @@
 [
   {
-<<<<<<< Updated upstream
-    "number": 7,
-    "name": "Ola Nordmann"
-  },
-  {
-    "number": 14,
-    "name": "Kari Nordmann"
-=======
     "number": 8,
     "name": "Audun Mathias Walle Thommasen"
   },
@@ -74,18 +66,5 @@
   {
     "number": 99,
     "name": "Steffen Riisa"
-  },
-  {
-    "number": 18,
-    "name": "Spiller 18"
-  },
-  {
-    "number": 19,
-    "name": "Spiller 19"
-  },
-  {
-    "number": 20,
-    "name": "Spiller 20"
->>>>>>> Stashed changes
   }
 ]
