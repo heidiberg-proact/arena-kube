@@ -2,151 +2,181 @@
   {
     "number": 14,
     "name": "Albert Svane Nilssen",
-    "goalMusic": "../audio/players/14.mp3"
+    "image": "../media/players/Images/14.jpeg",
+    "goalVideo": "../media/players/videos/14.mp4"
   },
   {
     "number": 75,
     "name": "Albin Bruus Green",
-    "goalMusic": "../audio/players/75.mp3"
+    "image": "../media/players/Images/75.jpeg",
+    "goalVideo": "../media/players/videos/75.mp4"
   },
   {
     "number": 20,
     "name": "Aleksi Pelo",
-    "goalMusic": "../audio/players/20.mp3"
+    "image": "../media/players/Images/20.jpeg",
+    "goalVideo": "../media/players/videos/20.mp4"
   },
   {
     "number": 18,
     "name": "Alexander Njøs",
-    "goalMusic": "../audio/players/18.mp3"
+    "image": "../media/players/Images/18.jpeg",
+    "goalVideo": "../media/players/videos/18.mp4"
   },
   {
     "number": 45,
     "name": "David Rosenqvist",
-    "goalMusic": "../audio/players/45.mp3"
+    "image": "../media/players/Images/45.jpeg",
+    "goalVideo": "../media/players/videos/45.mp4"
   },
   {
     "number": 27,
     "name": "Daniel Olai Nordal",
-    "goalMusic": "../audio/players/27.mp3"
+    "image": "../media/players/Images/27.jpeg",
+    "goalVideo": "../media/players/videos/27.mp4"
   },
   {
     "number": 72,
     "name": "Dennis Greger Steen",
-    "goalMusic": "../audio/players/72.mp3"
+    "image": "../media/players/Images/72.jpeg",
+    "goalVideo": "../media/players/videos/72.mp4"
   },
   {
     "number": 50,
     "name": "Eeili Parkaa",
-    "goalMusic": "../audio/players/50.mp3"
+    "image": "../media/players/Images/50.jpeg",
+    "goalVideo": "../media/players/videos/50.mp4"
   },
   {
     "number": 29,
     "name": "Elliot Henrik Rivedal-Lindeberg",
-    "goalMusic": "../audio/players/29.mp3"
+    "image": "../media/players/Images/29.jpeg",
+    "goalVideo": "../media/players/videos/29.mp4"
   },
   {
     "number": 31,
     "name": "Emil Nordseth",
-    "goalMusic": "../audio/players/31.mp3"
+    "image": "../media/players/Images/31.jpeg",
+    "goalVideo": "../media/players/videos/31.mp4"
   },
   {
     "number": 11,
     "name": "Filip Schedin",
-    "goalMusic": "../audio/players/11.mp3"
+    "image": "../media/players/Images/11.jpeg",
+    "goalVideo": "../media/players/videos/11.mp4"
   },
   {
     "number": 12,
     "name": "Filip Engebretsen-Hansen",
-    "goalMusic": "../audio/players/12.mp3"
+    "image": "../media/players/Images/12.jpeg",
+    "goalVideo": "../media/players/videos/12.mp4"
   },
   {
     "number": 32,
     "name": "Isak Kroon",
-    "goalMusic": "../audio/players/32.mp3"
+    "image": "../media/players/Images/32.jpeg",
+    "goalVideo": "../media/players/videos/32.mp4"
   },
   {
     "number": 25,
     "name": "Ivan Moen Tøraasen",
-    "goalMusic": "../audio/players/25.mp3"
+    "image": "../media/players/Images/25.jpeg",
+    "goalVideo": "../media/players/videos/25.mp4"
   },
   {
     "number": 97,
     "name": "Jonas Soløst",
-    "goalMusic": "../audio/players/97.mp3"
+    "image": "../media/players/Images/97.jpeg",
+    "goalVideo": "../media/players/videos/97.mp4"
   },
   {
     "number": 55,
     "name": "Kristian Brevik",
-    "goalMusic": "../audio/players/55.mp3"
+    "image": "../media/players/Images/55.jpeg",
+    "goalVideo": "../media/players/videos/55.mp4"
   },
   {
     "number": 99,
     "name": "Kristoffer Emanuelsen",
-    "goalMusic": "../audio/players/99.mp3"
+    "image": "../media/players/Images/99.jpeg",
+    "goalVideo": "../media/players/videos/99.mp4"
   },
   {
     "number": 33,
     "name": "Leon Sevendal",
-    "goalMusic": "../audio/players/33.mp3"
+    "image": "../media/players/Images/33.jpeg",
+    "goalVideo": "../media/players/videos/33.mp4"
   },
   {
     "number": 7,
     "name": "Magnus Johnsen",
-    "goalMusic": "../audio/players/7.mp3"
+    "image": "../media/players/Images/7.jpeg",
+    "goalVideo": "../media/players/videos/7.mp4"
   },
   {
     "number": 8,
     "name": "Magnus Dahlum-Skedsmo",
-    "goalMusic": "../audio/players/8.mp3"
+    "image": "../media/players/Images/8.jpeg",
+    "goalVideo": "../media/players/videos/8.mp4"
   },
   {
     "number": 19,
     "name": "Magnus Indand-Weinl",
-    "goalMusic": "../audio/players/19.mp3"
+    "image": "../media/players/Images/19.jpeg",
+    "goalVideo": "../media/players/videos/19.mp4"
   },
   {
     "number": 48,
     "name": "Magnus Bergsten Normann",
-    "goalMusic": "../audio/players/48.mp3"
+    "image": "../media/players/Images/48.jpeg",
+    "goalVideo": "../media/players/videos/48.mp4"
   },
   {
     "number": 30,
     "name": "Oliver Kristiansen",
-    "goalMusic": "../audio/players/30.mp3"
+    "image": "../media/players/Images/30.jpeg",
+    "goalVideo": "../media/players/videos/30.mp4"
   },
   {
     "number": 38,
     "name": "Sigurd Vangen",
-    "goalMusic": "../audio/players/38.mp3"
+    "image": "../media/players/Images/38.jpeg",
+    "goalVideo": "../media/players/videos/38.mp4"
   },
   {
     "number": 40,
     "name": "Sjur Vangen",
-    "goalMusic": "../audio/players/40.mp3"
+    "image": "../media/players/Images/40.jpeg",
+    "goalVideo": "../media/players/videos/40.mp4"
   },
   {
     "number": 42,
     "name": "Tobias Eriksen Sund",
-    "goalMusic": "../audio/players/42.mp3"
+    "image": "../media/players/Images/42.jpeg",
+    "goalVideo": "../media/players/videos/42.mp4"
   },
   {
     "number": 6,
     "name": "Tord Aasdalen Sundby",
-    "goalMusic": "../audio/players/6.mp3"
+    "image": "../media/players/Images/6.jpeg",
+    "goalVideo": "../media/players/videos/6.mp4"
   },
   {
     "number": 22,
     "name": "Aatu Parkaa",
-    "goalMusic": "../audio/players/22.mp3"
+    "image": "../media/players/Images/22.jpeg",
+    "goalVideo": "../media/players/videos/22.mp4"
   },
   {
     "number": 88,
     "name": "Even Hervik",
-    "goalMusic": "../audio/players/88.mp3"
+    "image": "../media/players/Images/88.jpeg",
+    "goalVideo": "../media/players/videos/88.mp4"
   },
   {
     "number": 89,
     "name": "Eivind Rossavik",
-    "goalMusic": "../audio/players/89.mp3"
+    "image": "../media/players/Images/89.jpeg",
+    "goalVideo": "../media/players/videos/89.mp4"
   }
 ]

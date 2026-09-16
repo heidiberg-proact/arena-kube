@@ -180,18 +180,55 @@
   </section>
 
 
-  <!-- HJEMMEMÅL -->
+  <!-- UMIDDELBAR MÅLFEIRING -->
+
+  <section id="goalCelebrationScene" class="scene">
+    <div class="goal-celebration-layout">
+      <img
+        id="goalCelebrationLogo"
+        src="../images/teams/ullkisa.jpg"
+        alt="Ull/Kisa"
+      >
+      <div class="goal-celebration-title">MÅL!</div>
+      <div class="goal-celebration-team">ULL/KISA INNEBANDY</div>
+    </div>
+  </section>
+
+
+  <!-- MÅLSCORER HJEMME -->
 
   <section id="goalHomeScene" class="scene">
 
     <div class="home-goal-layout">
 
-      <div class="home-goal-title">MÅL!</div>
+      <div class="home-goal-scoreboard">
+        <div class="home-goal-scoreboard-title">MÅL!</div>
 
-      <div class="home-goal-team">ULL/KISA INNEBANDY</div>
+        <div class="home-goal-score-row">
+          <div class="home-goal-mini-team">
+            <img id="goalHomeHomeLogo" src="../images/teams/ullkisa.jpg" alt="Hjemmelag">
+            <div id="goalHomeHomeName">ULL/KISA</div>
+            <strong id="goalHomeHomeScore">0</strong>
+            <div id="goalHomePenaltyHome" class="home-goal-penalties"></div>
+          </div>
 
+          <div class="home-goal-mini-clock">
+            <div id="goalHomeGameClock">00:00</div>
+            <div id="goalHomePeriod">1. PERIODE</div>
+            <div id="goalHomeClockStatus">STOPPET</div>
+          </div>
 
-      <div class="goal-media-area">
+          <div class="home-goal-mini-team">
+            <img id="goalHomeAwayLogo" src="../images/teams/away.png" alt="Bortelag">
+            <div id="goalHomeAwayName">BORTELAG</div>
+            <strong id="goalHomeAwayScore">0</strong>
+            <div id="goalHomePenaltyAway" class="home-goal-penalties"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="home-goal-player-panel">
+        <div class="goal-media-area">
 
         <img
           id="goalPlayerImage"
@@ -204,8 +241,17 @@
           id="goalPlayerVideo"
           class="goal-player-video"
           muted
+          loop
           playsinline
         ></video>
+
+        </div>
+
+        <div class="home-goal-player-info">
+          <div id="goalHomeNumber" class="home-goal-number"></div>
+          <div id="goalHomeName" class="home-goal-name"></div>
+          <div id="goalAssist" class="goal-assist"></div>
+        </div>
 
       </div>
 
@@ -488,6 +534,7 @@
     src="../media/video/innmarsj.mp4"
     preload="auto"
     playsinline
+    muted
   ></video>
 </div>
 
@@ -508,11 +555,6 @@
   preload="auto"
 ></audio>
 
-<audio
-  id="goalAwayAudio"
-  src="../audio/goal-away.mp3"
-  preload="auto"
-></audio>
 
 <audio
   id="penaltyAudio"
@@ -523,6 +565,12 @@
 <audio
   id="hornAudio"
   src="../audio/horn.mp3"
+  preload="auto"
+></audio>
+
+<audio
+  id="entranceAudio"
+  src="../media/video/innmarsj.mp3"
   preload="auto"
 ></audio>
 
@@ -546,25 +594,37 @@
       "entranceVideo"
     );
 
+  const entranceTrack =
+    document.getElementById(
+      "entranceAudio"
+    );
+
   let entranceRunning =
     false;
 
 
-  function resetVideo() {
-    if (!video) {
-      return;
-    }
+  function resetEntranceMedia() {
+    [
+      video,
+      entranceTrack
+    ].forEach(
+      (media) => {
+        if (!media) {
+          return;
+        }
 
-    video.pause();
+        media.pause();
 
-    try {
-      video.currentTime =
-        0;
-    } catch (error) {
-      console.log(
-        "Arena Kube: innmarsjvideo var ikke startet."
-      );
-    }
+        try {
+          media.currentTime =
+            0;
+        } catch (error) {
+          console.log(
+            "Arena Kube: innmarsjmediet var ikke startet."
+          );
+        }
+      }
+    );
   }
 
 
@@ -577,7 +637,7 @@
       return;
     }
 
-    resetVideo();
+    resetEntranceMedia();
 
     overlay.hidden =
       true;
@@ -605,14 +665,15 @@
   async function startEntrance() {
     if (
       !overlay ||
-      !video
+      !video ||
+      !entranceTrack
     ) {
       channel.postMessage({
         type:
           "entranceStopped",
 
         error:
-          "Innmarsjvideo mangler"
+          "Innmarsjvideo eller innmarsjlyd mangler"
       });
 
       return;
@@ -653,7 +714,7 @@
       stopGoalMedia();
     }
 
-    resetVideo();
+    resetEntranceMedia();
 
     overlay.hidden =
       false;
@@ -662,7 +723,10 @@
       true;
 
     try {
-      await video.play();
+      await Promise.all([
+        video.play(),
+        entranceTrack.play()
+      ]);
 
       channel.postMessage({
         type:
@@ -675,9 +739,11 @@
 
     } catch (error) {
       console.error(
-        "Arena Kube: kunne ikke starte innmarsjvideo:",
+        "Arena Kube: kunne ikke starte innmarsjvideo/-lyd:",
         error
       );
+
+      resetEntranceMedia();
 
       overlay.hidden =
         true;
@@ -863,6 +929,7 @@
         case "game":
         case "matchUpdate":
         case "goalHome":
+        case "goalCelebrationStart":
         case "goalAway":
         case "penalty":
         case "bestPlayerHome":

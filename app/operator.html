@@ -378,14 +378,6 @@
     </div>
 
 
-    <div
-      id="checkAwayGoalAudio"
-      class="preflight-item neutral"
-    >
-      <span class="preflight-icon">●</span>
-      <span>Bortemål-lyd</span>
-      <strong>Ikke testet</strong>
-    </div>
 
 
     <div
@@ -750,7 +742,7 @@
 
         <div class="compact-goal-control">
           <button
-            id="showHomeGoal"
+            id="showGoalCelebration"
             class="control-button goal-send-button compact-goal-button"
           >
             MÅL
@@ -869,16 +861,53 @@
 
 
   <!-- =====================================================
+       HJEMMEMÅL – MÅLSCORER OG ASSIST
+  ====================================================== -->
+
+  <section class="panel" id="homeGoalPanel">
+
+    <h2>Hjemmemål – målscorer</h2>
+
+    <p class="help">
+      Velg målscorer og eventuell assist. Denne funksjonen
+      viser delt skjerm. Resultatet endres manuelt.
+    </p>
+
+    <div id="homeGoalPlayers" class="players-grid"></div>
+
+    <div class="assist-area">
+      <label for="homeGoalAssistSelect">Assist</label>
+      <select id="homeGoalAssistSelect">
+        <option value="">Ingen assist</option>
+      </select>
+    </div>
+
+    <div id="homeGoalSelectionStatus" class="selected-goal-status">
+      Velg målscorer
+    </div>
+
+    <button
+      id="showHomeGoal"
+      class="control-button goal-send-button full-width-button"
+    >
+      VIS MÅLSCORER
+    </button>
+
+  </section>
+
+
+  <!-- =====================================================
        BORTEMÅL
   ====================================================== -->
 
-  <section class="panel">
+  <section id="awayGoalPanel" class="panel">
 
     <h2>Bortemål</h2>
 
     <p class="help">
       Bortelagets navn og logo hentes fra aktiv kamp.
-      Resultatet økes automatisk med ett mål.
+      Skriv draktnummer, så hentes navnet fra lagoppstillingen.
+      Resultatet endres manuelt på kampklokka.
     </p>
 
     <div class="away-goal-controls">
@@ -895,7 +924,7 @@
         id="awayGoalName"
         type="text"
         maxlength="40"
-        placeholder="Målscorer navn"
+        placeholder="Navn fylles inn automatisk"
       >
 
     </div>
@@ -914,17 +943,11 @@
         id="awayAssistName"
         type="text"
         maxlength="40"
-        placeholder="Assist navn"
+        placeholder="Navn fylles inn automatisk"
       >
 
     </div>
 
-    <button
-      id="showAwayGoal"
-      class="control-button yellow full-width-button"
-    >
-      VIS BORTEMÅL
-    </button>
 
   </section>
 

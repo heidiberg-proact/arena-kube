@@ -31,6 +31,9 @@ const BREAK_DURATION_MS =
 const ENTRANCE_VIDEO_URL =
   "../media/video/innmarsj.mp4";
 
+const ENTRANCE_AUDIO_URL =
+  "../media/video/innmarsj.mp3";
+
 const PENALTY_SLOT_COUNT =
   3;
 
@@ -48,6 +51,12 @@ let matches = [];
 
 let homeGoalRunning =
   false;
+
+let goalCelebrationRunning =
+  false;
+
+let selectedHomeGoalPlayer =
+  null;
 
 let activeMatch =
   null;
@@ -146,6 +155,26 @@ const awayLogo =
 const showHomeGoalButton =
   document.getElementById(
     "showHomeGoal"
+  );
+
+const showGoalCelebrationButton =
+  document.getElementById(
+    "showGoalCelebration"
+  );
+
+const homeGoalPlayersContainer =
+  document.getElementById(
+    "homeGoalPlayers"
+  );
+
+const homeGoalAssistSelect =
+  document.getElementById(
+    "homeGoalAssistSelect"
+  );
+
+const homeGoalSelectionStatus =
+  document.getElementById(
+    "homeGoalSelectionStatus"
   );
 
 
@@ -461,7 +490,6 @@ const PREFLIGHT_CHECK_IDS = [
   "checkAwayLogo",
   "checkBestAudio",
   "checkHomeGoalAudio",
-  "checkAwayGoalAudio",
   "checkPenaltyAudio",
   "checkEntranceVideo",
   "checkAwayPlayers",
@@ -738,6 +766,23 @@ function installOperatorEnhancementStyles() {
 
     .arena-kube-roster-status.fallback {
       color: #ffe891;
+    }
+
+    .away-goal-controls input[readonly] {
+      cursor: default;
+      background: #eef2ef;
+    }
+
+    .away-goal-controls .roster-name-found {
+      border-color: #32b85d !important;
+      background: #eaffef !important;
+      color: #0b4d20 !important;
+      font-weight: 900 !important;
+    }
+
+    .away-goal-controls .roster-name-missing {
+      border-color: #d44141 !important;
+      background: #fff0f0 !important;
     }
 
     .arena-kube-manual-fallback[hidden] {
@@ -1184,15 +1229,9 @@ function installBestHomeSelect() {
 ========================================================= */
 
 function installAwayGoalSelects() {
-  if (
-    !showAwayGoalButton
-  ) {
-    return;
-  }
-
   const section =
-    showAwayGoalButton.closest(
-      ".panel"
+    document.getElementById(
+      "awayGoalPanel"
     );
 
   if (!section) {
@@ -1206,14 +1245,6 @@ function installAwayGoalSelects() {
       )
     );
 
-  manualRows.forEach(
-    (row) => {
-      row.classList.add(
-        "arena-kube-manual-fallback"
-      );
-    }
-  );
-
   awayRosterStatus =
     document.createElement(
       "div"
@@ -1225,44 +1256,6 @@ function installAwayGoalSelects() {
   awayRosterStatus.textContent =
     "Bortelagsspillere: manuell registrering";
 
-  awayGoalSelectControls =
-    document.createElement(
-      "div"
-    );
-
-  awayGoalSelectControls.className =
-    "arena-kube-compact-select-row";
-
-  awayGoalPlayerSelect =
-    document.createElement(
-      "select"
-    );
-
-  awayGoalPlayerSelect.id =
-    "awayGoalPlayerSelect";
-
-  awayGoalPlayerSelect.innerHTML =
-    '<option value="">Velg målscorer …</option>';
-
-  awayGoalAssistSelect =
-    document.createElement(
-      "select"
-    );
-
-  awayGoalAssistSelect.id =
-    "awayGoalAssistSelect";
-
-  awayGoalAssistSelect.innerHTML =
-    '<option value="">Ingen assist</option>';
-
-  awayGoalSelectControls.appendChild(
-    awayGoalPlayerSelect
-  );
-
-  awayGoalSelectControls.appendChild(
-    awayGoalAssistSelect
-  );
-
   const firstManualRow =
     manualRows[0];
 
@@ -1272,20 +1265,11 @@ function installAwayGoalSelects() {
       awayRosterStatus
     );
 
-    awayRosterStatus.insertAdjacentElement(
-      "afterend",
-      awayGoalSelectControls
-    );
   } else {
-    showAwayGoalButton.insertAdjacentElement(
-      "beforebegin",
+    section.appendChild(
       awayRosterStatus
     );
 
-    awayRosterStatus.insertAdjacentElement(
-      "afterend",
-      awayGoalSelectControls
-    );
   }
 
   setAwayRosterMode(
@@ -3543,33 +3527,34 @@ function setAwayRosterMode(
       !rosterAvailable;
   }
 
-  if (
-    awayGoalNumberInput
-  ) {
-    const row =
-      awayGoalNumberInput.closest(
-        ".away-goal-controls"
+  [
+    awayGoalNameInput,
+    awayAssistNameInput
+  ].forEach(
+    (input) => {
+      if (!input) {
+        return;
+      }
+
+      input.readOnly =
+        rosterAvailable;
+
+      input.classList.toggle(
+        "roster-name-found",
+        rosterAvailable &&
+        Boolean(input.value)
       );
 
-    if (row) {
-      row.hidden =
-        rosterAvailable;
-    }
-  }
+      if (!rosterAvailable) {
+        input.classList.remove(
+          "roster-name-missing"
+        );
 
-  if (
-    awayAssistNumberInput
-  ) {
-    const row =
-      awayAssistNumberInput.closest(
-        ".away-goal-controls"
-      );
-
-    if (row) {
-      row.hidden =
-        rosterAvailable;
+        input.placeholder =
+          "Skriv navn manuelt";
+      }
     }
-  }
+  );
 
   if (
     bestAwayPlayerSelect
@@ -3600,7 +3585,7 @@ function setAwayRosterMode(
       );
 
       awayRosterStatus.textContent =
-        `${awayPlayers.length} bortespillere lastet`;
+        `${awayPlayers.length} bortespillere lastet – skriv draktnummer`;
 
     } else {
       awayRosterStatus.classList.remove(
@@ -3615,6 +3600,85 @@ function setAwayRosterMode(
         "Bortelagsspillere ikke funnet – bruker manuell registrering";
     }
   }
+}
+
+
+function findAwayPlayerByNumber(
+  number
+) {
+  const wanted =
+    String(number || "").trim();
+
+  if (!wanted) {
+    return null;
+  }
+
+  return (
+    awayPlayers.find(
+      (player) =>
+        String(
+          player.number
+        ).trim() ===
+        wanted
+    ) ||
+    null
+  );
+}
+
+
+function syncAwayGoalNameFromNumber(
+  numberInput,
+  nameInput
+) {
+  if (
+    !numberInput ||
+    !nameInput ||
+    !awayPlayersLoaded
+  ) {
+    return;
+  }
+
+  const number =
+    numberInput.value.trim();
+
+  const player =
+    findAwayPlayerByNumber(
+      number
+    );
+
+  nameInput.value =
+    player
+      ? player.name || ""
+      : "";
+
+  nameInput.classList.toggle(
+    "roster-name-found",
+    Boolean(player)
+  );
+
+  nameInput.classList.toggle(
+    "roster-name-missing",
+    Boolean(number) &&
+    !player
+  );
+
+  nameInput.placeholder =
+    number && !player
+      ? "Nummer ikke funnet"
+      : "Navn fylles inn automatisk";
+}
+
+
+function syncAwayGoalNames() {
+  syncAwayGoalNameFromNumber(
+    awayGoalNumberInput,
+    awayGoalNameInput
+  );
+
+  syncAwayGoalNameFromNumber(
+    awayAssistNumberInput,
+    awayAssistNameInput
+  );
 }
 
 
@@ -3641,6 +3705,8 @@ function renderAwayPlayers() {
     awayPlayers.length >
       0
   );
+
+  syncAwayGoalNames();
 
   refreshPenaltyClockSelectors();
 }
@@ -4088,6 +4154,20 @@ async function loadPlayers() {
 
 function renderPlayers() {
   if (
+    homeGoalPlayersContainer
+  ) {
+    homeGoalPlayersContainer.innerHTML =
+      "";
+  }
+
+  if (
+    homeGoalAssistSelect
+  ) {
+    homeGoalAssistSelect.innerHTML =
+      '<option value="">Ingen assist</option>';
+  }
+
+  if (
     penaltyHomePlayerSelect
   ) {
     penaltyHomePlayerSelect.innerHTML =
@@ -4106,6 +4186,77 @@ function renderPlayers() {
       player,
       index
     ) => {
+      if (
+        homeGoalPlayersContainer
+      ) {
+        const goalButton =
+          document.createElement(
+            "button"
+          );
+
+        goalButton.type =
+          "button";
+
+        goalButton.className =
+          "player-button";
+
+        goalButton.innerHTML = `
+          <span class="player-number">${player.number}</span>
+          <span class="player-name">${player.name}</span>
+        `;
+
+        goalButton.addEventListener(
+          "click",
+          () => {
+            selectedHomeGoalPlayer =
+              player;
+
+            homeGoalPlayersContainer
+              .querySelectorAll(
+                ".player-button"
+              )
+              .forEach(
+                (button) => {
+                  button.classList.toggle(
+                    "selected-player",
+                    button === goalButton
+                  );
+                }
+              );
+
+            if (
+              homeGoalSelectionStatus
+            ) {
+              homeGoalSelectionStatus.textContent =
+                `Målscorer: #${player.number} ${player.name}`;
+            }
+          }
+        );
+
+        homeGoalPlayersContainer.appendChild(
+          goalButton
+        );
+      }
+
+      if (
+        homeGoalAssistSelect
+      ) {
+        const assistOption =
+          document.createElement(
+            "option"
+          );
+
+        assistOption.value =
+          index;
+
+        assistOption.textContent =
+          `#${player.number} ${player.name}`;
+
+        homeGoalAssistSelect.appendChild(
+          assistOption
+        );
+      }
+
       if (
         penaltyHomePlayerSelect
       ) {
@@ -4151,7 +4302,39 @@ function renderPlayers() {
 
 
 /* =========================================================
-   HJEMMEMÅL
+   UMIDDELBAR MÅLFEIRING
+========================================================= */
+
+if (
+  showGoalCelebrationButton
+) {
+  showGoalCelebrationButton.addEventListener(
+    "click",
+    () => {
+      goalCelebrationRunning =
+        !goalCelebrationRunning;
+
+      showGoalCelebrationButton.classList.toggle(
+        "running",
+        goalCelebrationRunning
+      );
+
+      channel.postMessage({
+        type:
+          goalCelebrationRunning
+            ? "goalCelebrationStart"
+            : "goalCelebrationStop",
+
+        match:
+          activeMatch
+      });
+    }
+  );
+}
+
+
+/* =========================================================
+   HJEMMEMÅL – MÅLSCORER OG ASSIST
 ========================================================= */
 
 if (
@@ -4160,22 +4343,80 @@ if (
   showHomeGoalButton.addEventListener(
     "click",
     () => {
+      if (
+        homeGoalRunning
+      ) {
+        homeGoalRunning =
+          false;
+
+        showHomeGoalButton.textContent =
+          "VIS MÅLSCORER";
+
+        showHomeGoalButton.classList.remove(
+          "running"
+        );
+
+        channel.postMessage({
+          type:
+            "goalHomeStop"
+        });
+
+        return;
+      }
+
+      if (
+        !selectedHomeGoalPlayer
+      ) {
+        alert(
+          "Velg målscorer for hjemmelaget."
+        );
+
+        return;
+      }
+
+      const assistIndex =
+        homeGoalAssistSelect
+          ? homeGoalAssistSelect.value
+          : "";
+
+      const assist =
+        assistIndex === ""
+          ? null
+          : players[
+              Number(
+                assistIndex
+              )
+            ] || null;
+
+      if (
+        assist ===
+        selectedHomeGoalPlayer
+      ) {
+        alert(
+          "Målscorer og assist kan ikke være samme spiller."
+        );
+
+        return;
+      }
+
       homeGoalRunning =
-        !homeGoalRunning;
+        true;
 
       showHomeGoalButton.textContent =
-        "MÅL";
+        "STOPP MÅLVISNING";
 
-      showHomeGoalButton.classList.toggle(
-        "running",
-        homeGoalRunning
+      showHomeGoalButton.classList.add(
+        "running"
       );
 
       channel.postMessage({
         type:
-          homeGoalRunning
-            ? "goalHomeStart"
-            : "goalHomeStop",
+          "goalHome",
+
+        scorer:
+          selectedHomeGoalPlayer,
+
+        assist,
 
         match:
           activeMatch
@@ -4201,55 +4442,66 @@ if (
       let assist =
         null;
 
+      const number =
+        awayGoalNumberInput
+          ? awayGoalNumberInput.value.trim()
+          : "";
+
+      const name =
+        awayGoalNameInput
+          ? awayGoalNameInput.value.trim()
+          : "";
+
+      const assistNumber =
+        awayAssistNumberInput
+          ? awayAssistNumberInput.value.trim()
+          : "";
+
+      const assistName =
+        awayAssistNameInput
+          ? awayAssistNameInput.value.trim()
+          : "";
+
+      if (!number) {
+        alert(
+          "Skriv inn draktnummer på målscorer."
+        );
+
+        return;
+      }
+
       if (
         awayPlayersLoaded
       ) {
         scorer =
-          getAwayPlayerFromSelect(
-            awayGoalPlayerSelect
+          findAwayPlayerByNumber(
+            number
           );
 
         if (!scorer) {
           alert(
-            "Velg målscorer for bortelaget."
+            `Fant ikke spiller #${number} i bortelagets lagoppstilling.`
           );
 
           return;
         }
 
-        assist =
-          getAwayPlayerFromSelect(
-            awayGoalAssistSelect
-          );
+        if (assistNumber) {
+          assist =
+            findAwayPlayerByNumber(
+              assistNumber
+            );
+
+          if (!assist) {
+            alert(
+              `Fant ikke assist #${assistNumber} i bortelagets lagoppstilling.`
+            );
+
+            return;
+          }
+        }
 
       } else {
-        const number =
-          awayGoalNumberInput
-            ? awayGoalNumberInput.value.trim()
-            : "";
-
-        const name =
-          awayGoalNameInput
-            ? awayGoalNameInput.value.trim()
-            : "";
-
-        const assistNumber =
-          awayAssistNumberInput
-            ? awayAssistNumberInput.value.trim()
-            : "";
-
-        const assistName =
-          awayAssistNameInput
-            ? awayAssistNameInput.value.trim()
-            : "";
-
-        if (!number) {
-          alert(
-            "Skriv inn draktnummer på målscorer."
-          );
-
-          return;
-        }
 
         scorer = {
           number,
@@ -4269,11 +4521,6 @@ if (
           };
         }
       }
-
-      changeScore(
-        "away",
-        1
-      );
 
       channel.postMessage({
         type:
@@ -4328,6 +4575,34 @@ if (
           "";
       }
     }
+  );
+}
+
+
+if (
+  awayGoalNumberInput
+) {
+  awayGoalNumberInput.addEventListener(
+    "input",
+    () =>
+      syncAwayGoalNameFromNumber(
+        awayGoalNumberInput,
+        awayGoalNameInput
+      )
+  );
+}
+
+
+if (
+  awayAssistNumberInput
+) {
+  awayAssistNumberInput.addEventListener(
+    "input",
+    () =>
+      syncAwayGoalNameFromNumber(
+        awayAssistNumberInput,
+        awayAssistNameInput
+      )
   );
 }
 
@@ -5848,6 +6123,22 @@ channel.addEventListener(
 
     if (
       data.type ===
+        "goalCelebrationFinished"
+    ) {
+      goalCelebrationRunning =
+        false;
+
+      if (
+        showGoalCelebrationButton
+      ) {
+        showGoalCelebrationButton.classList.remove(
+          "running"
+        );
+      }
+    }
+
+    if (
+      data.type ===
         "goalHomeFinished"
     ) {
       homeGoalRunning =
@@ -5857,7 +6148,7 @@ channel.addEventListener(
         showHomeGoalButton
       ) {
         showHomeGoalButton.textContent =
-          "MÅL";
+          "VIS MÅLSCORER";
 
         showHomeGoalButton.classList.remove(
           "running"
@@ -6121,9 +6412,9 @@ async function runPreflight() {
     const [
       bestAudioOk,
       homeGoalAudioOk,
-      awayGoalAudioOk,
       penaltyAudioOk,
-      entranceVideoOk
+      entranceVideoOk,
+      entranceAudioOk
     ] =
       await Promise.all([
         testUrl(
@@ -6134,9 +6425,6 @@ async function runPreflight() {
           "../audio/goal-home.mp3"
         ),
 
-        testUrl(
-          "../audio/goal-away.mp3"
-        ),
 
         testUrl(
           "../audio/penalty.mp3"
@@ -6144,15 +6432,19 @@ async function runPreflight() {
 
         testUrl(
           ENTRANCE_VIDEO_URL
+        ),
+
+        testUrl(
+          ENTRANCE_AUDIO_URL
         )
       ]);
 
     results.push(
       bestAudioOk,
       homeGoalAudioOk,
-      awayGoalAudioOk,
       penaltyAudioOk,
-      entranceVideoOk
+      entranceVideoOk,
+      entranceAudioOk
     );
 
     setPreflightItem(
@@ -6175,15 +6467,6 @@ async function runPreflight() {
         : "Mangler"
     );
 
-    setPreflightItem(
-      "checkAwayGoalAudio",
-      awayGoalAudioOk
-        ? "ok"
-        : "fail",
-      awayGoalAudioOk
-        ? "OK"
-        : "Mangler"
-    );
 
     setPreflightItem(
       "checkPenaltyAudio",
@@ -6197,12 +6480,14 @@ async function runPreflight() {
 
     setPreflightItem(
       "checkEntranceVideo",
-      entranceVideoOk
+      entranceVideoOk &&
+      entranceAudioOk
         ? "ok"
         : "fail",
-      entranceVideoOk
-        ? "Funnet"
-        : "Mangler"
+      entranceVideoOk &&
+      entranceAudioOk
+        ? "Video + lyd funnet"
+        : "Video eller lyd mangler"
     );
 
     let awayRosterPreflightOk =

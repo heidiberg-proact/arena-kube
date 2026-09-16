@@ -1,21 +1,50 @@
 [
   {
+    "name": "Adam og Eva",
+    "type": "slide",
+    "image": "../images/sponsors/adam-eva.png",
+    "duration": 5
+  },
+  {
+    "name": "The Barber House",
+    "type": "slide",
+    "image": "../images/sponsors/barber-house.png",
+    "duration": 5
+  },
+  {
+    "name": "Barish",
+    "type": "slide",
+    "image": "../images/sponsors/barish.png",
+    "duration": 5
+  },
+  {
     "name": "Gausdal Landhandleri",
     "type": "slide",
-    "image": "../images/sponsors/Gausdal.png",
-    "duration": 3
+    "image": "../images/sponsors/gausdal.png",
+    "duration": 5
   },
   {
-    "name": "Sommer og vinter",
+    "name": "Romerike Sparebank",
     "type": "slide",
-    "image": "../images/sponsors/sommer og vinter.png",
-    "duration": 3
+    "image": "../images/sponsors/romerike-sparebank.png",
+    "duration": 5
   },
   {
-    "name": "alle",
+    "name": "Skoveng Kranservice",
     "type": "slide",
-    "image": "../images/sponsors/alle.png",
-    "duration": 3
+    "image": "../images/sponsors/skoveng.png",
+    "duration": 5
+  },
+  {
+    "name": "Sommer & Vinter",
+    "type": "slide",
+    "image": "../images/sponsors/sommer-vinter.png",
+    "duration": 5
+  },
+  {
+    "name": "Tut & Kjør Trafikkskole",
+    "type": "slide",
+    "image": "../images/sponsors/tut-kjor.png",
+    "duration": 5
   }
-  
 ]

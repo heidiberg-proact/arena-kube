@@ -114,6 +114,11 @@ const displayBreakClock =
    HJEMMEMÅL
 ========================================================= */
 
+const goalCelebrationLogo =
+  document.getElementById(
+    "goalCelebrationLogo"
+  );
+
 const goalHomeNumber =
   document.getElementById(
     "goalHomeNumber"
@@ -138,6 +143,18 @@ const goalPlayerVideo =
   document.getElementById(
     "goalPlayerVideo"
   );
+
+const goalHomeGameClock = document.getElementById("goalHomeGameClock");
+const goalHomeHomeScore = document.getElementById("goalHomeHomeScore");
+const goalHomeAwayScore = document.getElementById("goalHomeAwayScore");
+const goalHomePeriod = document.getElementById("goalHomePeriod");
+const goalHomeClockStatus = document.getElementById("goalHomeClockStatus");
+const goalHomeHomeName = document.getElementById("goalHomeHomeName");
+const goalHomeAwayName = document.getElementById("goalHomeAwayName");
+const goalHomeHomeLogo = document.getElementById("goalHomeHomeLogo");
+const goalHomeAwayLogo = document.getElementById("goalHomeAwayLogo");
+const goalHomePenaltyHome = document.getElementById("goalHomePenaltyHome");
+const goalHomePenaltyAway = document.getElementById("goalHomePenaltyAway");
 
 
 /* =========================================================
@@ -240,6 +257,7 @@ const sponsorSlideImage =
   );
 
 let sponsors = [];
+let sponsorOrder = [];
 let sponsorIndex = 0;
 let sponsorTimer = null;
 
@@ -298,11 +316,6 @@ const goalHomeAudio =
     "goalHomeAudio"
   );
 
-const goalAwayAudio =
-  document.getElementById(
-    "goalAwayAudio"
-  );
-
 const penaltyAudio =
   document.getElementById(
     "penaltyAudio"
@@ -311,6 +324,11 @@ const penaltyAudio =
 const hornAudio =
   document.getElementById(
     "hornAudio"
+  );
+
+const entranceAudio =
+  document.getElementById(
+    "entranceAudio"
   );
 
 const enableAudioButton =
@@ -505,11 +523,20 @@ function renderScoreboard() {
       );
   }
 
+  if (goalHomeGameClock) {
+    goalHomeGameClock.textContent =
+      formatTime(getCurrentElapsed(state));
+  }
+
   if (
     displayHomeScore
   ) {
     displayHomeScore.textContent =
       state.homeScore;
+  }
+
+  if (goalHomeHomeScore) {
+    goalHomeHomeScore.textContent = state.homeScore;
   }
 
   if (
@@ -519,11 +546,19 @@ function renderScoreboard() {
       state.awayScore;
   }
 
+  if (goalHomeAwayScore) {
+    goalHomeAwayScore.textContent = state.awayScore;
+  }
+
   if (
     displayPeriod
   ) {
     displayPeriod.textContent =
       `${state.period}. PERIODE`;
+  }
+
+  if (goalHomePeriod) {
+    goalHomePeriod.textContent = `${state.period}. PERIODE`;
   }
 
   if (
@@ -538,6 +573,11 @@ function renderScoreboard() {
       "running",
       state.running
     );
+  }
+
+  if (goalHomeClockStatus) {
+    goalHomeClockStatus.textContent =
+      state.running ? "KLOKKEN GÅR" : "STOPPET";
   }
 }
 
@@ -764,12 +804,20 @@ function applyMatch(
       "ULL/KISA";
   }
 
+  if (goalHomeHomeName) {
+    goalHomeHomeName.textContent = match.homeTeam || "ULL/KISA";
+  }
+
   if (
     frontAwayName
   ) {
     frontAwayName.textContent =
       match.awayTeam ||
       "BORTELAG";
+  }
+
+  if (goalHomeAwayName) {
+    goalHomeAwayName.textContent = match.awayTeam || "BORTELAG";
   }
 
   if (
@@ -790,6 +838,15 @@ function applyMatch(
         match.homeLogo;
     }
 
+    if (goalCelebrationLogo) {
+      goalCelebrationLogo.src =
+        match.homeLogo;
+    }
+
+    if (goalHomeHomeLogo) {
+      goalHomeHomeLogo.src = match.homeLogo;
+    }
+
     if (
       bestHomeTeamLogo
     ) {
@@ -806,6 +863,10 @@ function applyMatch(
     ) {
       frontAwayLogo.src =
         match.awayLogo;
+    }
+
+    if (goalHomeAwayLogo) {
+      goalHomeAwayLogo.src = match.awayLogo;
     }
 
     if (
@@ -914,6 +975,38 @@ function stopSponsorCarousel() {
 
     sponsorTimer = null;
   }
+
+}
+
+
+function shuffleSponsors(
+  list
+) {
+  const shuffled =
+    [...list];
+
+  for (
+    let index =
+      shuffled.length - 1;
+    index > 0;
+    index -= 1
+  ) {
+    const randomIndex =
+      Math.floor(
+        Math.random() *
+          (index + 1)
+      );
+
+    [
+      shuffled[index],
+      shuffled[randomIndex]
+    ] = [
+      shuffled[randomIndex],
+      shuffled[index]
+    ];
+  }
+
+  return shuffled;
 }
 
 
@@ -958,8 +1051,13 @@ function showCurrentSponsor() {
     return;
   }
 
+  const activeSponsors =
+    sponsorOrder.length
+      ? sponsorOrder
+      : sponsors;
+
   const sponsor =
-    sponsors[
+    activeSponsors[
       sponsorIndex
     ];
 
@@ -999,7 +1097,7 @@ function showCurrentSponsor() {
       sponsorCounter
     ) {
       sponsorCounter.textContent =
-        `${sponsorIndex + 1} / ${sponsors.length}`;
+        `${sponsorIndex + 1} / ${activeSponsors.length}`;
     }
 
     if (
@@ -1036,12 +1134,40 @@ function showCurrentSponsor() {
   sponsorTimer =
     setTimeout(
       () => {
-        sponsorIndex =
-          (
-            sponsorIndex +
-            1
-          ) %
-          sponsors.length;
+        sponsorIndex +=
+          1;
+
+        if (
+          sponsorIndex >=
+            activeSponsors.length
+        ) {
+          const previousSponsor =
+            activeSponsors[
+              activeSponsors.length - 1
+            ];
+
+          sponsorOrder =
+            shuffleSponsors(
+              sponsors
+            );
+
+          if (
+            sponsorOrder.length > 1 &&
+            sponsorOrder[0] ===
+              previousSponsor
+          ) {
+            [
+              sponsorOrder[0],
+              sponsorOrder[1]
+            ] = [
+              sponsorOrder[1],
+              sponsorOrder[0]
+            ];
+          }
+
+          sponsorIndex =
+            0;
+        }
 
         showCurrentSponsor();
       },
@@ -1052,6 +1178,11 @@ function showCurrentSponsor() {
 
 function startSponsorCarousel() {
   stopSponsorCarousel();
+
+  sponsorOrder =
+    shuffleSponsors(
+      sponsors
+    );
 
   sponsorIndex = 0;
 
@@ -1110,6 +1241,26 @@ function finishHomeGoalPresentation() {
 }
 
 
+function finishGoalCelebration() {
+  clearTimeout(
+    autoClearTimer
+  );
+
+  stopAllAudio();
+
+  showScene(
+    "idleScene"
+  );
+
+  renderDisplayPenalties();
+
+  channel.postMessage({
+    type:
+      "goalCelebrationFinished"
+  });
+}
+
+
 if (
   goalPlayerVideo
 ) {
@@ -1126,18 +1277,18 @@ if (
   goalHomeAudio.addEventListener(
     "ended",
     () => {
-      const homeGoalScene =
-        document.getElementById(
-          "goalHomeScene"
-        );
-
       if (
-        homeGoalScene &&
-        homeGoalScene.classList.contains(
-          "active"
-        )
+        document
+          .getElementById(
+            "goalCelebrationScene"
+          )
+          ?.classList.contains(
+            "active"
+          )
       ) {
-        finishHomeGoalPresentation();
+        finishGoalCelebration();
+
+        return;
       }
     }
   );
@@ -1311,15 +1462,15 @@ function stopAllAudio() {
   );
 
   stopAudioTrack(
-    goalAwayAudio
-  );
-
-  stopAudioTrack(
     penaltyAudio
   );
 
   stopAudioTrack(
     hornAudio
+  );
+
+  stopAudioTrack(
+    entranceAudio
   );
 }
 
@@ -1875,15 +2026,15 @@ async function activateAllAudio() {
   );
 
   await unlockAudio(
-    goalAwayAudio
-  );
-
-  await unlockAudio(
     penaltyAudio
   );
 
   await unlockAudio(
     hornAudio
+  );
+
+  await unlockAudio(
+    entranceAudio
   );
 
   markAudioEnabled();
@@ -2644,6 +2795,18 @@ function renderDisplayPenalties() {
     state.away,
     scoreboardState
   );
+
+  renderPenaltyTeam(
+    goalHomePenaltyHome,
+    state.home,
+    scoreboardState
+  );
+
+  renderPenaltyTeam(
+    goalHomePenaltyAway,
+    state.away,
+    scoreboardState
+  );
 }
 
 
@@ -3003,12 +3166,49 @@ channel.addEventListener(
         }
 
         showScene(
-          "goalHomeScene"
+          "goalCelebrationScene"
         );
 
         playHomeGoalAudio(
           null
         );
+
+        break;
+
+
+      case "goalCelebrationStart":
+
+        stopSponsorCarousel();
+
+        clearTimeout(
+          autoClearTimer
+        );
+
+        stopAllAudio();
+        stopGoalMedia();
+
+        if (
+          data.match
+        ) {
+          applyMatch(
+            data.match
+          );
+        }
+
+        showScene(
+          "goalCelebrationScene"
+        );
+
+        playHomeGoalAudio(
+          null
+        );
+
+        break;
+
+
+      case "goalCelebrationStop":
+
+        finishGoalCelebration();
 
         break;
 
@@ -3077,10 +3277,6 @@ channel.addEventListener(
         );
 
         showGoalMedia(
-          data.scorer
-        );
-
-        playHomeGoalAudio(
           data.scorer
         );
 
@@ -3196,10 +3392,6 @@ channel.addEventListener(
 
         showScene(
           "goalAwayScene"
-        );
-
-        playExclusiveAudio(
-          goalAwayAudio
         );
 
         autoClear(
