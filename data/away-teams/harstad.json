@@ -1,10 +1,91 @@
 [
   {
+<<<<<<< Updated upstream
     "number": 7,
     "name": "Ola Nordmann"
   },
   {
     "number": 14,
     "name": "Kari Nordmann"
+=======
+    "number": 8,
+    "name": "Audun Mathias Walle Thommasen"
+  },
+  {
+    "number": 10,
+    "name": "Toms Kimuzs"
+  },
+  {
+    "number": 11,
+    "name": "Joel Eklund"
+  },
+  {
+    "number": 12,
+    "name": "Lucas Ripson-Stefanovici"
+  },
+  {
+    "number": 18,
+    "name": "Lauri Mikael Laine"
+  },
+  {
+    "number": 23,
+    "name": "Rune Johansen"
+  },
+  {
+    "number": 26,
+    "name": "Eivind Hoem"
+  },
+  {
+    "number": 29,
+    "name": "Daniel Olav Palmer"
+  },
+  {
+    "number": 34,
+    "name": "Kalle Laakso"
+  },
+  {
+    "number": 36,
+    "name": "Julian Krokeide"
+  },
+  {
+    "number": 49,
+    "name": "Emil Gustav Fjellbakk"
+  },
+  {
+    "number": 50,
+    "name": "Toms Niedre"
+  },
+  {
+    "number": 68,
+    "name": "Oliver Bæcksbacka"
+  },
+  {
+    "number": 71,
+    "name": "Leonard Storsletten Kjeldås"
+  },
+  {
+    "number": 87,
+    "name": "Aron Daniel Kemp Hansen"
+  },
+  {
+    "number": 93,
+    "name": "Anders Halldahl"
+  },
+  {
+    "number": 99,
+    "name": "Steffen Riisa"
+  },
+  {
+    "number": 18,
+    "name": "Spiller 18"
+  },
+  {
+    "number": 19,
+    "name": "Spiller 19"
+  },
+  {
+    "number": 20,
+    "name": "Spiller 20"
+>>>>>>> Stashed changes
   }
 ]
