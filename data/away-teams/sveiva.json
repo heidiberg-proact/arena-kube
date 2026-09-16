@@ -1,1 +1,66 @@
-[]
+[
+  {
+    "number": 8,
+    "name": "Petter Nygaard"
+  },
+  {
+    "number": 16,
+    "name": "Mikkel Fauskanger"
+  },
+  {
+    "number": 18,
+    "name": "Tobias Pedersen"
+  },
+  {
+    "number": 19,
+    "name": "Marius Pedersen (BB)"
+  },
+  {
+    "number": 21,
+    "name": "Patrick Strandbygaard Martinsen"
+  },
+  {
+    "number": 29,
+    "name": "Jesper Pedersen"
+  },
+  {
+    "number": 30,
+    "name": "Carl Loke Severin Skytteren"
+  },
+  {
+    "number": 39,
+    "name": "Jostein Nikolai Nordseth"
+  },
+  {
+    "number": 42,
+    "name": "Christian Themte"
+  },
+  {
+    "number": 59,
+    "name": "Sebastian Lie"
+  },
+  {
+    "number": 68,
+    "name": "Andreas Næss Valbye"
+  },
+  {
+    "number": 76,
+    "name": "Lino Behringer"
+  },
+  {
+    "number": 77,
+    "name": "Fabian Østerman"
+  },
+  {
+    "number": 78,
+    "name": "Lukas Nordin"
+  },
+  {
+    "number": 79,
+    "name": "Balder Furnes-Bråthen"
+  },
+  {
+    "number": 98,
+    "name": "Mattis Lindgren"
+  }
+]
