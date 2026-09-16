@@ -1,10 +1,70 @@
 [
   {
-    "number": 7,
-    "name": "Ola Nordmann"
+    "number": 8,
+    "name": "Audun Mathias Walle Thomassen"
   },
   {
-    "number": 14,
-    "name": "Kari Nordmann"
+    "number": 10,
+    "name": "Toms Kirmuzs"
+  },
+  {
+    "number": 11,
+    "name": "Joel Lars Erik Eklund"
+  },
+  {
+    "number": 12,
+    "name": "Lukas Ripson-Stefanovici"
+  },
+  {
+    "number": 18,
+    "name": "Lauri Mikael Laine"
+  },
+  {
+    "number": 23,
+    "name": "Rune Birger Lockertsen Johansen"
+  },
+  {
+    "number": 26,
+    "name": "Eivind Hoem"
+  },
+  {
+    "number": 29,
+    "name": "Daniel Olav Palmer"
+  },
+  {
+    "number": 34,
+    "name": "Kalle Laakso"
+  },
+  {
+    "number": 36,
+    "name": "Julian Krokelide (C)"
+  },
+  {
+    "number": 49,
+    "name": "Emil Gustav Fjellbakk"
+  },
+  {
+    "number": 50,
+    "name": "Toms Niedre"
+  },
+  {
+    "number": 68,
+    "name": "Oliver Johan Samuel Bäcksbacha"
+  },
+  {
+    "number": 71,
+    "name": "Leonard Storstelten Kjelds"
+  },
+  {
+    "number": 87,
+    "name": "Aron Daniel Kemp Hansen"
+  },
+  {
+    "number": 93,
+    "name": "Anders Lars Thunman Halldahl (BB)"
+  },
+  {
+    "number": 99,
+    "name": "Steffen Riisa"
   }
 ]
