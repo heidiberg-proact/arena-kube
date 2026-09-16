@@ -490,7 +490,6 @@ const PREFLIGHT_CHECK_IDS = [
   "checkAwayLogo",
   "checkBestAudio",
   "checkHomeGoalAudio",
-  "checkAwayGoalAudio",
   "checkPenaltyAudio",
   "checkEntranceVideo",
   "checkAwayPlayers",
@@ -1230,15 +1229,9 @@ function installBestHomeSelect() {
 ========================================================= */
 
 function installAwayGoalSelects() {
-  if (
-    !showAwayGoalButton
-  ) {
-    return;
-  }
-
   const section =
-    showAwayGoalButton.closest(
-      ".panel"
+    document.getElementById(
+      "awayGoalPanel"
     );
 
   if (!section) {
@@ -1273,8 +1266,7 @@ function installAwayGoalSelects() {
     );
 
   } else {
-    showAwayGoalButton.insertAdjacentElement(
-      "beforebegin",
+    section.appendChild(
       awayRosterStatus
     );
 
@@ -6420,7 +6412,6 @@ async function runPreflight() {
     const [
       bestAudioOk,
       homeGoalAudioOk,
-      awayGoalAudioOk,
       penaltyAudioOk,
       entranceVideoOk,
       entranceAudioOk
@@ -6434,9 +6425,6 @@ async function runPreflight() {
           "../audio/goal-home.mp3"
         ),
 
-        testUrl(
-          "../audio/goal-away.mp3"
-        ),
 
         testUrl(
           "../audio/penalty.mp3"
@@ -6454,7 +6442,6 @@ async function runPreflight() {
     results.push(
       bestAudioOk,
       homeGoalAudioOk,
-      awayGoalAudioOk,
       penaltyAudioOk,
       entranceVideoOk,
       entranceAudioOk
@@ -6480,15 +6467,6 @@ async function runPreflight() {
         : "Mangler"
     );
 
-    setPreflightItem(
-      "checkAwayGoalAudio",
-      awayGoalAudioOk
-        ? "ok"
-        : "fail",
-      awayGoalAudioOk
-        ? "OK"
-        : "Mangler"
-    );
 
     setPreflightItem(
       "checkPenaltyAudio",

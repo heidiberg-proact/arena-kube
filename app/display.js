@@ -316,11 +316,6 @@ const goalHomeAudio =
     "goalHomeAudio"
   );
 
-const goalAwayAudio =
-  document.getElementById(
-    "goalAwayAudio"
-  );
-
 const penaltyAudio =
   document.getElementById(
     "penaltyAudio"
@@ -1467,10 +1462,6 @@ function stopAllAudio() {
   );
 
   stopAudioTrack(
-    goalAwayAudio
-  );
-
-  stopAudioTrack(
     penaltyAudio
   );
 
@@ -2032,10 +2023,6 @@ async function activateAllAudio() {
 
   await unlockAudio(
     goalHomeAudio
-  );
-
-  await unlockAudio(
-    goalAwayAudio
   );
 
   await unlockAudio(
@@ -3405,10 +3392,6 @@ channel.addEventListener(
 
         showScene(
           "goalAwayScene"
-        );
-
-        playExclusiveAudio(
-          goalAwayAudio
         );
 
         autoClear(
