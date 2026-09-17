@@ -42,11 +42,6 @@
 
 <body class="display-page">
 
-<button id="enableAudioButton" class="enable-audio-button">
-  🔊 AKTIVER LYD
-</button>
-
-
 <!-- =====================================================
      PAUSE-OVERLAY
 ===================================================== -->
@@ -539,42 +534,6 @@
 </div>
 
 
-<!-- =====================================================
-     LYD
-===================================================== -->
-
-<audio
-  id="bestPlayerAudio"
-  src="../audio/best-player.mp3"
-  preload="auto"
-></audio>
-
-<audio
-  id="goalHomeAudio"
-  src="../audio/goal-home.mp3"
-  preload="auto"
-></audio>
-
-
-<audio
-  id="penaltyAudio"
-  src="../audio/penalty.mp3"
-  preload="auto"
-></audio>
-
-<audio
-  id="hornAudio"
-  src="../audio/horn.mp3"
-  preload="auto"
-></audio>
-
-<audio
-  id="entranceAudio"
-  src="../media/video/innmarsj.mp3"
-  preload="auto"
-></audio>
-
-
 <script src="display.js"></script>
 
 
@@ -594,20 +553,12 @@
       "entranceVideo"
     );
 
-  const entranceTrack =
-    document.getElementById(
-      "entranceAudio"
-    );
-
   let entranceRunning =
     false;
 
 
   function resetEntranceMedia() {
-    [
-      video,
-      entranceTrack
-    ].forEach(
+    [video].forEach(
       (media) => {
         if (!media) {
           return;
@@ -665,24 +616,18 @@
   async function startEntrance() {
     if (
       !overlay ||
-      !video ||
-      !entranceTrack
+      !video
     ) {
       channel.postMessage({
         type:
           "entranceStopped",
 
         error:
-          "Innmarsjvideo eller innmarsjlyd mangler"
+          "Innmarsjvideo mangler"
       });
 
       return;
     }
-
-    /*
-      Stopper andre presentasjonslyder/scener uten å endre
-      scoreboard-, kampklokke- eller pauseklokkedata.
-    */
 
     if (
       typeof stopSponsorCarousel ===
@@ -701,13 +646,6 @@
     }
 
     if (
-      typeof stopAllAudio ===
-        "function"
-    ) {
-      stopAllAudio();
-    }
-
-    if (
       typeof stopGoalMedia ===
         "function"
     ) {
@@ -723,10 +661,7 @@
       true;
 
     try {
-      await Promise.all([
-        video.play(),
-        entranceTrack.play()
-      ]);
+      await video.play();
 
       channel.postMessage({
         type:
@@ -739,7 +674,7 @@
 
     } catch (error) {
       console.error(
-        "Arena Kube: kunne ikke starte innmarsjvideo/-lyd:",
+        "Arena Kube: kunne ikke starte innmarsjvideo:",
         error
       );
 
@@ -751,55 +686,13 @@
       entranceRunning =
         false;
 
-      if (
-        enableAudioButton
-      ) {
-        enableAudioButton.style.display =
-          "block";
-
-        enableAudioButton.textContent =
-          "🔊 AKTIVER LYD";
-      }
-
       channel.postMessage({
         type:
           "entranceStopped",
 
         error:
-          "Kunne ikke starte video/lyd"
+          "Kunne ikke starte video"
       });
-    }
-  }
-
-
-  async function unlockEntranceVideo() {
-    if (!video) {
-      return;
-    }
-
-    const oldVolume =
-      video.volume;
-
-    video.volume =
-      0;
-
-    try {
-      await video.play();
-
-      video.pause();
-
-      try {
-        video.currentTime =
-          0;
-      } catch (error) {
-        console.log(
-          "Arena Kube: kunne ikke nullstille innmarsjvideo under lydtest."
-        );
-      }
-
-    } finally {
-      video.volume =
-        oldVolume;
     }
   }
 
@@ -841,31 +734,6 @@
   }
 
 
-  /*
-    Når brukeren manuelt aktiverer lyd på displayet,
-    forsøker vi samtidig å låse opp videoavspilling.
-  */
-
-  if (
-    enableAudioButton
-  ) {
-    enableAudioButton.addEventListener(
-      "click",
-      async () => {
-        try {
-          await unlockEntranceVideo();
-
-        } catch (error) {
-          console.warn(
-            "Arena Kube: innmarsjvideo kunne ikke låses opp ennå:",
-            error
-          );
-        }
-      }
-    );
-  }
-
-
   channel.addEventListener(
     "message",
     async (event) => {
@@ -902,24 +770,6 @@
 
 
         /*
-          STOPP LYD er også nødstopp for innmarsjen.
-        */
-
-        case "stopAudio":
-
-          if (
-            entranceRunning
-          ) {
-            hideEntrance(
-              true,
-              "entranceStopped"
-            );
-          }
-
-          break;
-
-
-        /*
           Dersom operatøren velger en annen scene mens
           innmarsjen spiller, avsluttes videoen.
           Eksisterende display.js får fortsatt håndtere
@@ -944,27 +794,6 @@
             hideEntrance(
               false,
               "entranceStopped"
-            );
-          }
-
-          break;
-
-
-        /*
-          Preflight forsøker også å låse opp videomediet,
-          men eksisterende display.js beholder ansvaret
-          for selve preflightAudioResult.
-        */
-
-        case "preflightAudioTest":
-
-          try {
-            await unlockEntranceVideo();
-
-          } catch (error) {
-            console.warn(
-              "Arena Kube: preflight kunne ikke forhåndsaktivere innmarsjvideo:",
-              error
             );
           }
 
