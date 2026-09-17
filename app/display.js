@@ -302,45 +302,15 @@ const bestAwayNumber =
   );
 
 
-/* =========================================================
-   LYD
-========================================================= */
-
-const bestPlayerAudio =
-  document.getElementById(
-    "bestPlayerAudio"
-  );
-
-const goalHomeAudio =
-  document.getElementById(
-    "goalHomeAudio"
-  );
-
-const penaltyAudio =
-  document.getElementById(
-    "penaltyAudio"
-  );
-
-const hornAudio =
-  document.getElementById(
-    "hornAudio"
-  );
-
-const entranceAudio =
-  document.getElementById(
-    "entranceAudio"
-  );
-
-const enableAudioButton =
-  document.getElementById(
-    "enableAudioButton"
-  );
-
-const defaultGoalHomeAudioSource =
-  goalHomeAudio
-    ? goalHomeAudio.src
-    : "";
-
+/* V2.7 er lydløs. Disse beholdes som tomme kompatibilitetsverdier
+   slik at eldre meldinger ikke kan starte lyd. */
+const bestPlayerAudio = null;
+const goalHomeAudio = null;
+const penaltyAudio = null;
+const hornAudio = null;
+const entranceAudio = null;
+const enableAudioButton = null;
+const defaultGoalHomeAudioSource = "";
 let audioEnabled = false;
 let autoClearTimer = null;
 
@@ -1436,42 +1406,12 @@ function autoClear(
    LYD
 ========================================================= */
 
-function stopAudioTrack(
-  audio
-) {
-  if (!audio) {
-    return;
-  }
-
-  audio.pause();
-
-  try {
-    audio.currentTime =
-      0;
-  } catch (error) {}
+function stopAllAudio() {
+  // Bevisst tom: Arena Kube v2.7 spiller aldri lyd.
 }
 
-
-function stopAllAudio() {
-  stopAudioTrack(
-    bestPlayerAudio
-  );
-
-  stopAudioTrack(
-    goalHomeAudio
-  );
-
-  stopAudioTrack(
-    penaltyAudio
-  );
-
-  stopAudioTrack(
-    hornAudio
-  );
-
-  stopAudioTrack(
-    entranceAudio
-  );
+function stopAudioTrack() {
+  // Bevisst tom: lydressurser finnes ikke i v2.7.
 }
 
 
