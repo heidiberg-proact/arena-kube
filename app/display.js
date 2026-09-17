@@ -3280,9 +3280,11 @@ channel.addEventListener(
           data.scorer
         );
 
-        autoClear(
-          GOAL_AUTO_CLEAR_MS
-        );
+        autoClearTimer =
+          setTimeout(
+            finishHomeGoalPresentation,
+            GOAL_AUTO_CLEAR_MS
+          );
 
         break;
 
