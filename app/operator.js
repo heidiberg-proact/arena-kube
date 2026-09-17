@@ -4337,6 +4337,42 @@ if (
    HJEMMEMÅL – MÅLSCORER OG ASSIST
 ========================================================= */
 
+function resetHomeGoalSelection() {
+  selectedHomeGoalPlayer =
+    null;
+
+  if (
+    homeGoalPlayersContainer
+  ) {
+    homeGoalPlayersContainer
+      .querySelectorAll(
+        ".player-button"
+      )
+      .forEach(
+        (button) => {
+          button.classList.remove(
+            "selected-player"
+          );
+        }
+      );
+  }
+
+  if (
+    homeGoalAssistSelect
+  ) {
+    homeGoalAssistSelect.value =
+      "";
+  }
+
+  if (
+    homeGoalSelectionStatus
+  ) {
+    homeGoalSelectionStatus.textContent =
+      "Velg målscorer";
+  }
+}
+
+
 if (
   showHomeGoalButton
 ) {
@@ -4355,6 +4391,8 @@ if (
         showHomeGoalButton.classList.remove(
           "running"
         );
+
+        resetHomeGoalSelection();
 
         channel.postMessage({
           type:
@@ -6154,6 +6192,8 @@ channel.addEventListener(
           "running"
         );
       }
+
+      resetHomeGoalSelection();
     }
   }
 );
