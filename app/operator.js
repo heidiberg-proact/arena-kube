@@ -31,9 +31,6 @@ const BREAK_DURATION_MS =
 const ENTRANCE_VIDEO_URL =
   "../media/video/innmarsj.mp4";
 
-const ENTRANCE_AUDIO_URL =
-  "../media/video/innmarsj.mp3";
-
 const PENALTY_SLOT_COUNT =
   3;
 
@@ -74,15 +71,6 @@ let displayPingResolver =
   null;
 
 let displayPingTimer =
-  null;
-
-let displayAudioResolver =
-  null;
-
-let displayAudioTimer =
-  null;
-
-let displayAudioRequestId =
   null;
 
 let lastPenaltyPersistAt =
@@ -315,11 +303,6 @@ const messageInput =
     "messageInput"
   );
 
-const stopAudioButton =
-  document.getElementById(
-    "stopAudio"
-  );
-
 const clearDisplayButton =
   document.getElementById(
     "clearDisplay"
@@ -488,9 +471,6 @@ const PREFLIGHT_CHECK_IDS = [
   "checkSponsors",
   "checkHomeLogo",
   "checkAwayLogo",
-  "checkBestAudio",
-  "checkHomeGoalAudio",
-  "checkPenaltyAudio",
   "checkEntranceVideo",
   "checkAwayPlayers",
   "checkDisplay"
@@ -2932,7 +2912,7 @@ function checkPeriodEnd() {
   startBreakClock();
 
   console.log(
-    `Arena Kube: ${scoreboard.period}. periode ferdig – hornsignal og pauseklokke startet.`
+    `Arena Kube: ${scoreboard.period}. periode ferdig – pauseklokke startet.`
   );
 }
 
@@ -5747,22 +5727,6 @@ if (
 
 
 if (
-  stopAudioButton
-) {
-  stopAudioButton.addEventListener(
-    "click",
-    () => {
-      channel.postMessage({
-        type:
-          "stopAudio"
-      });
-
-    }
-  );
-}
-
-
-if (
   clearDisplayButton
 ) {
   clearDisplayButton.addEventListener(
@@ -6063,55 +6027,6 @@ channel.addEventListener(
 
     if (
       data.type ===
-        "preflightAudioResult" &&
-      displayAudioResolver &&
-      (
-        !displayAudioRequestId ||
-        data.requestId ===
-          displayAudioRequestId
-      )
-    ) {
-      if (
-        displayAudioTimer
-      ) {
-        clearTimeout(
-          displayAudioTimer
-        );
-
-        displayAudioTimer =
-          null;
-      }
-
-      const resolve =
-        displayAudioResolver;
-
-      displayAudioResolver =
-        null;
-
-      displayAudioRequestId =
-        null;
-
-      resolve({
-        ok:
-          Boolean(
-            data.ok
-          ),
-
-        alreadyEnabled:
-          Boolean(
-            data.alreadyEnabled
-          ),
-
-        message:
-          data.message ||
-          ""
-      });
-
-      return;
-    }
-
-    if (
-      data.type ===
         "timeoutFinished"
     ) {
       localStorage.removeItem(
@@ -6202,70 +6117,6 @@ function pingDisplay() {
             }
           },
           1800
-        );
-    }
-  );
-}
-
-
-function testDisplayAudio() {
-  return new Promise(
-    (resolve) => {
-      if (
-        displayAudioTimer
-      ) {
-        clearTimeout(
-          displayAudioTimer
-        );
-      }
-
-      const requestId =
-        `audio-${Date.now()}-${Math.random()}`;
-
-      displayAudioRequestId =
-        requestId;
-
-      displayAudioResolver =
-        resolve;
-
-      channel.postMessage({
-        type:
-          "preflightAudioTest",
-
-        requestId
-      });
-
-      displayAudioTimer =
-        setTimeout(
-          () => {
-            if (
-              displayAudioResolver
-            ) {
-              const resolver =
-                displayAudioResolver;
-
-              displayAudioResolver =
-                null;
-
-              displayAudioRequestId =
-                null;
-
-              displayAudioTimer =
-                null;
-
-              resolver({
-                ok:
-                  false,
-
-                alreadyEnabled:
-                  false,
-
-                message:
-                  "Ingen lydrespons"
-              });
-            }
-          },
-          3000
         );
     }
   );
@@ -6409,85 +6260,23 @@ async function runPreflight() {
         : "Mangler / kan ikke lastes"
     );
 
-    const [
-      bestAudioOk,
-      homeGoalAudioOk,
-      penaltyAudioOk,
-      entranceVideoOk,
-      entranceAudioOk
-    ] =
-      await Promise.all([
-        testUrl(
-          "../audio/best-player.mp3"
-        ),
-
-        testUrl(
-          "../audio/goal-home.mp3"
-        ),
-
-
-        testUrl(
-          "../audio/penalty.mp3"
-        ),
-
-        testUrl(
-          ENTRANCE_VIDEO_URL
-        ),
-
-        testUrl(
-          ENTRANCE_AUDIO_URL
-        )
-      ]);
+    const entranceVideoOk =
+      await testUrl(
+        ENTRANCE_VIDEO_URL
+      );
 
     results.push(
-      bestAudioOk,
-      homeGoalAudioOk,
-      penaltyAudioOk,
-      entranceVideoOk,
-      entranceAudioOk
-    );
-
-    setPreflightItem(
-      "checkBestAudio",
-      bestAudioOk
-        ? "ok"
-        : "fail",
-      bestAudioOk
-        ? "OK"
-        : "Mangler"
-    );
-
-    setPreflightItem(
-      "checkHomeGoalAudio",
-      homeGoalAudioOk
-        ? "ok"
-        : "fail",
-      homeGoalAudioOk
-        ? "OK"
-        : "Mangler"
-    );
-
-
-    setPreflightItem(
-      "checkPenaltyAudio",
-      penaltyAudioOk
-        ? "ok"
-        : "fail",
-      penaltyAudioOk
-        ? "OK"
-        : "Mangler"
+      entranceVideoOk
     );
 
     setPreflightItem(
       "checkEntranceVideo",
-      entranceVideoOk &&
-      entranceAudioOk
+      entranceVideoOk
         ? "ok"
         : "fail",
-      entranceVideoOk &&
-      entranceAudioOk
-        ? "Video + lyd funnet"
-        : "Video eller lyd mangler"
+      entranceVideoOk
+        ? "Video funnet"
+        : "Video mangler"
     );
 
     let awayRosterPreflightOk =
@@ -6566,46 +6355,20 @@ async function runPreflight() {
       );
 
     } else {
+      results.push(
+        true
+      );
+
+      setPreflightItem(
+        "checkDisplay",
+        "ok",
+        "Svar mottatt"
+      );
+
       setConnectionStatus(
         true,
-        "DISPLAY TILKOBLET – TESTER LYD"
+        "DISPLAY TILKOBLET"
       );
-
-      const audioResult =
-        await testDisplayAudio();
-
-      results.push(
-        audioResult.ok
-      );
-
-      if (
-        audioResult.ok
-      ) {
-        setPreflightItem(
-          "checkDisplay",
-          "ok",
-          audioResult.alreadyEnabled
-            ? "Svar + lyd allerede aktiv"
-            : "Svar + lyd aktivert"
-        );
-
-        setConnectionStatus(
-          true,
-          "DISPLAY + LYD KLAR"
-        );
-
-      } else {
-        setPreflightItem(
-          "checkDisplay",
-          "fail",
-          "Display svarer – aktiver lyd på display"
-        );
-
-        setConnectionStatus(
-          true,
-          "DISPLAY TILKOBLET – AKTIVER LYD"
-        );
-      }
     }
 
     const allOk =
