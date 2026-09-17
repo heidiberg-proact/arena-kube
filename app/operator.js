@@ -58,6 +58,9 @@ let goalCelebrationRunning =
 let selectedHomeGoalPlayer =
   null;
 
+let selectedHomeGoalAssist =
+  null;
+
 let activeMatch =
   null;
 
@@ -165,11 +168,6 @@ const showGoalCelebrationButton =
 const homeGoalPlayersContainer =
   document.getElementById(
     "homeGoalPlayers"
-  );
-
-const homeGoalAssistSelect =
-  document.getElementById(
-    "homeGoalAssistSelect"
   );
 
 const homeGoalSelectionStatus =
@@ -4161,13 +4159,6 @@ function renderPlayers() {
   }
 
   if (
-    homeGoalAssistSelect
-  ) {
-    homeGoalAssistSelect.innerHTML =
-      '<option value="">Ingen assist</option>';
-  }
-
-  if (
     penaltyHomePlayerSelect
   ) {
     penaltyHomePlayerSelect.innerHTML =
@@ -4200,6 +4191,9 @@ function renderPlayers() {
         goalButton.className =
           "player-button";
 
+        goalButton.dataset.playerIndex =
+          index;
+
         goalButton.innerHTML = `
           <span class="player-number">${player.number}</span>
           <span class="player-name">${player.name}</span>
@@ -4208,52 +4202,37 @@ function renderPlayers() {
         goalButton.addEventListener(
           "click",
           () => {
-            selectedHomeGoalPlayer =
-              player;
-
-            homeGoalPlayersContainer
-              .querySelectorAll(
-                ".player-button"
-              )
-              .forEach(
-                (button) => {
-                  button.classList.toggle(
-                    "selected-player",
-                    button === goalButton
-                  );
-                }
-              );
-
             if (
-              homeGoalSelectionStatus
+              !selectedHomeGoalPlayer
             ) {
-              homeGoalSelectionStatus.textContent =
-                `Målscorer: #${player.number} ${player.name}`;
+              selectedHomeGoalPlayer =
+                player;
+
+            } else if (
+              selectedHomeGoalPlayer ===
+                player
+            ) {
+              resetHomeGoalSelection();
+              return;
+
+            } else if (
+              selectedHomeGoalAssist ===
+                player
+            ) {
+              selectedHomeGoalAssist =
+                null;
+
+            } else {
+              selectedHomeGoalAssist =
+                player;
             }
+
+            updateHomeGoalSelectionUi();
           }
         );
 
         homeGoalPlayersContainer.appendChild(
           goalButton
-        );
-      }
-
-      if (
-        homeGoalAssistSelect
-      ) {
-        const assistOption =
-          document.createElement(
-            "option"
-          );
-
-        assistOption.value =
-          index;
-
-        assistOption.textContent =
-          `#${player.number} ${player.name}`;
-
-        homeGoalAssistSelect.appendChild(
-          assistOption
         );
       }
 
@@ -4337,8 +4316,70 @@ if (
    HJEMMEMÅL – MÅLSCORER OG ASSIST
 ========================================================= */
 
+function updateHomeGoalSelectionUi() {
+  if (
+    homeGoalPlayersContainer
+  ) {
+    homeGoalPlayersContainer
+      .querySelectorAll(
+        ".player-button"
+      )
+      .forEach(
+        (button) => {
+          const player =
+            players[
+              Number(
+                button.dataset.playerIndex
+              )
+            ];
+
+          button.classList.toggle(
+            "selected-player",
+            player ===
+              selectedHomeGoalPlayer
+          );
+
+          button.classList.toggle(
+            "selected-assist",
+            player ===
+              selectedHomeGoalAssist
+          );
+        }
+      );
+  }
+
+  if (
+    !homeGoalSelectionStatus
+  ) {
+    return;
+  }
+
+  if (
+    !selectedHomeGoalPlayer
+  ) {
+    homeGoalSelectionStatus.textContent =
+      "Velg målscorer";
+    return;
+  }
+
+  const scorerText =
+    `Målscorer: #${selectedHomeGoalPlayer.number} ${selectedHomeGoalPlayer.name}`;
+
+  const assistText =
+    selectedHomeGoalAssist
+      ? ` | Assist: #${selectedHomeGoalAssist.number} ${selectedHomeGoalAssist.name}`
+      : " | Ingen assist";
+
+  homeGoalSelectionStatus.textContent =
+    scorerText + assistText;
+}
+
+
 function resetHomeGoalSelection() {
   selectedHomeGoalPlayer =
+    null;
+
+  selectedHomeGoalAssist =
     null;
 
   if (
@@ -4351,17 +4392,11 @@ function resetHomeGoalSelection() {
       .forEach(
         (button) => {
           button.classList.remove(
-            "selected-player"
+            "selected-player",
+            "selected-assist"
           );
         }
       );
-  }
-
-  if (
-    homeGoalAssistSelect
-  ) {
-    homeGoalAssistSelect.value =
-      "";
   }
 
   if (
@@ -4412,30 +4447,8 @@ if (
         return;
       }
 
-      const assistIndex =
-        homeGoalAssistSelect
-          ? homeGoalAssistSelect.value
-          : "";
-
       const assist =
-        assistIndex === ""
-          ? null
-          : players[
-              Number(
-                assistIndex
-              )
-            ] || null;
-
-      if (
-        assist ===
-        selectedHomeGoalPlayer
-      ) {
-        alert(
-          "Målscorer og assist kan ikke være samme spiller."
-        );
-
-        return;
-      }
+        selectedHomeGoalAssist;
 
       homeGoalRunning =
         true;
