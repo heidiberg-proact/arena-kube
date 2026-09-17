@@ -741,6 +741,12 @@ body {
   border: 3px solid var(--yellow);
 }
 
+.player-button.selected-assist {
+  background: #fff;
+  border: 3px solid #071d11;
+  color: #071d11;
+}
+
 .best-player-button {
   border: 2px solid var(--yellow);
 }
@@ -759,22 +765,6 @@ body {
   margin-bottom: 5px;
   color: var(--yellow);
   font-weight: 900;
-}
-
-.assist-area {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  margin-top: 8px;
-  padding: 8px 10px;
-  background: #071d11;
-}
-
-.assist-area select {
-  flex: 1;
-  min-height: 38px;
-  padding: 5px 8px;
-  font-size: 14px;
 }
 
 .selected-goal-status {
@@ -1943,18 +1933,6 @@ body {
   .operator-page .goal-selection-title {
     margin-top: 8px;
     margin-bottom: 4px;
-  }
-
-  .operator-page .assist-area {
-    gap: 7px;
-    margin-top: 7px;
-    padding: 7px 9px;
-  }
-
-  .operator-page .assist-area select {
-    min-height: 36px;
-    padding: 4px 7px;
-    font-size: 13px;
   }
 
   .operator-page .selected-goal-status {
